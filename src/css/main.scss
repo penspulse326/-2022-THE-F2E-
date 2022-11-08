@@ -8,15 +8,31 @@ body {
 }
 
 .section1 {
+    position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
     width: 2511px;
     background-image: url('../images/loding\ BG.png');
     background-repeat:repeat-x;
+
+    .navbar {
+        position:fixed;
+        top: 0;
+        width: 100%;
+        height: 80px;
+        display: flex;
+        justify-content: space-between;
+        color: white;
+
+        .navbar__item {
+            display: flex;
+        }
+    }
 }
+
 .title {
-    position: relative;
     top: 15%;
     width: 875px; 
     height: 192px;

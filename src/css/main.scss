@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    background-color: #232323;
+}
+
+.wrapper {
+    margin: auto;
+}
+
+.section1 {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 2511px;
+    background-image: url('../images/loding\ BG.png');
+    background-repeat:repeat-x;
+}
+.title {
+    position: relative;
+    top: 15%;
+    width: 875px; 
+    height: 192px;
+    background-image: url('../images/loding.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}

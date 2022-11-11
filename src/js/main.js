@@ -3,57 +3,71 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { TextPlugin } from "gsap/dist/TextPlugin";
 
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
-const timeline = gsap.timeline();
+const tl = gsap.timeline();
 
-const gems = document.querySelectorAll(".gem");
-
-const randomX = random(1, 10);
-const randomY = random(1, 10);
-const randomDelay = random(0, 1);
-const randomTime = random(2, 4);
-const randomAngle = random(-15, 15);
-
-gems.forEach((can) => {
-  gsap.set(can, {
-    x: randomX(-1),
-    y: randomX(1),
-    rotation: randomAngle(-1),
-  });
-
-  moveX(can, 1);
-  moveY(can, -1);
-  rotate(can, 1);
+tl.from(".title", {
+  autoAlpha: 0,
+  duration: 2,
 });
 
-function rotate(target, direction) {
-  gsap.to(target, randomTime(), {
-    rotation: randomAngle(direction),
-    delay: randomDelay(),
-    ease: gsap.easeInOut,
-    onComplete: rotate,
-    onCompleteParams: [target, direction * -1],
-  });
-}
+tl.fromTo(
+  ".handwrite svg path",
+  {
+    strokeDasharray: 3000,
+    strokeDashoffset: 3000,
+  },
+  {
+    strokeDasharray: 3000,
+    strokeDashoffset: 0,
+    duration: 2,
+  }
+);
 
-function moveX(target, direction) {
-  gsap.to(target, randomTime(), {
-    x: randomX(direction),
-    ease: gsap.easeInOut,
-    onComplete: moveX,
-    onCompleteParams: [target, direction * -1],
-  });
-}
+// gem fade in
+const gems = document.querySelectorAll(".gem");
+tl.from(gems, {
+  yPercent: 100,
+  autoAlpha: 0,
+  ease: "back",
+  duration: 2,
+  onComplete: () => {
+    floating(gems);
+  },
+});
 
-function moveY(target, direction) {
-  gsap.to(target, randomTime(), {
-    y: randomY(direction),
-    ease: gsap.easeInOut,
-    onComplete: moveY,
-    onCompleteParams: [target, direction * -1],
+const stars = document.querySelectorAll(".star");
+stars.forEach((star) => {
+  gsap.to(star, {
+    autoAlpha: 1,
+    duration: gsap.utils.random(0.5, 1.5),
+    repeat: -1,
+    yoyo: true,
   });
-}
+});
 
-function random(min, max) {
-  const delta = max - min;
-  return (direction = 1) => (min + delta * Math.random()) * direction;
-}
+const tl1 = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".section2", // 決定scrolltrigger要以哪一個元素作為觸發基準點
+    markers: true, // 開啟start & end標記點，單純方便瀏覽動畫開始與結束點
+    start: "top 100%", // 決定動畫開始點的位置
+    end: "top 0%", // 決定動畫結束點的位置
+    scrub: true, //重要！開啟scrub來決定動畫播放是否依賴視窗滾動
+  },
+});
+
+tl1.to(".mask", {
+  background:
+    "radial-gradient(circle at center, transparent 0vmax, $primary-purple 0%)",
+});
+
+const floating = function (elements) {
+  elements.forEach((element) => {
+    gsap.to(element, {
+      y: gsap.utils.random([-35, -30, -25, 25, 30, 35]),
+      duration: gsap.utils.random(1, 2),
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+  });
+};

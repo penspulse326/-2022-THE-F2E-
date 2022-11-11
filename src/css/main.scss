@@ -18,7 +18,7 @@ body {
     margin: auto;
     width: 100%;
     height: 500vh;
-    
+
     background-image: url('../images/bg-dec.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -38,7 +38,7 @@ nav {
     position: fixed;
     top: 0;
     
-    z-index: 1;
+    z-index: 10;
 
     font-size: 14px;
 
@@ -108,9 +108,10 @@ nav {
     }
 }
 
-.section__main {
+.section1 {
     position: fixed;
-    height: 80vh;
+    height: 100vh;
+    width: 100%;
     box-sizing: border-box;
 
     .title {
@@ -120,8 +121,8 @@ nav {
         width: 100%;
 
         position: relative;
-        top: 41%;
-        left: 30%;
+        top: 30%;
+        left: 20%;
 
         color: $primary-pink;
         font-family: 'Raleway', sans-serif;
@@ -134,11 +135,10 @@ nav {
             
             margin-left: 20px;
             width: 200px;
-            height: 158px;
+            height: 160px;
             
             font-size: 0.5em;
             color: $font-color-db;
-            background-image: url('../images/doodle-line-0.svg');
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -154,49 +154,106 @@ nav {
 
         div{
             position: fixed;
+            width: 150px;
+            height: 150px; 
             background-repeat: no-repeat;
             background-size: contain;
         }
 
-        .gem-1 { 
-            width: 150px;
-            height: 150px;   
+        .gem-1 {            
             background-image: url('../images/gem-1.png');
             transform: scale(1.5);
             top: 52%;
             left: 6.5%;
         }
         .gem-2 {
-            width: 150px;
-            height: 150px;
             background-image: url('../images/gem-2.png');
-            transform: scale(1.5);
-            top: 70%;
+            transform: scale(1.3);
+            top: 75%;
             left: 28%;
         }
         .gem-3 {
-            width: 150px;
-            height: 150px;
             background-image: url('../images/gem-3.png');
             transform: scale(1.3);
-            top: 60%;
+            top: 57%;
             left: 55%;
         }
         .gem-4 {
-            width: 150px;
-            height: 150px;
             background-image: url('../images/gem-4.png');
             transform: scale(2);
             top: 27%;
-            right: 10%;
+            right: 15%;
         }
         .gem-5 {
-            width: 150px;
-            height: 150px;
             background-image: url('../images/gem-5.png');
+            top: 75%;
+            right: 10%;
+        }
+    }
+
+    .stars {
+        div { 
+            position: fixed;
+
+            height: 100px;
+            width: 100px;
             
+            opacity: 0; 
+            background-image: url("../images/star.svg");
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+        .star-1 {
+            transform: scale(0.65);
+            top: 15%;
+            left: 7%;
+        }
+        .star-2 {
+            transform: scale(0.5);
             top: 80%;
+            left: 15%;
+        }
+        .star-3 {
+            transform: scale(0.8);
+            top: 65%;
+            left: 35%;
+        }
+        .star-4 {
+            transform: scale(0.5);
+            top: 55%;
+            right: 30%;
+        }
+        .star-5 {
+            transform: scale(0.8);
+            top: 20%;
+            right: 28%;
+        }
+        .star-6 {
+            transform: scale(0.5);
+            top: 85%;
             right: 7%;
         }
     }
+}
+
+.mask__box {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+
+    .mask {
+        position:fixed;
+        box-sizing: border-box;  
+        width:100vw;
+        height:100vh;
+        background: radial-gradient(circle at center, transparent 100vmax, $primary-purple 0%);
+        z-index: 9;  
+    }
+}
+
+.section2 {
+    position: absolute;
+    top: 100vh;
+    height: 100vh;
+    width: 100%;
 }

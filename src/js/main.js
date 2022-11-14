@@ -52,13 +52,35 @@ const tl1 = gsap.timeline({
     start: "top 100%", // 決定動畫開始點的位置
     end: "top 0%", // 決定動畫結束點的位置
     scrub: true, //重要！開啟scrub來決定動畫播放是否依賴視窗滾動
+
+    onEnter: () => setNavColor("white"),
+    onEnterBack: () => {
+      setPosition(true);
+      setNavColor("white");
+    },
+    onLeaveBack: () => {
+      setNavColor("#00162A");
+    },
   },
 });
 
-tl1.to(".mask", {
-  background:
-    "radial-gradient(circle at center, transparent 0vmax, $primary-purple 0%)",
+tl1.to(".mask-inner div", {
+  width: 0,
+  height: 0,
+  onComplete: () => setPosition(false),
 });
+
+const setNavColor = (color) => {
+  gsap.set("nav", {
+    color,
+  });
+};
+
+const setPosition = (status) => {
+  gsap.set(".gem, .star, .section1", {
+    position: status ? "fixed" : "absolute",
+  });
+};
 
 const floating = function (elements) {
   elements.forEach((element) => {

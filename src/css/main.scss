@@ -118,9 +118,8 @@ nav {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        width: 100%;
 
-        position: relative;
+        position: absolute;
         top: 30%;
         left: 20%;
 
@@ -151,7 +150,6 @@ nav {
     }
 
     .gems {
-
         div{
             position: fixed;
             width: 150px;
@@ -237,17 +235,33 @@ nav {
 }
 
 .mask__box {
-    overflow: hidden;
+    width: 100%;
+    height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
+    
 
-    .mask {
-        position:fixed;
-        box-sizing: border-box;  
-        width:100vw;
-        height:100vh;
-        background: radial-gradient(circle at center, transparent 100vmax, $primary-purple 0%);
-        z-index: 9;  
+    .mask-outer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .mask-inner {
+        opacity: 0.5;
+        position: fixed;
+        box-shadow: $primary-purple 0 0 0 2022px;
+        border-radius: 500px;
+        z-index: 5;
+
+        div {
+            width: 135vw;
+            height: 150vh;
+        }
     }
 }
 

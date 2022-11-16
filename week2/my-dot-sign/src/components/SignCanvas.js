@@ -71,6 +71,7 @@ export function SignCanvas() {
   const saveImage = () => {
     const newImg = canvasRef.current.toDataURL("image/png");
     document.querySelector(".show-img").src = newImg;
+    localStorage.setItem("img", newImg);
   };
 
   return (

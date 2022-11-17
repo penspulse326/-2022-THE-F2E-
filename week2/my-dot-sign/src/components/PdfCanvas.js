@@ -4,14 +4,13 @@ import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 
 const Base64Prefix = "data:application/pdf;base64,";
-const pdf = new jsPDF();
 
-function PageCanvas({ page, img }) {
+function PageCanvas({ page, id, innerRef }) {
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
   useEffect(() => {
     createViewer();
-  }, [img]);
+  }, [page]);
 
   async function printPDF(page) {
     // 設定尺寸及產生 canvas
@@ -57,26 +56,21 @@ function PageCanvas({ page, img }) {
 
     // 將 PDF 畫面設定為背景
     canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
+    innerRef.current[id] = canvas;
   }
 
   const handleSign = () => {
-    fabric.Image.fromURL(img, function (image) {
-      // 設定簽名出現的位置及大小，後續可調整
+    const img = localStorage.getItem("img");
+    if (img) {
+      fabric.Image.fromURL(img, function (image) {
+        // 設定簽名出現的位置及大小，後續可調整
 
-      image.top = 30;
-      image.scaleX = 0.5;
-      image.scaleY = 0.5;
-      fabricRef.current.add(image);
-    });
-  };
-
-  const saveImage = () => {
-    // 將 canvas 存為圖片
-    const image = fabricRef.current.toDataURL("image/png");
-
-    // 設定背景在 PDF 中的位置及大小
-    const width = pdf.internal.pageSize.width;
-    const height = pdf.internal.pageSize.height;
+        image.top = 30;
+        image.scaleX = 0.5;
+        image.scaleY = 0.5;
+        fabricRef.current.add(image);
+      });
+    }
   };
 
   return (
@@ -87,24 +81,69 @@ function PageCanvas({ page, img }) {
   );
 }
 
-export function PdfCanvas() {
-  const pdfRef = useRef([]);
-  const [file, setFile] = useState(null);
+function PageContainer({ pages }) {
+  const pageRef = useRef([]);
+
+  const savePDF = () => {
+    if (pageRef.current.length > 0) {
+      // jsPDF 實例化必定會有第一頁的空白頁 因此先對該頁進行設定
+      const innerPages = pageRef.current;
+      const pdf = new jsPDF([innerPages[0].width / 3.78, innerPages[0].height]);
+
+      for (let i = 0; i < pages.length; i++) {
+        // 將 canvas 存為圖片
+        const image = innerPages[i].toDataURL("image/png");
+
+        // 設定背景在 PDF 中的位置及大小
+        const width = innerPages[i].width / 3.78;
+        const height = innerPages[i].height / 3.78;
+        pdf.addImage(image, "png", 0, 0, width, height);
+        // 設定下一頁的大小
+        if (i < pages.length - 1)
+          pdf.addPage(
+            [innerPages[i + 1].width / 3.78, innerPages[i + 1].height] / 3.78
+          );
+      }
+      pdf.save("yourPDF");
+    } else {
+      alert("請上傳好檔案再進行儲存");
+    }
+  };
+
+  return (
+    <div>
+      {pages.length === 0 ? (
+        <></>
+      ) : (
+        pages.map((item, index) => (
+          <PageCanvas key={index} id={index} page={item} innerRef={pageRef} />
+        ))
+      )}
+      <button
+        onClick={() => {
+          savePDF();
+        }}
+      >
+        轉出你的簽名檔案
+      </button>
+    </div>
+  );
+}
+
+export function PDFCanvas() {
   const [pages, setPages] = useState([]);
-  const [signImg, setSignImg] = useState(null);
 
   const handleUpload = async (e) => {
     const pdf = await readBlob(e.target.files[0]);
     const data = atob(pdf.substring(Base64Prefix.length));
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
-    setFile(pdfDoc);
     const pdfLength = pdfDoc.numPages;
     let arr = [];
     for (let i = 1; i <= pdfLength; i++) {
       const pdfPage = await pdfDoc.getPage(i);
       arr.push(pdfPage);
     }
-    setPages(arr);
+    setPages(() => arr);
   };
 
   // 使用原生 FileReader 轉檔
@@ -117,14 +156,6 @@ export function PdfCanvas() {
     });
   }
 
-  const selectSign = (e) => {
-    const sign = e.target;
-    if (localStorage.getItem("img")) {
-      sign.src = localStorage.getItem("img");
-      setSignImg(sign.src);
-    }
-  };
-  const savePDF = () => {};
   return (
     <div>
       <input
@@ -133,33 +164,7 @@ export function PdfCanvas() {
         accept="application/pdf"
         onChange={handleUpload}
       />
-      <p>選擇簽名</p>
-      <img
-        className="sign"
-        style={{ border: "1px solid #000" }}
-        width="250"
-        height="150"
-        onClick={(e) => selectSign(e)}
-      />
-      {pages.length ? (
-        pages.map((i, index) => (
-          <PageCanvas
-            key={index}
-            ref={(el) => (pdfRef.current[i] = el)}
-            page={i}
-            img={signImg}
-          />
-        ))
-      ) : (
-        <></>
-      )}
-      <button
-        onClick={() => {
-          savePDF();
-        }}
-      >
-        轉出你的簽名檔案
-      </button>
+      <PageContainer pages={pages} />
     </div>
   );
 }

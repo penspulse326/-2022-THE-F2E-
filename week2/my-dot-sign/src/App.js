@@ -1,12 +1,11 @@
 import "./App.css";
 import { SignCanvas } from "./components/SignCanvas";
-import { PdfCanvas } from "./components/PdfCanvas";
+import { PDFCanvas } from "./components/PDFCanvas";
 function App() {
   return (
     <div className="App">
       <SignCanvas />
-
-      <PdfCanvas />
+      <PDFCanvas />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
-
+const PRINT_RATE = 150/72.0;
 const Base64Prefix = "data:application/pdf;base64,";
 
 function PageCanvas({ page, id, innerRef }) {
@@ -19,11 +19,12 @@ function PageCanvas({ page, id, innerRef }) {
     const context = canvas.getContext("2d");
 
     // 設定 PDF 所要顯示的寬高及渲染
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+    canvas.height = viewport.height * PRINT_RATE;
+    canvas.width = viewport.width * PRINT_RATE;
     const renderContext = {
       canvasContext: context,
       viewport,
+      transform: [PRINT_RATE, 0, 0, PRINT_RATE, 0, 0],
     };
     const renderTask = page.render(renderContext);
 
@@ -53,7 +54,7 @@ function PageCanvas({ page, id, innerRef }) {
     // 透過比例設定 canvas 尺寸
     canvas.setWidth(pdfImage.width / window.devicePixelRatio);
     canvas.setHeight(pdfImage.height / window.devicePixelRatio);
-
+    
     // 將 PDF 畫面設定為背景
     canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
     innerRef.current[id] = canvas;
@@ -66,8 +67,8 @@ function PageCanvas({ page, id, innerRef }) {
         // 設定簽名出現的位置及大小，後續可調整
 
         image.top = 30;
-        image.scaleX = 0.5;
-        image.scaleY = 0.5;
+        image.scaleX = 1;
+        image.scaleY = 1;
         fabricRef.current.add(image);
       });
     }
@@ -88,21 +89,22 @@ function PageContainer({ pages }) {
     if (pageRef.current.length > 0) {
       // jsPDF 實例化必定會有第一頁的空白頁 因此先對該頁進行設定
       const innerPages = pageRef.current;
-      const pdf = new jsPDF([innerPages[0].width / 3.78, innerPages[0].height]);
-
+      const pdf = new jsPDF({
+        unit: 'px',
+        userUnit: 72,
+      });
+      console.log(innerPages[0].width, pdf.internal.pageSize.width)
       for (let i = 0; i < pages.length; i++) {
         // 將 canvas 存為圖片
         const image = innerPages[i].toDataURL("image/png");
 
         // 設定背景在 PDF 中的位置及大小
-        const width = innerPages[i].width / 3.78;
-        const height = innerPages[i].height / 3.78;
+        const width = Math.min(innerPages[i].width ,pdf.internal.pageSize.width);
+        const height = Math.min(innerPages[i].height ,pdf.internal.pageSize.height);
         pdf.addImage(image, "png", 0, 0, width, height);
         // 設定下一頁的大小
         if (i < pages.length - 1)
-          pdf.addPage(
-            [innerPages[i + 1].width / 3.78, innerPages[i + 1].height] / 3.78
-          );
+          pdf.addPage();
       }
       pdf.save("yourPDF");
     } else {

@@ -13,6 +13,8 @@ export function SignCanvas() {
     const context = canvas.getContext("2d");
     context.lineCap = "round";
     context.strokeStyle = "black";
+    context.shadowBlur = 1;
+    context.shadowColor = "black";
     context.lineWidth = 3;
     contextRef.current = context;
   }, []);

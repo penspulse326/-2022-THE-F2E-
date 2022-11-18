@@ -2,13 +2,22 @@ import { useState, useEffect, useRef } from "react";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
-const PRINT_RATE = 150/72.0;
+import styled from "styled-components";
+
+const PRINT_RATE = 96.0 / 72.0;
 const Base64Prefix = "data:application/pdf;base64,";
 
-function PageCanvas({ page, id, innerRef }) {
+const Canvas = styled.canvas`
+  box-shadow: 1px 1px 5px 1px #ccc;
+`;
+
+function PageCanvas({ page, id, setFabricPages }) {
+  // 用 useRef 抓取此頁面下的 canvas
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
+
   useEffect(() => {
+    fabricRef.current?.dispose();
     createViewer();
   }, [page]);
 
@@ -54,10 +63,14 @@ function PageCanvas({ page, id, innerRef }) {
     // 透過比例設定 canvas 尺寸
     canvas.setWidth(pdfImage.width / window.devicePixelRatio);
     canvas.setHeight(pdfImage.height / window.devicePixelRatio);
-    
-    // 將 PDF 畫面設定為背景
+
+    // 將 PDF 畫面設定為背景 並存進 state
     canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
-    innerRef.current[id] = canvas;
+    setFabricPages((state) => {
+      let arr = [...state];
+      arr[id] = canvas;
+      return arr;
+    });
   }
 
   const handleSign = () => {
@@ -65,10 +78,9 @@ function PageCanvas({ page, id, innerRef }) {
     if (img) {
       fabric.Image.fromURL(img, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
-
         image.top = 30;
-        image.scaleX = 1;
-        image.scaleY = 1;
+        image.scaleX = 0.5;
+        image.scaleY = 0.5;
         fabricRef.current.add(image);
       });
     }
@@ -76,37 +88,48 @@ function PageCanvas({ page, id, innerRef }) {
 
   return (
     <div>
-      <canvas style={{ border: "1px solid #000" }} ref={canvasRef} />
+      <Canvas ref={canvasRef} />
       <button onClick={() => handleSign()}>新增簽名</button>
     </div>
   );
 }
 
 function PageContainer({ pages }) {
-  const pageRef = useRef([]);
+  // 存 fabaric 生成的 canvas 之後輸出 PDF 要使用
+  const [fabricPages, setFabricPages] = useState(new Array(pages.length));
 
   const savePDF = () => {
-    if (pageRef.current.length > 0) {
+    if (fabricPages.length > 0) {
       // jsPDF 實例化必定會有第一頁的空白頁 因此先對該頁進行設定
-      const innerPages = pageRef.current;
       const pdf = new jsPDF({
-        unit: 'px',
+        orientation: fabricPages[0].height > fabricPages[0].width ? "p" : "l",
+        unit: "px",
         userUnit: 72,
       });
-      console.log(innerPages[0].width, pdf.internal.pageSize.width)
-      for (let i = 0; i < pages.length; i++) {
+
+      fabricPages.forEach((page, i) => {
         // 將 canvas 存為圖片
-        const image = innerPages[i].toDataURL("image/png");
+        const image = page.toDataURL({
+          format: "jpeg",
+          quality: 1,
+        });
 
         // 設定背景在 PDF 中的位置及大小
-        const width = Math.min(innerPages[i].width ,pdf.internal.pageSize.width);
-        const height = Math.min(innerPages[i].height ,pdf.internal.pageSize.height);
+        const width = Math.min(
+          page.width / PRINT_RATE,
+          pdf.internal.pageSize.width
+        );
+        const height = Math.min(
+          page.height / PRINT_RATE,
+          pdf.internal.pageSize.height
+        );
+
         pdf.addImage(image, "png", 0, 0, width, height);
         // 設定下一頁的大小
-        if (i < pages.length - 1)
-          pdf.addPage();
-      }
-      pdf.save("yourPDF");
+        if (i < pages.length - 1) pdf.addPage();
+      });
+
+      pdf.save("your_pdf");
     } else {
       alert("請上傳好檔案再進行儲存");
     }
@@ -114,30 +137,28 @@ function PageContainer({ pages }) {
 
   return (
     <div>
-      {pages.length === 0 ? (
-        <></>
-      ) : (
+      {pages.length > 0 &&
         pages.map((item, index) => (
-          <PageCanvas key={index} id={index} page={item} innerRef={pageRef} />
-        ))
-      )}
-      <button
-        onClick={() => {
-          savePDF();
-        }}
-      >
-        轉出你的簽名檔案
-      </button>
+          <PageCanvas
+            key={index}
+            id={index}
+            page={item}
+            setFabricPages={setFabricPages}
+          />
+        ))}
+      <button onClick={() => savePDF()}>轉出你的簽名檔案</button>
     </div>
   );
 }
 
 export function PDFCanvas() {
+  // 存放讀進來的 PDF 檔
   const [pages, setPages] = useState([]);
 
+  // 將 PDF 檔轉成 Base64 編碼資料 分頁放入 state 並傳給 PageContainer
   const handleUpload = async (e) => {
     const pdf = await readBlob(e.target.files[0]);
-    const data = atob(pdf.substring(Base64Prefix.length));
+    const data = window.atob(pdf.substring(Base64Prefix.length));
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
     const pdfLength = pdfDoc.numPages;
     let arr = [];

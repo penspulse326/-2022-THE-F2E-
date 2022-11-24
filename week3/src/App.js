@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import "./App.css";
 import { ThemeProvider } from "styled-components";
 import { HashRouter, Routes, Route } from "react-router-dom";
@@ -6,6 +7,7 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import CreateAvatar from "./pages/CreateAvatar";
 import ErrorPage from "./pages/ErrorPage";
+import { UserContext } from "./contexts/UserContext";
 
 const theme = {
   colors: {
@@ -19,17 +21,20 @@ const theme = {
 };
 
 function App() {
+  const [user, setUser] = useState({ gender: null, name: null });
   return (
     <ThemeProvider theme={theme}>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="createAvatar" element={<CreateAvatar />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
-        </Routes>
-      </HashRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="createAvatar" element={<CreateAvatar />} />
+              <Route path="*" element={<ErrorPage />} />
+            </Route>
+          </Routes>
+        </HashRouter>
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import styled from "styled-components";
 
 export function pageTransition(el, navigate, url) {
   const tl = gsap.timeline();
@@ -13,3 +14,9 @@ export function pageTransition(el, navigate, url) {
     navigate(url);
   }, 2000);
 }
+
+export const Mark = (text) => <MarkedText>{text}</MarkedText>;
+
+const MarkedText = styled.span`
+  color: ${(props) => props.theme.colors.primary};
+`;

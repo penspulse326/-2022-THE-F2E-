@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StartButton = styled.div`
+export const Start = styled.div`
   &:before {
     content: "${(props) => props.content}";
   }
@@ -25,7 +25,7 @@ export const StartButton = styled.div`
   }
 `;
 
-export const ConfirmButton = styled(StartButton)`
+export const ConfirmButton = styled(Start)`
   justify-content: center;
   height: 90px;
   width: 525px;
@@ -33,7 +33,7 @@ export const ConfirmButton = styled(StartButton)`
   font-weight: 900;
 `;
 
-export const GreyButton = styled(StartButton)`
+export const Grey = styled(Start)`
   &:before {
     content: "${(props) => props.content}";
   }
@@ -48,3 +48,15 @@ export const GreyButton = styled(StartButton)`
     background: ${(props) => props.theme.colors.tertiary};
   }
 `;
+
+export const GreyButton = ({ content }) => (
+  <Grey content={content}>
+    <img alt="" src="./images/grey_arrow.png" style={{ marginLeft: "5px" }} />
+  </Grey>
+);
+
+export const StartButton = ({ content }) => (
+  <Start content={content}>
+    <img alt="" src="./images/arrow.png" style={{ marginLeft: "5px" }} />
+  </Start>
+);

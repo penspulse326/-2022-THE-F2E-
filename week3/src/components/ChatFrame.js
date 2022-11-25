@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const ChatFrame = styled.div`
   position: absolute;
-  padding: 80px 140px;
+  padding: 70px 120px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,7 +13,7 @@ export const ChatFrame = styled.div`
   border-radius: 30px;
   color: ${(props) => props.theme.colors.dark_grey};
 
-  font-size: 32px;
+  font-size: 30px;
   font-weight: 500;
   line-height: 58px;
   letter-spacing: 0px;
@@ -33,4 +33,30 @@ export const ChatFrame = styled.div`
 export const NormalDialog = styled(ChatFrame)`
   left: 300px;
   top: 5%;
-`
+`;
+
+export const Loading = () => (
+  <DotBox>
+    <Dot />
+    <Dot />
+    <Dot />
+  </DotBox>
+);
+
+const DotBox = styled(NormalDialog)`
+  padding: 0;
+  position: absolute;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 122px;
+  width: 353px;
+`;
+
+const Dot = styled.div`
+  height: 11px;
+  width: 11px;
+  border-radius: 100%;
+  background: ${(props) => props.theme.colors.mid_grey};
+  margin: 0 9px;
+`;

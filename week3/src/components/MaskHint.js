@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { GreyButton } from "./Buttons";
 import { ChatFrame } from "./ChatFrame";
-import { NamedWorker2 } from "./Workers";
+import { NamedWorker } from "./Workers";
 
 const Mask = styled.div`
   position: absolute;
@@ -23,22 +23,22 @@ const Dialog = styled(ChatFrame)`
   white-space: pre-line;
 `;
 
-export default function MaskHint({ method, content }) {
+export default function MaskHint({
+  method,
+  content,
+  onStage,
+  btnText,
+  worker,
+}) {
   return (
     <Mask>
       <Dialog>
         <div className="text">{content}</div>
-        <div className="btn">
-          <GreyButton content="好的" onClick={() => method(false)}>
-            <img
-              alt=""
-              src="./images/grey_arrow.png"
-              style={{ marginLeft: "15px" }}
-            />
-          </GreyButton>
+        <div className="btn" onClick={() => method(false)}>
+          <GreyButton content={btnText} />
         </div>
       </Dialog>
-      <NamedWorker2></NamedWorker2>
+      <NamedWorker worker={worker} onStage={onStage}></NamedWorker>
     </Mask>
   );
 }

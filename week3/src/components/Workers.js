@@ -30,35 +30,45 @@ export const Worker4 = styled(Worker1)`
   background: url("./images/worker_4.png");
 `;
 
-export function NamedWorker2({ onStage }) {
+export function NamedWorker({ worker, onStage = true }) {
+  const innerWorker = workerMap.get(worker);
+
   return (
     <div>
-      <SmallWorker2>
-        <NameTag>{onStage ? "小敏" : "？？？"}</NameTag>
-      </SmallWorker2>
+      {shrink(innerWorker)}
+      <NameTag>{onStage ? worker : "？？？"}</NameTag>
     </div>
   );
 }
 
-const SmallWorker2 = styled(Worker2)`
-  position: absolute;
-  width: 248px;
-  height: 380px;
-  left: 1300px;
-  bottom: -20px;
-  background-repeat: no-repeat;
-  background-size: contain;
-`;
+const workerMap = new Map([
+  ["小斯", Worker1],
+  ["小敏", Worker2],
+  ["小凱", Worker3],
+  ["小捷", Worker4],
+]);
+
+const shrink = (worker) => {
+  const SmallWorker = styled(worker)`
+    position: absolute;
+    left: 1200px;
+    bottom: -180px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: scale(0.575);
+  `;
+  return <SmallWorker />;
+};
 
 const NameTag = styled.div`
-display: flex;
-justify-content: center;
-align-items: center;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
   height: 53px;
   width: 153px;
-  top: -32px;
-  left: 120px;
+  top: 585px;
+  left: 1400px;
   border-radius: 30px;
 
   background: #ffffff;

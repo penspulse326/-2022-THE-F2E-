@@ -6,6 +6,65 @@ import MaskHint from "../components/MaskHint";
 import { useUser } from "../contexts/UserContext";
 import { pageTransition } from "../utils";
 
+export default function NewAvatarPage() {
+  const [data, setData] = useState({ gender: null, name: "" });
+  const [error, setError] = useState(false);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
+
+  const handleSelect = (e) => {
+    setData((state) => ({ ...state, gender: e.target.getAttribute("data") }));
+  };
+
+  const handleChange = (e) => {
+    setData((state) => ({ ...state, name: e.target.value }));
+  };
+
+  const handleClick = () => {
+    if (data.gender && data.name) {
+      setUser({ ...data });
+      pageTransition("body", navigate, "/stage1");
+    } else {
+      setError(true);
+    }
+  };
+
+  return (
+    <Wrapper>
+      <Title>請選擇代表你的角色</Title>
+      <AvatarWrapper>
+        <Male
+          gender={data.gender}
+          data="male"
+          onClick={(e) => handleSelect(e)}
+        ></Male>
+        <Female
+          gender={data.gender}
+          data="female"
+          onClick={(e) => handleSelect(e)}
+        ></Female>
+      </AvatarWrapper>
+      <InputName
+        placeholder="請輸入你的名字。"
+        value={data.name}
+        onChange={(e) => handleChange(e)}
+      />
+      <Confirm content="確定" onClick={() => handleClick()}></Confirm>
+      {error && (
+        <MaskHint
+          worker={"小敏"}
+          btnText={"好的"}
+          onStage={false}
+          method={setError}
+          content={`嘿！菜鳥！
+          不打算報上名字和身分嗎？
+          `}
+        ></MaskHint>
+      )}
+    </Wrapper>
+  );
+}
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -100,59 +159,3 @@ const AvatarWrapper = styled.div`
 const Confirm = styled(ConfirmButton)`
   margin-top: 30px;
 `;
-
-export default function CreateAvatar() {
-  const [data, setData] = useState({ gender: null, name: "" });
-  const [error, setError] = useState(false);
-  const { setUser } = useUser();
-  const navigate = useNavigate();
-
-  const handleSelect = (e) => {
-    setData((state) => ({ ...state, gender: e.target.getAttribute("data") }));
-  };
-
-  const handleChange = (e) => {
-    setData((state) => ({ ...state, name: e.target.value }));
-  };
-
-  const handleClick = () => {
-    if (data.gender && data.name) {
-      setUser({ ...data });
-      pageTransition("body", navigate, "/stage1");
-    } else {
-      setError(true);
-    }
-  };
-
-  return (
-    <Wrapper>
-      <Title>請選擇代表你的角色</Title>
-      <AvatarWrapper>
-        <Male
-          gender={data.gender}
-          data="male"
-          onClick={(e) => handleSelect(e)}
-        ></Male>
-        <Female
-          gender={data.gender}
-          data="female"
-          onClick={(e) => handleSelect(e)}
-        ></Female>
-      </AvatarWrapper>
-      <InputName
-        placeholder="請輸入你的名字。"
-        value={data.name}
-        onChange={(e) => handleChange(e)}
-      />
-      <Confirm content="確定" onClick={() => handleClick()}></Confirm>
-      {error && (
-        <MaskHint
-          method={setError}
-          content={`嘿！菜鳥！
-          不打算報上名字和身分嗎？
-          `}
-        ></MaskHint>
-      )}
-    </Wrapper>
-  );
-}

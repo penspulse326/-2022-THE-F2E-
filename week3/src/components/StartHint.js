@@ -1,42 +1,22 @@
 import { useState, useEffect, useRef } from "react";
-import styled from "styled-components";
-import { NormalDialog } from "./ChatFrame";
-import { NamedWorker2 } from "./Workers";
+import { Loading, NormalDialog } from "./ChatFrame";
+import { NamedWorker } from "./Workers";
 import { StartButton } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 import { pageTransition } from "../utils";
 
-const SmallBox = styled(NormalDialog)`
-  padding: 0;
-  position: absolute;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 122px;
-  width: 353px;
-`;
-
-const Dot = styled.div`
-  height: 11px;
-  width: 11px;
-  border-radius: 100%;
-  background: ${(props) => props.theme.colors.mid_grey};
-  margin: 0 9px;
-`;
-
 export default function StartHint() {
   const [logState, setLogState] = useState(false);
   const pageRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!logState) {
-      setTimeout(() => setLogState(true), 1000)
-        ;
+      setTimeout(() => setLogState(true), 1000);
     }
     return () => setLogState(false);
   }, []);
 
-  const navigate = useNavigate();
   const handleClick = () => {
     pageTransition("body", navigate, "/createAvatar");
   };
@@ -45,35 +25,30 @@ export default function StartHint() {
     <div className="home__container" ref={pageRef}>
       {logState ? (
         <NormalDialog>
-          <div className="text">
-            {textContent}
-          </div>
+          <div className="text">{textContent}</div>
           <div className="btn" onClick={() => handleClick()}>
-            <StartButton content="開始試煉">
-              <img
-                alt=""
-                src="./images/arrow.png"
-                style={{ marginLeft: "5px" }}
-              />
-            </StartButton>
+            <StartButton content="開始試煉" />
           </div>
         </NormalDialog>
       ) : (
-        <SmallBox>
-          <Dot />
-          <Dot />
-          <Dot />
-        </SmallBox>
+        <Loading />
       )}
-      <NamedWorker2></NamedWorker2>
+      <NamedWorker worker={"小敏"} onStage={false}></NamedWorker>
     </div>
   );
 }
 
-const textContent = `菜鳥！恭喜你成為六角學院的正式員工啦！
-在正式加入專案開發之前，
-需要請你先了解 Scrum 的流程與精神！ 
-
-成功通過 Scrum 新手村的試煉吧！
-
-`
+const textContent = (
+  <>
+    菜鳥！恭喜你成為六角學院的正式員工啦！
+    <br />
+    在正式加入專案開發之前，
+    <br />
+    需要請你先了解 Scrum 的流程與精神！
+    <br />
+    <br />
+    成功通過 Scrum 新手村的試煉吧！
+    <br />
+    <br />
+  </>
+);

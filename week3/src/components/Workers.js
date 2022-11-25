@@ -30,11 +30,11 @@ export const Worker4 = styled(Worker1)`
   background: url("./images/worker_4.png");
 `;
 
-export function NamedWorker2() {
+export function NamedWorker2({ onStage }) {
   return (
     <div>
       <SmallWorker2>
-        <NameTag>？？？</NameTag>
+        <NameTag>{onStage ? "小敏" : "？？？"}</NameTag>
       </SmallWorker2>
     </div>
   );
@@ -45,12 +45,15 @@ const SmallWorker2 = styled(Worker2)`
   width: 248px;
   height: 380px;
   left: 1300px;
-  top: 650px;
+  bottom: -20px;
   background-repeat: no-repeat;
   background-size: contain;
 `;
 
 const NameTag = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
   position: relative;
   height: 53px;
   width: 153px;
@@ -64,7 +67,6 @@ const NameTag = styled.div`
   font-weight: 500;
   font-size: 32px;
   line-height: 180%;
-  text-align: center;
 
   color: ${(props) => props.theme.colors.dark_grey};
 `;

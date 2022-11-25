@@ -41,6 +41,7 @@ const Male = styled.button`
     background-image: url("./images/male.png");
     color: transparent;
     transition: 0.3s;
+    cursor: pointer;
   }
 
   background-image: ${(props) =>
@@ -103,7 +104,7 @@ const Confirm = styled(ConfirmButton)`
 export default function CreateAvatar() {
   const [data, setData] = useState({ gender: null, name: "" });
   const [error, setError] = useState(false);
-  const { user, setUser } = useUser();
+  const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSelect = (e) => {
@@ -117,7 +118,7 @@ export default function CreateAvatar() {
   const handleClick = () => {
     if (data.gender && data.name) {
       setUser({ ...data });
-      pageTransition("body", navigate, "/");
+      pageTransition("body", navigate, "/stage1");
     } else {
       setError(true);
     }

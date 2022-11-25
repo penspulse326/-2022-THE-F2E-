@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { GreyButton } from "./Buttons";
-import ChatFrame from "./ChatFrame";
+import { ChatFrame } from "./ChatFrame";
 import { NamedWorker2 } from "./Workers";
 
 const Mask = styled.div`
@@ -20,6 +20,7 @@ const Dialog = styled(ChatFrame)`
   left: 548px;
   top: 300px;
   box-sizing: border-box;
+  white-space: pre-line;
 `;
 
 export default function MaskHint({ method, content }) {

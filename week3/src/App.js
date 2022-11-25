@@ -3,11 +3,13 @@ import { useState } from "react";
 import "./App.css";
 import { ThemeProvider } from "styled-components";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { UserContext } from "./contexts/UserContext";
 import Home from "./pages/Home";
-import Layout from "./pages/Layout";
+import Layout from "./components/Layout";
 import CreateAvatar from "./pages/CreateAvatar";
 import ErrorPage from "./pages/ErrorPage";
-import { UserContext } from "./contexts/UserContext";
+import Stage__1 from "./pages/Stage__1"
+
 
 const theme = {
   colors: {
@@ -30,6 +32,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="createAvatar" element={<CreateAvatar />} />
+              <Route path="stage1" element={<Stage__1 />} />
               <Route path="*" element={<ErrorPage />} />
             </Route>
           </Routes>

@@ -1,28 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import ChatFrame from "./ChatFrame";
+import { NormalDialog } from "./ChatFrame";
 import { NamedWorker2 } from "./Workers";
 import { StartButton } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 import { pageTransition } from "../utils";
 
-const SmallBox = styled(ChatFrame)`
+const SmallBox = styled(NormalDialog)`
+  padding: 0;
   position: absolute;
-  left: 15.62%;
-  right: 65.99%;
-  top: 16.11%;
-  bottom: 72.59%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: 122px;
   width: 353px;
-
-  text-align: center;
-  font-size: 32px;
-`;
-const LargeBox = styled(ChatFrame)`
-  width: 888px;
-  height: 551px;
-  left: 300px;
-  top: 137px;
 `;
 
 const Dot = styled.div`
@@ -34,14 +25,15 @@ const Dot = styled.div`
 `;
 
 export default function StartHint() {
-  const [logState, setLogState] = useState(true);
+  const [logState, setLogState] = useState(false);
   const pageRef = useRef(null);
 
   useEffect(() => {
     if (!logState) {
-      setTimeout(() => setLogState(true), 1500);
+      setTimeout(() => setLogState(true), 1000)
+        ;
     }
-    //return () => setLogState(false);
+    return () => setLogState(false);
   }, []);
 
   const navigate = useNavigate();
@@ -52,14 +44,9 @@ export default function StartHint() {
   return (
     <div className="home__container" ref={pageRef}>
       {logState ? (
-        <LargeBox>
+        <NormalDialog>
           <div className="text">
-            {`菜鳥！恭喜你成為六角學院的正式員工啦！
-          在正式加入專案開發之前，
-          需要請你先了解 Scrum 的流程與精神！ 
-
-          成功通過 Scrum 新手村的試煉吧！
-          `}
+            {textContent}
           </div>
           <div className="btn" onClick={() => handleClick()}>
             <StartButton content="開始試煉">
@@ -70,7 +57,7 @@ export default function StartHint() {
               />
             </StartButton>
           </div>
-        </LargeBox>
+        </NormalDialog>
       ) : (
         <SmallBox>
           <Dot />
@@ -82,3 +69,11 @@ export default function StartHint() {
     </div>
   );
 }
+
+const textContent = `菜鳥！恭喜你成為六角學院的正式員工啦！
+在正式加入專案開發之前，
+需要請你先了解 Scrum 的流程與精神！ 
+
+成功通過 Scrum 新手村的試煉吧！
+
+`

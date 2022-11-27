@@ -23,7 +23,6 @@ const DragItem = styled.div`
 
   box-sizing: border-box;
   border: 1.5px solid ${(props) => props.theme.colors.dark_grey};
-  z-index: 99;
 
   transform: ${(props) => props.snapshot.isDragging && `scale(1.2)`};
 `;
@@ -52,8 +51,6 @@ export const Slot = styled.div`
   margin-bottom: 20px;
   width: 600px;
   height: 76px;
-  left: 660px;
-  top: 427px;
   border: 2px dashed ${(props) => props.theme.colors.mid_grey};
   box-sizing: border-box;
 `;

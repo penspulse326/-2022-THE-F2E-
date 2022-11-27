@@ -6,6 +6,6 @@ const Wrapper = styled.div`
   background-color: white;
 `;
 
-export default function ErrorPage() {
+export default function Error() {
   return <Wrapper>Error</Wrapper>;
 }

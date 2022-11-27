@@ -1,14 +1,15 @@
 import React from "react";
-import { useState } from "react";
 import "./App.css";
+import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from "./contexts/UserContext";
-import HomePage from "./pages/HomePage";
+import Home from "./pages/Home";
 import Layout from "./components/Layout";
-import NewAvatarPage from "./pages/NewAvatartPage";
-import ErrorPage from "./pages/ErrorPage";
-import Stage1Page from "./pages/Stage1Page";
+import NewAvatar from "./pages/NewAvatar";
+import Error from "./pages/Error";
+import Stage1 from "./pages/Stage1";
+import Stage2 from "./pages/Stage2";
 
 const theme = {
   colors: {
@@ -29,10 +30,11 @@ function App() {
         <HashRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route path="createAvatar" element={<NewAvatarPage />} />
-              <Route path="stage1" element={<Stage1Page />} />
-              <Route path="*" element={<ErrorPage />} />
+              <Route index element={<Home />} />
+              <Route path="createAvatar" element={<NewAvatar />} />
+              <Route path="stage1" element={<Stage1 />} />
+              <Route path="stage2" element={<Stage2 />} />
+              <Route path="*" element={<Error />} />
             </Route>
           </Routes>
         </HashRouter>

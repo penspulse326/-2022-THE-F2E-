@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { Card, Slot } from "./Card";
+import { Card } from "./Card";
 
 export function DropBox({ itemObj, setItemObj, answerAry, setIsOrderCorret }) {
   const [firstDrag, setFirstDrag] = useState(false);
@@ -70,10 +70,6 @@ export function DropBox({ itemObj, setItemObj, answerAry, setIsOrderCorret }) {
           </Droppable>
         </OutSectionWrapper>
         <SectionWrapper>
-          <Slot key={1} />
-          <Slot key={2} />
-          <Slot key={3} />
-          <Slot key={4} />
           <Droppable droppableId="inner">
             {(provided, snapshot) => (
               <DroppableContainer
@@ -100,24 +96,29 @@ export function DropBox({ itemObj, setItemObj, answerAry, setIsOrderCorret }) {
 
 const DropContextWrapper = styled.div`
   position: relative;
+  top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
 `;
 
 const DroppableContainer = styled.div`
-  position: absolute;
+  position: relative;
   top: 0;
   height: 349px;
   box-sizing: border-box;
 `;
 
 const SectionWrapper = styled.div`
-  position: absolute;
+  position: relative;
+  top: -452px;
+  width: 600px;
+  height: 400px;
   z-index: 99;
 `;
 
 const OutSectionWrapper = styled.div`
-  position: relative;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
@@ -126,8 +127,8 @@ const OutSectionWrapper = styled.div`
 `;
 
 const initPosition = [
-  { x: "150px", y: "250px" },
-  { x: "1070px", y: "320px" },
-  { x: "1100px", y: "30px" },
-  { x: "1150px", y: "200px" },
+  { x: "100px", y: "500px" },
+  { x: "1100px", y: "700px" },
+  { x: "1150px", y: "405px" },
+  { x: "1200px", y: "510px" },
 ];

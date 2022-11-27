@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ChatFrame = styled.div`
-  position: absolute;
+  position: fixed;
   padding: 70px 120px;
   display: flex;
   flex-direction: column;
@@ -31,8 +31,8 @@ export const ChatFrame = styled.div`
   }
 `;
 export const NormalDialog = styled(ChatFrame)`
+  top: 50px;
   left: 300px;
-  top: 5%;
 `;
 
 export const Loading = () => (

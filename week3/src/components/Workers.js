@@ -30,16 +30,26 @@ export const Worker4 = styled(Worker1)`
   background: url("./images/worker_4.png");
 `;
 
-export function NamedWorker({ worker, onStage = true }) {
+export function namedWorker(worker, onStage = true) {
   const innerWorker = workerMap.get(worker);
-
+  const SmallWorker = styled(innerWorker)`
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: scale(0.575);
+  `;
   return (
-    <div>
-      {shrink(innerWorker)}
+    <WorkerWrapper>
       <NameTag>{onStage ? worker : "？？？"}</NameTag>
-    </div>
+      <SmallWorker />
+    </WorkerWrapper>
   );
 }
+
+const WorkerWrapper = styled.div`
+  position: fixed;
+  left: 1200px;
+  bottom: -170px;
+`;
 
 const workerMap = new Map([
   ["小斯", Worker1],
@@ -48,27 +58,15 @@ const workerMap = new Map([
   ["小捷", Worker4],
 ]);
 
-const shrink = (worker) => {
-  const SmallWorker = styled(worker)`
-    position: absolute;
-    left: 1200px;
-    bottom: -180px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    transform: scale(0.575);
-  `;
-  return <SmallWorker />;
-};
-
 const NameTag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: relative;
   height: 53px;
   width: 153px;
-  top: 585px;
-  left: 1400px;
+  top: 150px;
+  left: 200px;
   border-radius: 30px;
 
   background: #ffffff;
@@ -79,4 +77,6 @@ const NameTag = styled.div`
   line-height: 180%;
 
   color: ${(props) => props.theme.colors.dark_grey};
+
+  z-index: 99;
 `;

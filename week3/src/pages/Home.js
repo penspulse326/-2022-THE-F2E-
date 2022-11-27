@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { gsap } from "gsap";
 import { useRef, useLayoutEffect, useState, useEffect } from "react";
+import { gsap } from "gsap";
+import styled from "styled-components";
 import { Worker1, Worker2, Worker3, Worker4 } from "../components/Workers";
 import StartHint from "../components/StartHint";
 
-export default function HomePage() {
+export default function Home() {
   const [isAnimating, setIsAnimating] = useState(true);
   const [isClick, setIsClick] = useState(false);
   const titleRef = useRef(null);

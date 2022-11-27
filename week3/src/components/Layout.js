@@ -8,7 +8,7 @@ const AppWrapper = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: black;
+  background-color: white;
   background-image: url("./images/bk.png");
   background-size: cover;
   background-repeat: no-repeat;

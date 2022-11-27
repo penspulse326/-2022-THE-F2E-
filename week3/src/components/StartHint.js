@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Loading, NormalDialog } from "./ChatFrame";
-import { NamedWorker } from "./Workers";
+import { namedWorker } from "./Workers";
 import { StartButton } from "./Buttons";
 import { useNavigate } from "react-router-dom";
 import { pageTransition } from "../utils";
@@ -33,7 +33,7 @@ export default function StartHint() {
       ) : (
         <Loading />
       )}
-      <NamedWorker worker={"小敏"} onStage={false}></NamedWorker>
+      {namedWorker("小敏", false)}
     </div>
   );
 }

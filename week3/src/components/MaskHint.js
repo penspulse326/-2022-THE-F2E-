@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { GreyButton } from "./Buttons";
 import { ChatFrame } from "./ChatFrame";
-import { namedWorker } from "./Workers";
+import { NamedWorker } from "./Workers";
 
 const Mask = styled.div`
   position: absolute;
@@ -15,30 +15,26 @@ const Mask = styled.div`
 
 const Dialog = styled(ChatFrame)`
   position: absolute;
-  height: 381px;
-  width: 834px;
   left: 548px;
   top: 300px;
+
+  height: 381px;
+  width: 834px;
+
   box-sizing: border-box;
   white-space: pre-line;
 `;
 
-export default function MaskHint({
-  method,
-  content,
-  onStage,
-  btnText,
-  worker,
-}) {
+export default function MaskHint({ name, content, btnText, toggle }) {
   return (
     <Mask>
       <Dialog>
         <div className="text">{content}</div>
-        <div className="btn" onClick={() => method(false)}>
+        <div className="btn" onClick={() => toggle(false)}>
           <GreyButton content={btnText} />
         </div>
       </Dialog>
-      {namedWorker(worker, onStage)}
+      <NamedWorker number={2} name={name}></NamedWorker>
     </Mask>
   );
 }

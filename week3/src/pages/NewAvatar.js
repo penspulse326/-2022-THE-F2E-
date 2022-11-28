@@ -52,13 +52,13 @@ export default function NewAvatarPage() {
       <Confirm content="確定" onClick={() => handleClick()}></Confirm>
       {error && (
         <MaskHint
-          worker={"小敏"}
-          btnText={"好的"}
-          onStage={false}
-          method={setError}
+          name={"？？？"}
           content={`嘿！菜鳥！
           不打算報上名字和身分嗎？
           `}
+          btnText={"好的"}
+          toggle={setError}
+          onStage={false}
         ></MaskHint>
       )}
     </Wrapper>

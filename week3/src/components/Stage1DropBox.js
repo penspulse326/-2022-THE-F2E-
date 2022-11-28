@@ -3,7 +3,12 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Card } from "./Card";
 
-export function DropBox({ itemObj, setItemObj, answerAry, setIsOrderCorret }) {
+export function Stage1DropBox({
+  itemObj,
+  setItemObj,
+  answerAry,
+  setIsOrderCorret,
+}) {
   const [firstDrag, setFirstDrag] = useState(false);
   const onDragEnd = (event) => {
     const { source, destination } = event;
@@ -111,10 +116,11 @@ const DroppableContainer = styled.div`
 
 const SectionWrapper = styled.div`
   position: relative;
-  top: -452px;
+  top: -423px;
   width: 600px;
   height: 400px;
   z-index: 99;
+  background-color: rgba(0, 255, 255, 0.5);
 `;
 
 const OutSectionWrapper = styled.div`
@@ -124,6 +130,7 @@ const OutSectionWrapper = styled.div`
   height: 100vh;
   width: 100vw;
   z-index: 77;
+  border: 10px solid red;
 `;
 
 const initPosition = [

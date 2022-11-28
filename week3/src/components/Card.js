@@ -2,14 +2,7 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
 const DragItem = styled.div`
-  position: ${(props) => (props.position ? "absolute" : "relative")};
-  ${(props) =>
-    !props.firstDrag &&
-    `
-    top: ${props.position.y};
-    left: ${props.position.x};
-  `}
-
+  position: absolute;
   display: flex;
   align-items: center;
   padding: 12px 32px;
@@ -24,13 +17,16 @@ const DragItem = styled.div`
   box-sizing: border-box;
   border: 1.5px solid ${(props) => props.theme.colors.dark_grey};
 
-  transform: ${(props) => props.snapshot.isDragging && `scale(1.2)`};
+  transform: ${(props) =>
+    props.snapshot.isDropAnimating ? `scale(1.2)` : `scale(1)`};
+  transition: 0.3s;
 `;
 
 export const Card = ({ item, index, position }) => {
   return (
     <Draggable draggableId={item.id} index={index}>
       {(provided, snapshot) => {
+        console.log(snapshot);
         return (
           <DragItem
             ref={provided.innerRef}

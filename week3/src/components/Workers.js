@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Worker1 = styled.div`
   width: 382px;
   height: 713px;
-
   background: url("./images/worker_1.png");
   background-repeat: no-repeat;
   background-size: contain;
+
+  ${(props) => props.size && `transform: scale(${props.size})`}
 `;
 
 export const Worker2 = styled(Worker1)`
@@ -30,53 +31,52 @@ export const Worker4 = styled(Worker1)`
   background: url("./images/worker_4.png");
 `;
 
-export function namedWorker(worker, onStage = true) {
-  const innerWorker = workerMap.get(worker);
-  const SmallWorker = styled(innerWorker)`
-    background-repeat: no-repeat;
-    background-size: contain;
-    transform: scale(0.575);
-  `;
-  return (
-    <WorkerWrapper>
-      <NameTag>{onStage ? worker : "？？？"}</NameTag>
-      <SmallWorker />
-    </WorkerWrapper>
-  );
-}
+export const NameTag = styled.div`
+  position: relative;
+  top: 150px;
+  left: ${(props) => (props.tag === "right" ? "200px" : "100px")};
 
-const WorkerWrapper = styled.div`
-  position: fixed;
-  left: 1200px;
-  bottom: -170px;
-`;
-
-const workerMap = new Map([
-  ["小斯", Worker1],
-  ["小敏", Worker2],
-  ["小凱", Worker3],
-  ["小捷", Worker4],
-]);
-
-const NameTag = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
+
   height: 53px;
   width: 153px;
-  top: 150px;
-  left: 200px;
-  border-radius: 30px;
 
   background: #ffffff;
+  border-radius: 30px;
   box-shadow: 0px 4px 30px rgba(116, 48, 48, 0.4);
-  backdrop-filter: blur(15px);
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 180%;
 
+  font-weight: 500;
+  font-size: 30px;
   color: ${(props) => props.theme.colors.dark_grey};
 
   z-index: 99;
 `;
+
+export function NamedWorker({
+  number,
+  name,
+  bottom = "-160px",
+  left = "1200px",
+  tag = "right",
+}) {
+  const style = {
+    position: "fixed",
+    bottom,
+    left,
+  };
+  return (
+    <div style={style}>
+      <NameTag tag={tag}>{name}</NameTag>
+      {workerSelect[number - 1]}
+    </div>
+  );
+}
+
+const workerSelect = [
+  <Worker1 size={0.575}></Worker1>,
+  <Worker2 size={0.575}></Worker2>,
+  <Worker3 size={0.575}></Worker3>,
+  <Worker4 size={0.575}></Worker4>,
+];

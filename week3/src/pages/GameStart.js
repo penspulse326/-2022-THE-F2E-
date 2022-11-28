@@ -1,20 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { Loading, NormalDialog } from "./ChatFrame";
-import { namedWorker } from "./Workers";
-import { StartButton } from "./Buttons";
+import { Loading, NormalDialog } from "../components/ChatFrame";
+import { NamedWorker } from "../components/Workers";
 import { useNavigate } from "react-router-dom";
 import { pageTransition } from "../utils";
+import { StartButton } from "../components/Buttons";
 
-export default function StartHint() {
-  const [logState, setLogState] = useState(false);
+export default function GameStart() {
+  const [isLoading, setIsLoading] = useState(true);
   const pageRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!logState) {
-      setTimeout(() => setLogState(true), 1000);
-    }
-    return () => setLogState(false);
+    setTimeout(() => setIsLoading(false), 1000);
   }, []);
 
   const handleClick = () => {
@@ -23,22 +20,22 @@ export default function StartHint() {
 
   return (
     <div className="home__container" ref={pageRef}>
-      {logState ? (
-        <NormalDialog>
-          <div className="text">{textContent}</div>
-          <div className="btn" onClick={() => handleClick()}>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <NormalDialog size="M">
+          <div className="text">{text}</div>
+          <div onClick={() => handleClick()}>
             <StartButton content="開始試煉" />
           </div>
         </NormalDialog>
-      ) : (
-        <Loading />
       )}
-      {namedWorker("小敏", false)}
+      <NamedWorker number={2} name={"？？？"}></NamedWorker>
     </div>
   );
 }
 
-const textContent = (
+const text = (
   <>
     菜鳥！恭喜你成為六角學院的正式員工啦！
     <br />

@@ -2,50 +2,29 @@ import { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { gsap } from "gsap";
 import styled from "styled-components";
 import { Worker1, Worker2, Worker3, Worker4 } from "../components/Workers";
-import StartHint from "../components/StartHint";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const [isAnimating, setIsAnimating] = useState(true);
-  const [isClick, setIsClick] = useState(false);
   const titleRef = useRef(null);
   const tl = useRef(null);
+  const navigate = useNavigate();
 
   useLayoutEffect(() => {
-    if (!isClick) {
-      let ctx = gsap.context(() => {
-        tl.current = HomeAnimation();
-        setIsAnimating(false);
-      }, titleRef);
+    let ctx = gsap.context(() => {
+      tl.current = HomeAnimation();
+    }, titleRef);
 
-      return () => ctx.revert();
-    }
+    return () => ctx.revert();
   });
 
-  useEffect(() => {
-    return () => {
-      setIsAnimating(true);
-      setIsClick(false);
-    };
-  }, []);
-
-  const handleClick = () => {
-    if (!isAnimating) setIsClick(true);
-  };
-
   return (
-    <HomeWrapper className="home" ref={titleRef} onClick={() => handleClick()}>
-      {isClick ? (
-        <StartHint />
-      ) : (
-        <>
-          <Title className="title" />
-          <Start className="start">任意點擊開始</Start>
-          <WorkerHome1 className="worker1" />
-          <WorkerHome2 className="worker2" />
-          <WorkerHome3 className="worker3" />
-          <WorkerHome4 className="worker4" />
-        </>
-      )}
+    <HomeWrapper ref={titleRef} onClick={() => navigate("/start")}>
+      <Title className="title" />
+      <Start className="start">任意點擊開始</Start>
+      <WorkerHome1 className="worker1" />
+      <WorkerHome2 className="worker2" />
+      <WorkerHome3 className="worker3" />
+      <WorkerHome4 className="worker4" />
     </HomeWrapper>
   );
 }

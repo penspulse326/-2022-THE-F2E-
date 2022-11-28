@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import { NormalDialog, ChatFrame } from "../components/ChatFrame";
-import { namedWorker } from "../components/Workers";
+import { NormalDialog, ChatFrame, LongHintBar } from "../components/ChatFrame";
+import { NamedWorker } from "../components/Workers";
 import { StartButton, ConfirmButton } from "../components/Buttons";
 import { useUser } from "../contexts/UserContext";
 import { Mark } from "../utils";
-import { DropBox } from "../components/DropBox";
+import { Stage1DropBox } from "../components/Stage1DropBox";
 import { Slot } from "../components/Card";
 import MaskHint from "../components/MaskHint";
 import { pageTransition } from "../utils";
@@ -42,13 +42,16 @@ export default function Stage1() {
   const [isOrderCorret, setIsOrderCorret] = useState(null);
   const [mask, setMask] = useState(0);
   const [isMask, setIsMask] = useState(false);
-  const [progress, setProgress] = useState(1);
+  const [progress, setProgress] = useState(2);
   const { user } = useUser();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (mask === 2 && !isMask) pageTransition("body", navigate, "/stage2");
-  }, [mask, isMask]);
+  /*useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+      setProgress(1);
+    }, 1000);
+  }, []);*/
 
   const handleStart = () => {
     setProgress(2);
@@ -64,70 +67,55 @@ export default function Stage1() {
   };
 
   return (
-    <StageWrapper className="stage1__container">
+    <StageWrapper className="stage1">
       {progress === 1 && (
         <>
-          <DialogBox>
-            <div className="text">{textContent(user.name)}</div>
-            <div className="btn" onClick={() => handleStart()}>
+          <NormalDialog size="L">
+            <div className="text">{text(user.name)}</div>
+            <div onClick={() => handleStart()}>
               <StartButton content="開始試煉" />
             </div>
-          </DialogBox>
-          {namedWorker("小敏", true)}
+          </NormalDialog>
+          <NamedWorker number={2} name={"小敏"}></NamedWorker>
         </>
       )}
       {progress === 2 && (
         <>
           <LongHintBar>
-            請把需求放到產品待辦清單，並調整待辦的優先度順序。公司也推薦使用
-            <img
-              src="./images/jira_logo.png"
-              alt="Jira"
-              style={{ margin: "0 8px" }}
-            />
+            <>
+              請把需求放到產品待辦清單，並調整待辦的優先度順序。公司也推薦使用
+            </>
+            <a href="https://www.atlassian.com/software/jira">
+              <img src="./images/jira_logo.png" alt="Jira" />
+            </a>
             來做任務的管理喔！
           </LongHintBar>
           <GameBox>
-            <div style={{ fontWeight: 700 }}>產品待辦清單 ProductBacklog</div>
-            <GameHintText>優先度高↑</GameHintText>
+            <>產品待辦清單 ProductBacklog</>
             <SlotWrapper>
-              <Slot key={1} />
-              <Slot key={2} />
-              <Slot key={3} />
-              <Slot key={4} />
+              <GameHintText>優先度高↑</GameHintText>
+              <Slot />
+              <Slot />
+              <Slot />
+              <Slot />
               <GameHintText>優先度低↓</GameHintText>
             </SlotWrapper>
-            <Confirm content="我完成了！" onClick={() => handleCheck()} />
-            <DropBox
+            <Stage1DropBox
               itemObj={itemObj}
               setItemObj={setItemObj}
-              setIsOrderCorret={setIsOrderCorret}
               answerAry={answerAry}
+              setIsOrderCorret={setIsOrderCorret}
             />
+            <Confirm content="我完成了！" />
           </GameBox>
         </>
-      )}
-      {isMask && (
-        <MaskHint
-          worker={"小敏"}
-          btnText={mask === 1 ? "好的" : "謝謝"}
-          onStage={true}
-          method={setIsMask}
-          content={
-            mask === 1
-              ? `嘿！菜鳥！
-          想跑去哪呢？你的試煉還沒有完成
-          `
-              : `做得好啊！菜鳥！`
-          }
-        />
       )}
     </StageWrapper>
   );
 }
 
 const SlotWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 50px;
   position: relative;
   top: 0px;
   display: flex;
@@ -144,14 +132,18 @@ const GameHintText = styled.div`
 `;
 
 const GameBox = styled(ChatFrame)`
-  padding: 30px 100px;
   position: relative;
+
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  padding: 30px 100px;
   margin-top: 30px;
   width: 688px;
   height: 874px;
+
+  font-weight: 700;
 `;
 
 const StageWrapper = styled.div`
@@ -164,24 +156,7 @@ const StageWrapper = styled.div`
   align-items: center;
 `;
 
-const DialogBox = styled(NormalDialog)`
-  margin-top: 30px;
-  width: 1084px;
-`;
-const LongHintBar = styled(ChatFrame)`
-  position: relative;
-
-  padding: 20px 100px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  font-weight: 500;
-  font-size: 24px;
-
-  margin-top: 40px;
-`;
-
-const textContent = (name) => (
+const text = (name) => (
   <>
     哈囉~{name}。
     <br />

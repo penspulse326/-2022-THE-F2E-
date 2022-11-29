@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { Card } from "./Card";
+import { Card, Slot } from "./Card";
+import { ChatFrame } from "./ChatFrame";
+import { ConfirmButton } from "../components/Buttons";
 
 export function Stage1DropBox({
   itemObj,
   setItemObj,
   answerAry,
   setIsOrderCorret,
+  handleCheck,
 }) {
   const [firstDrag, setFirstDrag] = useState(false);
   const onDragEnd = (event) => {
@@ -53,10 +56,17 @@ export function Stage1DropBox({
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <DropContextWrapper>
-        <OutSectionWrapper>
+        <Section1>
+          項目清單 List
+          <SlotWrapper>
+            <Slot />
+            <Slot />
+            <Slot />
+            <Slot />
+          </SlotWrapper>
           <Droppable droppableId="outer">
             {(provided, snapshot) => (
-              <DroppableContainer
+              <DroppableContainer1
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
@@ -66,34 +76,38 @@ export function Stage1DropBox({
                     index={index}
                     key={item.id}
                     firstDrag={firstDrag}
-                    position={initPosition[item.priority - 1]}
                   />
                 ))}
                 {provided.placeholder}
-              </DroppableContainer>
+              </DroppableContainer1>
             )}
           </Droppable>
-        </OutSectionWrapper>
-        <SectionWrapper>
+        </Section1>
+        <Section2>
+          產品待辦清單 ProductBacklog
+          <GameHintText>優先度高↑</GameHintText>
+          <SlotWrapper>
+            <Slot />
+            <Slot />
+            <Slot />
+            <Slot />
+          </SlotWrapper>
+          <GameHintText>優先度低↓</GameHintText>
           <Droppable droppableId="inner">
             {(provided, snapshot) => (
-              <DroppableContainer
+              <DroppableContainer2
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
                 {itemObj.inner.items.map((item, index) => (
-                  <Card
-                    item={item}
-                    index={index}
-                    key={item.id}
-                    position={false}
-                  />
+                  <Card item={item} index={index} key={item.id} />
                 ))}
                 {provided.placeholder}
-              </DroppableContainer>
+              </DroppableContainer2>
             )}
           </Droppable>
-        </SectionWrapper>
+          <Confirm content="我完成了！" onClick={() => handleCheck()} />
+        </Section2>
       </DropContextWrapper>
     </DragDropContext>
   );
@@ -101,41 +115,82 @@ export function Stage1DropBox({
 
 const DropContextWrapper = styled.div`
   position: relative;
-  top: 0;
-  left: 0;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
-const DroppableContainer = styled.div`
-  position: relative;
-  top: 0;
-  height: 349px;
+const DroppableContainer1 = styled.div`
+  position: absolute;
+  top: 69px;
+  margin-top: 15px;
+  width: 600px;
+  height: 300px;
   box-sizing: border-box;
 `;
 
-const SectionWrapper = styled.div`
+const DroppableContainer2 = styled(DroppableContainer1)`
+  top: 178px;
+`;
+
+const Section1 = styled(ChatFrame)`
   position: relative;
-  top: -423px;
-  width: 600px;
-  height: 400px;
-  z-index: 99;
-  background-color: rgba(0, 255, 255, 0.5);
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px 40px 45px 40px;
+  margin: 20px 10px;
+  width: 688px;
+  height: auto;
+
+  font-weight: 700;
 `;
 
-const OutSectionWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 77;
-  border: 10px solid red;
+const Section2 = styled(ChatFrame)`
+  position: relative;
+
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  margin: 20px 10px;
+  width: 688px;
+  height: 900px;
+
+  font-weight: 700;
 `;
 
-const initPosition = [
-  { x: "100px", y: "500px" },
-  { x: "1100px", y: "700px" },
-  { x: "1150px", y: "405px" },
-  { x: "1200px", y: "510px" },
-];
+const SlotWrapper = styled.div`
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const GameHintText = styled.div`
+  margin: 20px 0;
+  font-weight: 500;
+  font-size: 20px;
+  color: ${(props) => props.theme.colors.mid_grey};
+`;
+
+const Confirm = styled(ConfirmButton)`
+  position: relative;
+
+  margin-top: 20px;
+  height: 80px;
+
+  border-radius: 25px;
+  font-size: 28px;
+  cursor: pointer;
+
+  align-self: center;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.secondary};
+  }
+`;

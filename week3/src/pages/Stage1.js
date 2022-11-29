@@ -46,12 +46,13 @@ export default function Stage1() {
   const { user } = useUser();
   const navigate = useNavigate();
 
-  /*useEffect(() => {
-    setTimeout(() => {
+  useEffect(() => {
+    console.log(mask);
+    /*setTimeout(() => {
       setIsLoading(false);
       setProgress(1);
-    }, 1000);
-  }, []);*/
+    }, 1000);*/
+  }, [mask]);
 
   const handleStart = () => {
     setProgress(2);
@@ -90,60 +91,41 @@ export default function Stage1() {
             </a>
             來做任務的管理喔！
           </LongHintBar>
-          <GameBox>
-            <>產品待辦清單 ProductBacklog</>
-            <SlotWrapper>
-              <GameHintText>優先度高↑</GameHintText>
-              <Slot />
-              <Slot />
-              <Slot />
-              <Slot />
-              <GameHintText>優先度低↓</GameHintText>
-            </SlotWrapper>
+          <GameWrapper>
             <Stage1DropBox
               itemObj={itemObj}
               setItemObj={setItemObj}
               answerAry={answerAry}
               setIsOrderCorret={setIsOrderCorret}
+              handleCheck={handleCheck}
             />
-            <Confirm content="我完成了！" />
-          </GameBox>
+          </GameWrapper>
         </>
       )}
+      {isMask &&
+        (mask === 1 ? (
+          <MaskHint
+            name={"小敏"}
+            content={"???"}
+            btnText={"謝謝"}
+            toggle={setIsMask}
+          />
+        ) : (
+          <MaskHint
+            name={"小敏"}
+            content={"幹的好"}
+            btnText={"謝謝"}
+            toggle={setIsMask}
+          />
+        ))}
     </StageWrapper>
   );
 }
 
-const SlotWrapper = styled.div`
-  margin-top: 50px;
-  position: relative;
-  top: 0px;
+const GameWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-const GameHintText = styled.div`
-  margin-bottom: 10px;
-  font-weight: 500;
-  font-size: 20px;
-  color: ${(props) => props.theme.colors.mid_grey};
-`;
-
-const GameBox = styled(ChatFrame)`
-  position: relative;
-
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-
-  padding: 30px 100px;
-  margin-top: 30px;
-  width: 688px;
-  height: 874px;
-
-  font-weight: 700;
 `;
 
 const StageWrapper = styled.div`
@@ -174,17 +156,3 @@ const text = (name) => (
     <br />
   </>
 );
-
-const Confirm = styled(ConfirmButton)`
-  position: absolute;
-  top: 620px;
-  height: 72px;
-  margin-top: 20px;
-  font-size: 28px;
-  border-radius: 25px;
-  z-index: 99;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
-  }
-`;

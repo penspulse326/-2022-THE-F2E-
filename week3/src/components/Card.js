@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Draggable } from "react-beautiful-dnd";
 
 const DragItem = styled.div`
-  position: absolute;
   display: flex;
   align-items: center;
   padding: 12px 32px;
@@ -16,24 +15,37 @@ const DragItem = styled.div`
 
   box-sizing: border-box;
   border: 1.5px solid ${(props) => props.theme.colors.dark_grey};
-
-  transform: ${(props) =>
-    props.snapshot.isDropAnimating ? `scale(1.2)` : `scale(1)`};
-  transition: 0.3s;
 `;
 
-export const Card = ({ item, index, position }) => {
+export const Card = ({ item, index }) => {
+  function getStyle(style, snapshot) {
+    if (!snapshot.isDropAnimating) {
+      return {
+        ...style,
+        background: snapshot.isDragging && "#f7ca56",
+        color: snapshot.isDragging && "#555",
+      };
+    }
+    const { moveTo, curve, duration } = snapshot.dropAnimation;
+
+    const translate = `translate(${moveTo.x}px, ${moveTo.y}px)`;
+
+    return {
+      ...style,
+      transform: `${translate} scale(1.1)`,
+      transition: `all ${curve} ${duration + 0.2}s`,
+    };
+  }
   return (
     <Draggable draggableId={item.id} index={index}>
       {(provided, snapshot) => {
-        console.log(snapshot);
         return (
           <DragItem
             ref={provided.innerRef}
             snapshot={snapshot}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            position={position}
+            style={getStyle(provided.draggableProps.style, snapshot)}
           >
             {item.content}
           </DragItem>
@@ -44,7 +56,7 @@ export const Card = ({ item, index, position }) => {
 };
 
 export const Slot = styled.div`
-  margin-bottom: 20px;
+  margin: 10px;
   width: 600px;
   height: 76px;
   border: 2px dashed ${(props) => props.theme.colors.mid_grey};

@@ -33,8 +33,8 @@ export const Worker4 = styled(Worker1)`
 
 export const NameTag = styled.div`
   position: relative;
-  top: 150px;
-  left: ${(props) => (props.tag === "right" ? "200px" : "100px")};
+  top: ${(props) => props.top};
+  left: ${(props) => (props.tag === "right" ? "200px" : "20px")};
 
   display: flex;
   justify-content: center;
@@ -60,6 +60,7 @@ export function NamedWorker({
   bottom = "-160px",
   left = "1200px",
   tag = "right",
+  tagTop = "150px",
 }) {
   const style = {
     position: "fixed",
@@ -68,7 +69,9 @@ export function NamedWorker({
   };
   return (
     <div style={style}>
-      <NameTag tag={tag}>{name}</NameTag>
+      <NameTag tag={tag} top={tagTop}>
+        {name}
+      </NameTag>
       {workerSelect[number - 1]}
     </div>
   );

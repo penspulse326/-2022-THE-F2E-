@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
-import { NormalDialog, ChatFrame, LongHintBar } from "../components/ChatFrame";
+import { NormalDialog, LongHintBar } from "../components/ChatFrame";
 import { NamedWorker } from "../components/Workers";
-import { StartButton, ConfirmButton } from "../components/Buttons";
+import { StartButton } from "../components/Buttons";
 import { useUser } from "../contexts/UserContext";
 import { Mark } from "../utils";
 import { Stage1DropBox } from "../components/Stage1DropBox";
-import { Slot } from "../components/Card";
 import MaskHint from "../components/MaskHint";
 import { pageTransition } from "../utils";
 import { useNavigate } from "react-router-dom";
@@ -47,12 +46,9 @@ export default function Stage1() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(mask);
-    /*setTimeout(() => {
-      setIsLoading(false);
-      setProgress(1);
-    }, 1000);*/
-  }, [mask]);
+    if (mask === 2 && isMask === false)
+      pageTransition("body", navigate, "../stage2");
+  }, [mask, isMask]);
 
   const handleStart = () => {
     setProgress(2);
@@ -106,14 +102,16 @@ export default function Stage1() {
         (mask === 1 ? (
           <MaskHint
             name={"小敏"}
-            content={"???"}
+            content={`嘿！菜鳥！
+              想跑去哪呢？你的試煉還沒有完成呢！
+            `}
             btnText={"謝謝"}
             toggle={setIsMask}
           />
         ) : (
           <MaskHint
             name={"小敏"}
-            content={"幹的好"}
+            content={"做得好啊！菜鳥！"}
             btnText={"謝謝"}
             toggle={setIsMask}
           />

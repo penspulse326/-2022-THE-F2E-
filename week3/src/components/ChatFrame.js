@@ -39,11 +39,12 @@ export const LongHintBar = styled(ChatFrame)`
   position: relative;
 
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
   padding: 40px 120px;
   width: 1396px;
+  height: 140px;
 
   font-weight: 500;
   font-size: 25px;

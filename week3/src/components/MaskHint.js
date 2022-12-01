@@ -25,7 +25,13 @@ const Dialog = styled(ChatFrame)`
   white-space: pre-line;
 `;
 
-export default function MaskHint({ name, content, btnText, toggle }) {
+export default function MaskHint({
+  name,
+  number = 2,
+  content,
+  btnText,
+  toggle,
+}) {
   return (
     <Mask>
       <Dialog>
@@ -34,7 +40,7 @@ export default function MaskHint({ name, content, btnText, toggle }) {
           <GreyButton content={btnText} />
         </div>
       </Dialog>
-      <NamedWorker number={2} name={name}></NamedWorker>
+      <NamedWorker number={number} name={name}></NamedWorker>
     </Mask>
   );
 }

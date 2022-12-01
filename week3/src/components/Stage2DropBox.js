@@ -2,15 +2,16 @@ import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import { Card, Slot } from "./Card";
 import { ChatFrame } from "./ChatFrame";
-import { ConfirmButton } from "../components/Buttons";
+import { ConfirmButton } from "./Buttons";
+import { useState } from "react";
 
-export function Stage1DropBox({
+export function Stage2DropBox({
   itemObj,
   setItemObj,
-  answerAry,
-  setIsOrderCorret,
+  setIsTotalOK,
   handleCheck,
 }) {
+  const [totalPoints, setTotalPoints] = useState(0);
   const onDragEnd = (event) => {
     const { source, destination } = event;
 
@@ -38,44 +39,20 @@ export function Stage1DropBox({
     // set state新的 itemObj
     setItemObj(newItemObj);
 
-    // 確認productBacklog順序
-    const checkProductBacklogOrder = () => {
-      const currentProductBacklogOrder = newItemObj.inner.items.map((ele) => {
-        return ele.priority;
-      });
-      return currentProductBacklogOrder.join("") === answerAry.join("")
-        ? true
-        : false;
+    // 確認短衝點數
+    const checkTotalPoints = () => {
+      let total = 0;
+      newItemObj.inner.items.forEach((el) => (total += Number(el.point)));
+      setTotalPoints(total);
+      return total <= 20 && total > 0 ? true : false;
     };
-    setIsOrderCorret(checkProductBacklogOrder);
+    setIsTotalOK(checkTotalPoints);
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <DropContextWrapper>
         <Section1>
-          項目清單 List
-          <SlotWrapper>
-            <Slot />
-            <Slot />
-            <Slot />
-            <Slot />
-          </SlotWrapper>
-          <Droppable droppableId="outer">
-            {(provided, snapshot) => (
-              <DroppableContainer1
-                ref={provided.innerRef}
-                {...provided.droppableProps}
-              >
-                {itemObj.outer.items.map((item, index) => (
-                  <Card item={item} index={index} key={item.id} />
-                ))}
-                {provided.placeholder}
-              </DroppableContainer1>
-            )}
-          </Droppable>
-        </Section1>
-        <Section2>
           產品待辦清單 ProductBacklog
           <GameHintText>優先度高↑</GameHintText>
           <SlotWrapper>
@@ -85,20 +62,56 @@ export function Stage1DropBox({
             <Slot />
           </SlotWrapper>
           <GameHintText>優先度低↓</GameHintText>
+          <Droppable droppableId="outer">
+            {(provided, snapshot) => (
+              <DroppableContainer
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {itemObj.outer.items.map((item, index) => (
+                  <Card
+                    item={item}
+                    index={index}
+                    key={item.id}
+                    point={item.point}
+                  />
+                ))}
+                {provided.placeholder}
+              </DroppableContainer>
+            )}
+          </Droppable>
+        </Section1>
+        <Section2>
+          開發 A 組的短衝辦清單
+          <GameHintTextDark>{totalPoints} / 20 點</GameHintTextDark>
+          <SlotWrapper>
+            <Slot color={"dk"} />
+            <Slot color={"dk"} />
+            <Slot color={"dk"} />
+            <Slot color={"dk"} />
+          </SlotWrapper>
           <Droppable droppableId="inner">
             {(provided, snapshot) => (
-              <DroppableContainer2
+              <DroppableContainer
                 ref={provided.innerRef}
                 {...provided.droppableProps}
               >
                 {itemObj.inner.items.map((item, index) => (
-                  <Card item={item} index={index} key={item.id} />
+                  <Card
+                    item={item}
+                    index={index}
+                    key={item.id}
+                    point={item.point}
+                  />
                 ))}
                 {provided.placeholder}
-              </DroppableContainer2>
+              </DroppableContainer>
             )}
           </Droppable>
-          <Confirm content="我完成了！" onClick={() => handleCheck()} />
+          <Confirm
+            content="準備好了，開始  Sprint"
+            onClick={() => handleCheck()}
+          />
         </Section2>
       </DropContextWrapper>
     </DragDropContext>
@@ -112,35 +125,16 @@ const DropContextWrapper = styled.div`
   align-items: center;
 `;
 
-const DroppableContainer1 = styled.div`
+const DroppableContainer = styled.div`
   position: absolute;
   top: 69px;
-  margin-top: 15px;
+  margin-top: 124px;
   width: 600px;
-  height: 300px;
+  height: 364px;
   box-sizing: border-box;
 `;
 
-const DroppableContainer2 = styled(DroppableContainer1)`
-  top: 178px;
-`;
-
 const Section1 = styled(ChatFrame)`
-  position: relative;
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  padding: 30px 40px 45px 40px;
-  margin: 20px 10px;
-  width: 688px;
-  height: auto;
-
-  font-weight: 700;
-`;
-
-const Section2 = styled(ChatFrame)`
   position: relative;
 
   flex-direction: column;
@@ -152,6 +146,10 @@ const Section2 = styled(ChatFrame)`
   height: 900px;
 
   font-weight: 700;
+`;
+
+const Section2 = styled(Section1)`
+  background-color: #fff8ba;
 `;
 
 const SlotWrapper = styled.div`
@@ -170,10 +168,14 @@ const GameHintText = styled.div`
   color: ${(props) => props.theme.colors.mid_grey};
 `;
 
+const GameHintTextDark = styled(GameHintText)`
+  color: ${(props) => props.theme.colors.dark_grey};
+`;
+
 const Confirm = styled(ConfirmButton)`
   position: relative;
 
-  margin-top: 20px;
+  margin-top: 50px;
   height: 80px;
 
   border-radius: 25px;

@@ -29,6 +29,7 @@ export const Worker4 = styled(Worker1)`
   height: 662px;
 
   background: url("./images/worker_4.png");
+  z-index: 99;
 `;
 
 export const NameTag = styled.div`

@@ -3,38 +3,43 @@ import styled from "styled-components";
 import { gsap } from "gsap";
 import { nanoid } from "nanoid";
 import { NormalDialog, LongHintBar } from "../components/ChatFrame";
-import { NamedWorker, Worker4 } from "../components/Workers";
+import { NamedWorker, Worker1 } from "../components/Workers";
 import { StartButton, GreyButton, DialogBack } from "../components/Buttons";
 import { Mark } from "../utils";
 import MaskHint from "../components/MaskHint";
 import { pageTransition } from "../utils";
 import { useNavigate } from "react-router-dom";
-import { Stage2DropBox } from "../components/Stage2DropBox";
+import { Stage3DropBox } from "../components/Stage3DropBox";
 
-export default function Stage2() {
+export default function Stage3() {
   // game data
   const [itemObj, setItemObj] = useState({
     outer: {
       items: [
         {
-          content: "前台職缺列表（職缺詳細內容、點選可發送應徵意願）",
+          content: "短衝檢視會議 Sprint Review",
           id: nanoid(),
-          point: "8",
-        },
-        { content: "應徵者的線上履歷編輯器", id: nanoid(), point: "13" },
-        {
-          content: "會員系統（登入、註冊、權限管理）",
-          id: nanoid(),
-          point: "4",
+          priority: "2",
         },
         {
-          content: "後台職缺管理功能（資訊上架、下架、顯示應徵者資料）",
+          content: "短衝自省會議 Sprint Retrospective",
           id: nanoid(),
-          point: "5",
+          priority: "3",
+        },
+        {
+          content: "每日站立會議(Daily Scrum)",
+          id: nanoid(),
+          priority: "1",
         },
       ],
     },
-    inner: {
+    scrum1: {
+      items: [],
+    },
+    scrum2: {
+      items: [],
+    },
+    scrum3: {
       items: [],
     },
   });
@@ -48,12 +53,6 @@ export default function Stage2() {
 
   // run animation and check game state
   useEffect(() => {
-    if (progress === 3) {
-      gsap.from(".npc div", {
-        y: 500,
-        duration: 2,
-      });
-    }
     if (progress === 6) {
       gsap
         .timeline()
@@ -65,7 +64,7 @@ export default function Stage2() {
         .to(".gamebox", {
           clearProps: true,
         })
-        .from(".npc4", {
+        .from(".npc1", {
           y: -300,
           duration: 0.5,
           ease: "expo",
@@ -102,7 +101,12 @@ export default function Stage2() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker number={2} name={"小敏"}></NamedWorker>
+            <NamedWorker
+              number={1}
+              name={"小斯"}
+              tagTop={"190px"}
+              bottom={"-170px"}
+            ></NamedWorker>
           </>
         )}
         {progress === 2 && (
@@ -113,7 +117,12 @@ export default function Stage2() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker number={4} name={"小捷"}></NamedWorker>
+            <NamedWorker
+              number={1}
+              name={"小斯"}
+              tagTop={"190px"}
+              bottom={"-170px"}
+            ></NamedWorker>
           </>
         )}
         {progress === 3 && (
@@ -124,22 +133,12 @@ export default function Stage2() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker number={4} name={"小捷"}></NamedWorker>
-            <div className="npc">
-              <NamedWorker
-                number={3}
-                name={"小凱"}
-                left={"550px"}
-              ></NamedWorker>
-              <NamedWorker
-                number={1}
-                name={"小斯"}
-                left={"300px"}
-                tag={"left"}
-                tagTop={"190px"}
-                bottom={"-170px"}
-              ></NamedWorker>
-            </div>
+            <NamedWorker
+              number={1}
+              name={"小斯"}
+              tagTop={"190px"}
+              bottom={"-170px"}
+            ></NamedWorker>
           </>
         )}
         {progress === 4 && (
@@ -166,19 +165,24 @@ export default function Stage2() {
                 <StartButton content="開始試煉" />
               </div>
             </NormalDialog>
-            <NamedWorker number={3} name={"小凱"}></NamedWorker>
+            <NamedWorker
+              number={1}
+              name={"小斯"}
+              tagTop={"190px"}
+              bottom={"-170px"}
+            ></NamedWorker>
           </>
         )}
         {progress > 1 && <DialogBack onClick={() => handleBack()} />}
       </>
       {progress === 6 && (
         <>
-          <InlineWorker className="npc4"></InlineWorker>
+          <InlineWorker className="npc1"></InlineWorker>
           <GameWrapper className="gamebox">
             <LongHintBar>
               請將產品待辦清單中的項目拖曳到短衝清單。(20點內)
             </LongHintBar>
-            <Stage2DropBox
+            <Stage3DropBox
               itemObj={itemObj}
               setItemObj={setItemObj}
               setIsTotalOK={setIsTotalOK}
@@ -210,11 +214,12 @@ export default function Stage2() {
   );
 }
 
-const InlineWorker = styled(Worker4)`
+const InlineWorker = styled(Worker1)`
   position: absolute;
   transform: scale(0.28);
-  top: -220px;
-  left: 1420px;
+  top: -250px;
+  left: 1410px;
+  z-index: 99;
 `;
 
 const GameWrapper = styled.div`
@@ -236,60 +241,70 @@ const StageWrapper = styled.div`
 
 const text = [
   <>
-    產品待辦清單好了之後，
+    等等等等等，你都還不知道什麼是{Mark("Sprint")} 吧！
     <br />
-    我們來召集 Scrum Master 和開發團隊
-    <br />
-    共同召開{Mark("短衝規劃會議（Sprint Planning）")}。<br />
-    短衝即是一個迭代，具有固定時間限制，我們會在這個會議中，決定要完成哪些工作事項來達到商業需求，
-    <br />
-    <br />
-    {Mark("列出短衝待辦清單（Sprint Backlog）")}
-    ，並由開發團隊在接下來的產品開發週期裡執行。
+    讓我先為你介紹一下～ 仔細聽好唷，等等會考考你！
     <br />
     <br />
   </>,
   <>
-    嗨嗨！你是新來的前端吧！
+    {Mark("Sprint 是一個短衝")} ， 開發團隊會在這期間執行開發。
     <br />
-    我是這次的 Scrum Master 小捷，
-    <br />
-    我的工作主要是促成開發團隊成員協作、引導團隊進行自省會議，提升團隊成員對
-    Scrum 瞭解。
+    在這段期間內，開發團隊舉辦{Mark("每日站立會議 Daily Scrum")}
+    ，追蹤成員間的工作狀況。
     <br />
     <br />
-  </>,
-  <>
-    這兩位是小斯和小廣，是我們開發團為的成員唷～ 目前我們團隊一次 Sprint
-    週期是兩週的時間，依照我的觀察，目前團隊可以負擔的點數 (Sprint Point) 大約是
-    20 點左右。
+    除了每日站立會議，在 Sprint 結束後也會有：
+    <br />
+    {Mark("短衝檢視會議 SprintReview")}、
+    <br />
+    {Mark("短衝自省會議 Sprint Retrospective")}。
     <br />
     <br />
   </>,
   <>
-    菜鳥，你應該不知道點數是什麼意思吧哈哈！
+    {Mark("每日站立會議 Daily Scrum")}
+    每天都要進行的會議，以 15 分鐘為限制
     <br />
-    我來跟你介紹一下吧～
+    ．昨天為團隊的短衝目標（Sprint Goal）做了那些進度
     <br />
-    Sprint Point 目的是為了衡量速度，是用大概花費的時間預估出的相對點數。
+    ．今天我會如何準備來幫助團隊達到短衝目標
+    <br />
+    ．過程中有遇到什麼問題、難題
+    <br />
+    <br />
+    透過團隊分享，追蹤大家的工作狀況。
     <br />
     <br />
   </>,
   <>
-    沒錯，如同小斯說的，我這邊已經把剛剛討論好的點數標上去囉～你來練習把任務排到短衝待辦清單吧！
+    {Mark("短衝檢視會議 Sprint Review")}
     <br />
-    By the way，我們平常管理任務是使用
-    <a
-      href="https://www.atlassian.com/software/jira"
-      style={{ verticalAlign: "middle" }}
-    >
-      <img
-        src="./images/jira_logo.png"
-        alt="Jira"
-        style={{ margin: "0 7px" }}
-      />
-    </a>
-    這套軟體，你有時間記得先去註冊和熟悉唷～
+    <br />
+    用來檢視該次短衝增量的成果，
+    <br />
+    以蒐集相關的回饋數據或意見。
+    <br />
+    <br />
+  </>,
+  <>
+    {Mark("短衝自省會議 Sprint Retrospective")}
+    <br />
+    <br />
+    團隊在自省會議裡，
+    <br />
+    會共同回顧該短衝歷程發生的事情：
+    <br />
+    ・好的地方
+    <br />
+    ・可以改進的地方
+    <br />
+    ・如何維持我們已有的成功經驗
+    <br />
+    <br />
+    優化工作流程、讓團隊有變得更好的機會。
+    <br />
+    推薦工具：Confluence
     <br />
     <br />
   </>,

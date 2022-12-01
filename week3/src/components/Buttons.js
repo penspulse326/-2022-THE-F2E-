@@ -60,3 +60,16 @@ export const StartButton = ({ content }) => (
     <img alt="" src="./images/arrow.png" style={{ marginLeft: "5px" }} />
   </Start>
 );
+
+export const DialogBack = styled.div`
+  position: fixed;
+  bottom: 30px;
+  left: 40px;
+  height: 82px;
+  width: 86px;
+  background-image: url("./images/back.png");
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;

@@ -3,19 +3,16 @@ import styled from "styled-components";
 import { Card, Slot } from "./Card";
 import { ChatFrame } from "./ChatFrame";
 import { ConfirmButton } from "./Buttons";
-import { useState } from "react";
 
 export function Stage3DropBox({
   itemObj,
   setItemObj,
-  setIsTotalOK,
+  setIsProrityOK,
   handleCheck,
 }) {
-  const [totalPoints, setTotalPoints] = useState(0);
   const onDragEnd = (event) => {
     const { source, destination } = event;
-
-    if (!destination) {
+    if (!destination || source.droppableId === destination.droppableId) {
       return;
     }
 
@@ -24,20 +21,34 @@ export function Stage3DropBox({
 
     // splice(start, deleteCount, item )
     // 從source剪下被拖曳的元素
-    const [remove] = newItemObj[source.droppableId].items.splice(
-      source.index,
-      1
-    );
+    // 第三關 itemObj 內容有陣列和物件 依照 destination 設計方法
+    let remove = null;
 
-    // 在destination位置貼上被拖曳的元素
-    newItemObj[destination.droppableId].items.splice(
-      destination.index,
-      0,
-      remove
-    );
+    if (source.droppableId === "outer") {
+      [remove] = newItemObj[source.droppableId].items.splice(source.index, 1);
+    } else {
+      remove = newItemObj[source.droppableId].item;
+    }
+
+    if (destination.droppableId === "outer") {
+      newItemObj["outer"].items.push(remove);
+    } else {
+      if (newItemObj[destination.droppableId].item)
+        newItemObj["outer"].items.push(
+          newItemObj[destination.droppableId].item
+        );
+      newItemObj[destination.droppableId].item = remove;
+    }
+    newItemObj[source.droppableId].item = null;
 
     // set state新的 itemObj
+    const checkPriority = () =>
+      newItemObj.scrum1.item?.priority === 1 &&
+      newItemObj.scrum2.item?.priority === 2 &&
+      newItemObj.scrum3.item?.priority === 3;
+
     setItemObj(newItemObj);
+    setIsProrityOK(checkPriority());
   };
 
   return (
@@ -47,27 +58,55 @@ export function Stage3DropBox({
           Scrum 流程圖
           <ScrumCircle />
           <Slot1 size="M">
-            <DroppableContainer1>
+            <DroppableContainer>
               <Droppable droppableId="scrum1">
                 {(provided, snapshot) => (
                   <OuterContainer
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
-                    {itemObj.scrum1.items.map((item, index) => (
-                      <Card item={item} index={index} key={item.id} size="M" />
-                    ))}
+                    {itemObj.scrum1.item && (
+                      <Card item={itemObj.scrum1.item} index={0} size="M" />
+                    )}
                     {provided.placeholder}
                   </OuterContainer>
                 )}
               </Droppable>
-            </DroppableContainer1>
+            </DroppableContainer>
           </Slot1>
           <Slot2 size="M">
-            <DroppableContainer2 droppableId="scrum2"></DroppableContainer2>
+            <DroppableContainer droppableId="scrum2">
+              <Droppable droppableId="scrum2">
+                {(provided, snapshot) => (
+                  <OuterContainer
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {itemObj.scrum2.item && (
+                      <Card item={itemObj.scrum2.item} index={0} size="M" />
+                    )}
+                    {provided.placeholder}
+                  </OuterContainer>
+                )}
+              </Droppable>
+            </DroppableContainer>
           </Slot2>
           <Slot3 size="M">
-            <DroppableContainer3 droppableId="scrum3"></DroppableContainer3>
+            <DroppableContainer droppableId="scrum3">
+              <Droppable droppableId="scrum3">
+                {(provided, snapshot) => (
+                  <OuterContainer
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {itemObj.scrum3.item && (
+                      <Card item={itemObj.scrum3.item} index={0} size="M" />
+                    )}
+                    {provided.placeholder}
+                  </OuterContainer>
+                )}
+              </Droppable>
+            </DroppableContainer>
           </Slot3>
           <ListWrapper>
             <GameHintText>會議種類</GameHintText>
@@ -99,6 +138,7 @@ export function Stage3DropBox({
               <Slot size="M" />
             </SlotWrapper>
           </ListWrapper>
+          <Confirm content="我完成了！" onClick={() => handleCheck()} />
         </Section>
       </DropContextWrapper>
     </DragDropContext>
@@ -128,12 +168,10 @@ const OuterContainer = styled.div`
   z-index: 99;
 `;
 
-const DroppableContainer1 = styled.div`
+const DroppableContainer = styled.div`
   width: 360px;
   height: 72px;
 `;
-const DroppableContainer2 = styled(DroppableContainer1)``;
-const DroppableContainer3 = styled(DroppableContainer1)``;
 
 const Section = styled(ChatFrame)`
   position: relative;
@@ -165,9 +203,9 @@ const SlotWrapper = styled.div`
 `;
 
 const ListWrapper = styled.div`
-  position: relative;
-  top: -830px;
-  left: 380px;
+  position: absolute;
+  top: 50px;
+  left: 875px;
 
   display: flex;
   flex-direction: column;
@@ -190,7 +228,7 @@ const GameHintText = styled.div`
 const Confirm = styled(ConfirmButton)`
   position: relative;
 
-  margin-top: 50px;
+  margin-top: 45px;
   height: 80px;
 
   border-radius: 25px;
@@ -199,26 +237,24 @@ const Confirm = styled(ConfirmButton)`
 
   align-self: center;
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.secondary};
-  }
+  z-index: 99;
 `;
 
 const Slot1 = styled(Slot)`
-  position: relative;
-  top: -470px;
-  left: -240px;
+  position: absolute;
+  top: 130px;
+  left: 225px;
 
   background-color: rgba(255, 255, 255, 0.5);
   box-sizing: content-box;
 `;
 
 const Slot2 = styled(Slot1)`
-  top: -270px;
-  left: 30px;
+  top: 430px;
+  left: 500px;
 `;
 
 const Slot3 = styled(Slot1)`
-  top: -356px;
-  left: 410px;
+  top: 430px;
+  left: 880px;
 `;

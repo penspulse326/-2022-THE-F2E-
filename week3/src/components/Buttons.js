@@ -31,6 +31,10 @@ export const ConfirmButton = styled(Start)`
   width: 525px;
   border-radius: 30px;
   font-weight: 900;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.secondary};
+  }
 `;
 
 export const Grey = styled(Start)`

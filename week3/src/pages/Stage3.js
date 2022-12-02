@@ -19,31 +19,31 @@ export default function Stage3() {
         {
           content: "短衝檢視會議 Sprint Review",
           id: nanoid(),
-          priority: "2",
+          priority: 2,
         },
         {
           content: "短衝自省會議 Sprint Retrospective",
           id: nanoid(),
-          priority: "3",
+          priority: 3,
         },
         {
           content: "每日站立會議(Daily Scrum)",
           id: nanoid(),
-          priority: "1",
+          priority: 1,
         },
       ],
     },
     scrum1: {
-      items: [],
+      item: null,
     },
     scrum2: {
-      items: [],
+      item: null,
     },
     scrum3: {
-      items: [],
+      item: null,
     },
   });
-  const [isTotalOK, setIsTotalOK] = useState(null);
+  const [isProrityOK, setIsProrityOK] = useState(null);
 
   // dom state
   const [progress, setProgress] = useState(6);
@@ -59,7 +59,7 @@ export default function Stage3() {
         .from(".gamebox", {
           yPercent: 100,
           duration: 2,
-          ease: "expo",
+          ease: "power1",
         })
         .to(".gamebox", {
           clearProps: true,
@@ -74,7 +74,7 @@ export default function Stage3() {
 
   useEffect(() => {
     if (isMask === false && mask === 2)
-      pageTransition("body", navigate, "../stage3");
+      pageTransition("body", navigate, "../stage4");
   }, [isMask]);
 
   const handleStart = () => {
@@ -86,7 +86,7 @@ export default function Stage3() {
 
   const handleCheck = () => {
     setIsMask(true);
-    if (isTotalOK) setMask(2);
+    if (isProrityOK) setMask(2);
     else setMask(1);
   };
 
@@ -180,12 +180,13 @@ export default function Stage3() {
           <InlineWorker className="npc1"></InlineWorker>
           <GameWrapper className="gamebox">
             <LongHintBar>
-              請將產品待辦清單中的項目拖曳到短衝清單。(20點內)
+              在這經典的 Scrum 流程圖中，
+              這些流程分別代表哪一個會議呢？請把對應的流程拖曳到正確位置。
             </LongHintBar>
             <Stage3DropBox
               itemObj={itemObj}
               setItemObj={setItemObj}
-              setIsTotalOK={setIsTotalOK}
+              setIsProrityOK={setIsProrityOK}
               handleCheck={handleCheck}
             />
           </GameWrapper>
@@ -194,18 +195,19 @@ export default function Stage3() {
       {isMask &&
         (mask === 1 ? (
           <MaskHint
-            name={"小捷"}
-            number={4}
-            content={`請再試試看，我相信你可以的！
+            name={"小斯"}
+            number={1}
+            content={`加把勁啊新人！
             `}
             btnText={"好的"}
             toggle={setIsMask}
           />
         ) : (
           <MaskHint
-            name={"小捷"}
-            number={4}
-            content={"你做到了！非常有潛力喔！"}
+            name={"小斯"}
+            number={1}
+            content={`這麼快就對Scrum瞭若指掌了，
+            我對你刮目相看了哦！`}
             btnText={"謝謝"}
             toggle={setIsMask}
           />

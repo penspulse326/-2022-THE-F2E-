@@ -38,7 +38,7 @@ export const Card = ({ item, index, point = null, size = null }) => {
     };
   }
   return (
-    <Draggable draggableId={item.id} index={index}>
+    <Draggable draggableId={item?.id} index={index}>
       {(provided, snapshot) => {
         return (
           <DragItem
@@ -49,7 +49,7 @@ export const Card = ({ item, index, point = null, size = null }) => {
             {...provided.dragHandleProps}
             style={getStyle(provided.draggableProps.style, snapshot)}
           >
-            {item.content}
+            {item?.content}
             {point && <Point>{point}</Point>}
           </DragItem>
         );

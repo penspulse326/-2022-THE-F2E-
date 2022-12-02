@@ -128,7 +128,7 @@ export default function Stage2() {
             <div className="npc">
               <NamedWorker
                 number={3}
-                name={"小凱"}
+                name={"小廣"}
                 left={"550px"}
               ></NamedWorker>
               <NamedWorker
@@ -166,7 +166,7 @@ export default function Stage2() {
                 <StartButton content="開始試煉" />
               </div>
             </NormalDialog>
-            <NamedWorker number={3} name={"小凱"}></NamedWorker>
+            <NamedWorker number={3} name={"小廣"}></NamedWorker>
           </>
         )}
         {progress > 1 && <DialogBack onClick={() => handleBack()} />}

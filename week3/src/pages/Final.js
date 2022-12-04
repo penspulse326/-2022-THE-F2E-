@@ -60,6 +60,11 @@ export default function Final() {
     setTimeout(() => setProgress((state) => ++state), 2000);
   };
 
+  const dateObj = new Date();
+  const taiwanDate = `${dateObj.getFullYear() - 1911} 年 ${
+    dateObj.getMonth() + 1
+  } 月 ${dateObj.getDate()} 日`;
+
   return (
     <StageWrapper>
       {progress === 1 && (
@@ -85,8 +90,7 @@ export default function Final() {
               <Avatar gender={user.gender} />
               <Title>結業證書</Title>
               <Text>
-                {user.name} 君<br />
-                於111年11月OO日參加六角學院
+                {user.name} 君<br />於{taiwanDate}參加六角學院
                 <br />
                 Scrum新手培訓營，經測驗合格
                 <br />
@@ -97,7 +101,7 @@ export default function Final() {
               <Text style={{ top: "400px" }}>
                 六角學院波利馬資訊科技有限公司
               </Text>
-              <Date>中華民國111年11月11日</Date>
+              <DateTime>中華民國{taiwanDate}</DateTime>
             </CertificateContent>
           </Certificate>
           <ScreenShot onClick={() => handleScreenShot()} />
@@ -163,7 +167,7 @@ const Text = styled.div`
   line-height: 50px;
 `;
 
-const Date = styled(Text)`
+const DateTime = styled(Text)`
   top: 400px;
   font-size: 28px;
 `;

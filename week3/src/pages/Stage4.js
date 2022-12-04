@@ -86,7 +86,7 @@ export default function Stage4() {
               number={3}
               name={"小廣"}
               tagTop={"170px"}
-              bottom={"-160px"}
+              bottom={"-180px"}
             ></NamedWorker>
           </>
         )}
@@ -172,7 +172,7 @@ export default function Stage4() {
 const InlineWorker = styled(Worker3)`
   position: absolute;
   transform: scale(0.28);
-  top: -220px;
+  top: -250px;
   left: 1425px;
   z-index: 99;
 `;

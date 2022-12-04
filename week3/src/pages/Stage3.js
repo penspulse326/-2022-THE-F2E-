@@ -46,7 +46,7 @@ export default function Stage3() {
   const [isProrityOK, setIsProrityOK] = useState(null);
 
   // dom state
-  const [progress, setProgress] = useState(6);
+  const [progress, setProgress] = useState(1);
   const [mask, setMask] = useState(0);
   const [isMask, setIsMask] = useState(false);
   const navigate = useNavigate();
@@ -101,12 +101,7 @@ export default function Stage3() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              tagTop={"190px"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress === 2 && (
@@ -117,12 +112,7 @@ export default function Stage3() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              tagTop={"190px"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress === 3 && (
@@ -133,12 +123,7 @@ export default function Stage3() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              tagTop={"190px"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress === 4 && (
@@ -149,12 +134,7 @@ export default function Stage3() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              tagTop={"190px"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress === 5 && (
@@ -165,12 +145,7 @@ export default function Stage3() {
                 <StartButton content="開始試煉" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              tagTop={"190px"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress > 1 && <DialogBack onClick={() => handleBack()} />}

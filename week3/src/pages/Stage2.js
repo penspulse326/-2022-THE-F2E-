@@ -41,7 +41,7 @@ export default function Stage2() {
   const [isTotalOK, setIsTotalOK] = useState(null);
 
   // dom state
-  const [progress, setProgress] = useState(6);
+  const [progress, setProgress] = useState(1);
   const [mask, setMask] = useState(0);
   const [isMask, setIsMask] = useState(false);
   const navigate = useNavigate();
@@ -213,7 +213,7 @@ export default function Stage2() {
 const InlineWorker = styled(Worker4)`
   position: absolute;
   transform: scale(0.28);
-  top: -220px;
+  top: -250px;
   left: 1420px;
 `;
 

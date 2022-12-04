@@ -41,7 +41,7 @@ export default function Stage1() {
   const [isOrderCorret, setIsOrderCorret] = useState(null);
   const [mask, setMask] = useState(0);
   const [isMask, setIsMask] = useState(false);
-  const [progress, setProgress] = useState(2);
+  const [progress, setProgress] = useState(1);
   const { user } = useUser();
   const navigate = useNavigate();
 

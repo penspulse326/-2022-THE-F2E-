@@ -137,7 +137,7 @@ const Certificate = styled.div`
   justify-content: center;
 
   width: 705px;
-  height: 1000px;
+  height: 995px;
 
   background-image: url("./images/expo.png");
   background-size: cover;

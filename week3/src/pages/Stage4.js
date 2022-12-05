@@ -85,7 +85,6 @@ export default function Stage4() {
             <NamedWorker
               number={3}
               name={"小廣"}
-              tagTop={"170px"}
               bottom={"-180px"}
             ></NamedWorker>
           </>

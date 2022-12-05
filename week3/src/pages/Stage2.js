@@ -136,7 +136,6 @@ export default function Stage2() {
                 name={"小斯"}
                 left={"300px"}
                 tag={"left"}
-                tagTop={"190px"}
                 bottom={"-170px"}
               ></NamedWorker>
             </div>
@@ -153,7 +152,6 @@ export default function Stage2() {
             <NamedWorker
               number={1}
               name={"小斯"}
-              tagTop={"190px"}
               bottom={"-170px"}
             ></NamedWorker>
           </>

@@ -75,12 +75,7 @@ export default function Final() {
               <GreyButton content="繼續" />
             </div>
           </NormalDialog>
-          <NamedWorker
-            number={3}
-            name={"小廣"}
-            tagTop={"170px"}
-            bottom={"-180px"}
-          ></NamedWorker>
+          <NamedWorker number={3} name={"小廣"}></NamedWorker>
         </>
       )}
       {progress === 2 && (
@@ -107,8 +102,8 @@ export default function Final() {
           <ScreenShot onClick={() => handleScreenShot()} />
           <BackToHome onClick={() => handleBackToHome()} />
           <WokerWrapper>
-            <Worker1 style={{ left: "-500px" }} />
-            <Worker3 style={{ left: "-450px" }} />
+            <Worker1 style={{ left: "-450px" }} />
+            <Worker3 style={{ left: "-400px" }} />
             <Worker2 style={{ left: "450px" }} />
             <Worker4 style={{ left: "500px" }} />
           </WokerWrapper>
@@ -231,6 +226,7 @@ const WokerWrapper = styled.div`
   position: absolute;
   top: 440px;
   display: flex;
+  align-items: flex-end;
   transform: scale(0.575);
 
   div {

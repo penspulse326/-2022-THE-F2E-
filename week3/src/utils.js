@@ -1,6 +1,7 @@
 import { gsap } from "gsap";
 import styled from "styled-components";
 
+// 換頁 + gsap 特效
 export function pageTransition(el, navigate, url) {
   const tl = gsap.timeline();
   tl.to(el, {
@@ -11,10 +12,11 @@ export function pageTransition(el, navigate, url) {
     autoAlpha: 1,
   });
   setTimeout(() => {
-    navigate(url);
+    if (navigate) navigate(url);
   }, 2000);
 }
 
+// 標記文字顏色
 export const Mark = (text) => <MarkedText>{text}</MarkedText>;
 
 const MarkedText = styled.span`

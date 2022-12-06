@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { nanoid } from "nanoid";
 import { NormalDialog, LongHintBar } from "../components/ChatFrame";
 import { NamedWorker } from "../components/Workers";
 import { StartButton } from "../components/Buttons";
 import { useUser } from "../contexts/UserContext";
-import { Mark } from "../utils";
-import { Stage1DropBox } from "../components/Stage1DropBox";
+import { Mark, pageTransition } from "../utils";
 import MaskHint from "../components/MaskHint";
-import { pageTransition } from "../utils";
-import { useNavigate } from "react-router-dom";
+import { Stage1DropBox } from "../components/Stage1DropBox";
 
 export default function Stage1() {
+  // data for draggable items
   const [itemObj, setItemObj] = useState({
     outer: {
       items: [
@@ -37,12 +37,20 @@ export default function Stage1() {
       items: [],
     },
   });
+  // order answer(by priority)
   const answerAry = ["1", "2", "3", "4"];
   const [isOrderCorret, setIsOrderCorret] = useState(null);
+
+  // mask hint number, 1 is answer incorrect, 2 is correct
   const [mask, setMask] = useState(0);
   const [isMask, setIsMask] = useState(false);
+
+  // switch content by this state
   const [progress, setProgress] = useState(1);
+
+  // user data from context
   const { user } = useUser();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,21 +58,16 @@ export default function Stage1() {
       pageTransition("body", navigate, "../stage2");
   }, [mask, isMask]);
 
-  const handleStart = () => {
-    setProgress(2);
-  };
+  const handleStart = () => setProgress(2);
 
   const handleCheck = () => {
     setIsMask(true);
-    if (isOrderCorret) {
-      setMask(2);
-    } else {
-      setMask(1);
-    }
+    if (isOrderCorret) setMask(2);
+    else setMask(1);
   };
 
   return (
-    <StageWrapper className="stage1">
+    <StageWrapper>
       {progress === 1 && (
         <>
           <NormalDialog size="L">

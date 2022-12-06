@@ -136,7 +136,6 @@ export default function Stage2() {
                 name={"小斯"}
                 left={"300px"}
                 tag={"left"}
-                bottom={"-170px"}
               ></NamedWorker>
             </div>
           </>
@@ -149,11 +148,7 @@ export default function Stage2() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={1}
-              name={"小斯"}
-              bottom={"-170px"}
-            ></NamedWorker>
+            <NamedWorker number={1} name={"小斯"}></NamedWorker>
           </>
         )}
         {progress === 5 && (
@@ -211,7 +206,7 @@ export default function Stage2() {
 const InlineWorker = styled(Worker4)`
   position: absolute;
   transform: scale(0.28);
-  top: -250px;
+  top: -220px;
   left: 1420px;
 `;
 

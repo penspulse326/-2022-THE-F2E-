@@ -1,48 +1,51 @@
 import styled from "styled-components";
 
 export const Worker1 = styled.div`
-  width: 382px;
-  height: 713px;
-  background: url("./images/worker_1.png");
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: bottom;
+  width: ${(props) => (props.size ? `${props.size * 383}px` : "383px")};
+  height: ${(props) => (props.size ? `${props.size * 713}px` : "713px")};
 
-  ${(props) => props.size && `transform: scale(${props.size})`}
+  background: url("./images/worker_1.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
 `;
 
 export const Worker2 = styled(Worker1)`
-  width: 432px;
-  height: 713px;
+  width: ${(props) => (props.size ? `${props.size * 432}px` : "432px")};
+  height: ${(props) => (props.size ? `${props.size * 662}px` : "662px")};
 
   background: url("./images/worker_2.png");
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
 `;
 
 export const Worker3 = styled(Worker1)`
-  width: 383px;
-  height: 713px;
+  width: ${(props) => (props.size ? `${props.size * 383}px` : "383px")};
+  height: ${(props) => (props.size ? `${props.size * 662}px` : "662px")};
 
   background: url("./images/worker_3.png");
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
 `;
 
 export const Worker4 = styled(Worker1)`
-  width: 382px;
-  height: 713px;
+  width: ${(props) => (props.size ? `${props.size * 383}px` : "383px")};
+  height: ${(props) => (props.size ? `${props.size * 662}px` : "662px")};
 
   background: url("./images/worker_4.png");
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom;
+
   z-index: 99;
 `;
 
 export const NameTag = styled.div`
   position: relative;
   top: ${(props) => props.top};
-  left: ${(props) => (props.tag === "right" ? "200px" : "20px")};
+  left: ${(props) => (props.tag === "right" ? "120px" : "-70px")};
 
   display: flex;
   justify-content: center;
@@ -65,16 +68,17 @@ export const NameTag = styled.div`
 export function NamedWorker({
   number,
   name,
-  bottom = "-175px",
-  left = "1180px",
+  bottom = "0px",
+  left = "1300px",
   tag = "right",
-  tagTop = "190px",
+  tagTop = "10px",
 }) {
   const style = {
     position: "fixed",
     bottom,
     left,
   };
+  if (number === 1) tagTop = "40px";
   return (
     <div style={style}>
       <NameTag tag={tag} top={tagTop}>

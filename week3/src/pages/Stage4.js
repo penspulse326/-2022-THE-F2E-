@@ -82,11 +82,7 @@ export default function Stage4() {
                 <GreyButton content="繼續" />
               </div>
             </NormalDialog>
-            <NamedWorker
-              number={3}
-              name={"小廣"}
-              bottom={"-180px"}
-            ></NamedWorker>
+            <NamedWorker number={3} name={"小廣"}></NamedWorker>
           </>
         )}
         {progress > 1 && <DialogBack onClick={() => handleBack()} />}
@@ -171,7 +167,7 @@ export default function Stage4() {
 const InlineWorker = styled(Worker3)`
   position: absolute;
   transform: scale(0.28);
-  top: -250px;
+  top: -220px;
   left: 1425px;
   z-index: 99;
 `;

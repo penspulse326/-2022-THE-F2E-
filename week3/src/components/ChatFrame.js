@@ -19,7 +19,6 @@ export const ChatFrame = styled.div`
   color: ${(props) => props.theme.colors.dark_grey};
   font-size: 30px;
   font-weight: 500;
-  letter-spacing: 0px;
   text-align: left;
 
   .text {

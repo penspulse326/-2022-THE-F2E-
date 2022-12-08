@@ -7,12 +7,17 @@ const LogoWrapper = styled.div`
   background-image: url("./images/logo.png");
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
+`;
+
+const LogoLink = styled(Link)`
+  margin: 0 30px;
 `;
 
 export default function Logo() {
   return (
-    <Link to="/home">
+    <LogoLink to="/">
       <LogoWrapper></LogoWrapper>
-    </Link>
+    </LogoLink>
   );
 }

@@ -1,45 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;  
-    font-style: normal;
     box-sizing: border-box;
-}
-
-.App {
-    height: 100vh;
-    width: 100vw;
-    background-size: cover;
-}
-
-.navbar a {
-    text-decoration: none;
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 29px;
-    color: black;
-}
-
-
-
-.login {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding: 24px 30px;
-    gap: 16px;
-
-    width: 152px;
-    height: 77px;
-
-    border-radius: 15px;
-}
-
-.process {
-    margin-left: 80px;
-    width: 632px;
-    height: 75px;
-    background-image: url("");
+    font-family: 'Microsoft JhengHei';
 }

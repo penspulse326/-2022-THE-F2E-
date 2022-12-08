@@ -1,9 +1,9 @@
 import React from "react";
+import "./App.css";
 import { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from "./contexts/UserContext";
-import "./App.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import GameStart from "./pages/GameStart";

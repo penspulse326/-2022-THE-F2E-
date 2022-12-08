@@ -1,8 +1,8 @@
-import { useRef, useLayoutEffect, useState, useEffect } from "react";
-import { gsap } from "gsap";
+import { useRef, useLayoutEffect } from "react";
 import styled from "styled-components";
-import { Worker1, Worker2, Worker3, Worker4 } from "../components/Workers";
+import { gsap } from "gsap";
 import { useNavigate } from "react-router-dom";
+import { Worker1, Worker2, Worker3, Worker4 } from "../components/Workers";
 
 export default function Home() {
   const titleRef = useRef(null);

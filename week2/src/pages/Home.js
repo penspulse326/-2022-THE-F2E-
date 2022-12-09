@@ -21,10 +21,18 @@ export default function Home() {
       </TitleWrapper>
       <UploadWrapper>
         <Frame>
-          <DarkBtn onClick={() => alert("click")}>
-            <BsCloudUpload />
-            上傳文件
-          </DarkBtn>
+          <label for="upload">
+            <Upload>
+              <BsCloudUpload />
+              上傳文件
+              <input
+                id="upload"
+                type="file"
+                className="select"
+                accept="application/pdf"
+              />
+            </Upload>
+          </label>
 
           <Description>
             或拖曳檔案到此處
@@ -128,4 +136,10 @@ const Description = styled.div`
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+`;
+
+const Upload = styled(DarkBtn)`
+  input {
+    display: none;
+  }
 `;

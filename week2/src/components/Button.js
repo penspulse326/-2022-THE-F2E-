@@ -41,3 +41,13 @@ export const LightBtn = styled(DarkBtn)`
     border: 2px solid ${(props) => props.theme.primary_hover};
   }
 `;
+
+export const DarkBtn_Long = styled(DarkBtn)`
+  width: 360px;
+  height: 77px;
+`;
+
+export const LightBtn_Long = styled(LightBtn)`
+  width: 360px;
+  height: 77px;
+`;

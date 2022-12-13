@@ -5,11 +5,9 @@ import styled from "styled-components";
 import Logo from "./Logo";
 
 const NavbarWrapper = styled.div`
-  position: absolute;
-  width: 100vw;
+  position: relative;
+  width: 100%;
   height: 97px;
-  left: 0px;
-  top: 0px;
 
   display: flex;
   justify-content: space-between;
@@ -19,6 +17,8 @@ const NavbarWrapper = styled.div`
   background: #ffffff;
   box-shadow: 0px 3px 4px #eeeeee;
   box-sizing: border-box;
+
+  z-index: 99;
 `;
 
 const Info = styled.div`

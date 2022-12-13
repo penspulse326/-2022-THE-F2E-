@@ -1,9 +1,30 @@
 import styled from "styled-components";
 import Logo from "../components/Logo";
 import { DarkBtn, LightBtn } from "../components/Button";
-import { BsCloudUpload, BsCamera } from "react-icons/bs";
+import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
+import { useState } from "react";
+
+const FILE_MAX_SIZE = 1 * 1024 * 1024;
 
 export default function Home() {
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const handleUpload = ({ target }) => {
+    setErrorMessage(null);
+    const file = target.files[0];
+    console.log(file.type);
+    if (
+      file.type !== "application/pdf" &&
+      file.type !== "image/png" &&
+      file.type !== "image/jpg" &&
+      file.type !== "image/jpeg"
+    ) {
+      setErrorMessage("不接受該檔案類型");
+    }
+    if (file.size > FILE_MAX_SIZE) {
+      setErrorMessage("檔案尺寸太大");
+    }
+  };
   return (
     <Wrapper>
       <Wave_1 />
@@ -21,23 +42,30 @@ export default function Home() {
       </TitleWrapper>
       <UploadWrapper>
         <Frame>
-          <label for="upload">
-            <Upload>
+          <label htmlFor="upload">
+            <DarkBtn>
               <BsCloudUpload />
               上傳文件
               <input
                 id="upload"
                 type="file"
                 className="select"
-                accept="application/pdf"
+                accept="application/pdf image/jpg+jpeg+png"
+                onChange={(e) => handleUpload(e)}
+                style={{ display: "none" }}
               />
-            </Upload>
+            </DarkBtn>
           </label>
-
           <Description>
             或拖曳檔案到此處
             <br />
             接受檔案類型：pdf、jpg、png
+            {errorMessage && (
+              <ErrorMessage>
+                <BsExclamationCircle></BsExclamationCircle>
+                {errorMessage}
+              </ErrorMessage>
+            )}
           </Description>
         </Frame>
         <LightBtn>
@@ -48,6 +76,20 @@ export default function Home() {
     </Wrapper>
   );
 }
+
+const ErrorMessage = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 30px;
+
+  color: red;
+
+  svg {
+    margin-right: 12px;
+  }
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -136,10 +178,4 @@ const Description = styled.div`
   font-size: 18px;
   font-weight: 700;
   text-align: center;
-`;
-
-const Upload = styled(DarkBtn)`
-  input {
-    display: none;
-  }
 `;

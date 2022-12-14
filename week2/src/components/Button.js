@@ -43,11 +43,15 @@ export const LightBtn = styled(DarkBtn)`
 `;
 
 export const DarkBtn_Long = styled(DarkBtn)`
+  font-size: 24px;
+  font-weight: 600;
   width: 360px;
   height: 77px;
 `;
 
 export const LightBtn_Long = styled(LightBtn)`
+  font-size: 24px;
+  font-weight: 600;
   width: 360px;
   height: 77px;
 `;

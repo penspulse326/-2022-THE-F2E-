@@ -96,8 +96,8 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
 
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 `;
 
 const Wave_1 = styled.div`
@@ -122,6 +122,7 @@ const Wave_2 = styled(Wave_1)`
 
 const TitleWrapper = styled.div`
   position: relative;
+  top: 50px;
   left: 10%;
 
   display: flex;
@@ -151,6 +152,7 @@ const Subtitle = styled.div`
 
 const UploadWrapper = styled.div`
   position: relative;
+  top: 100px;
   left: 20%;
 
   display: flex;

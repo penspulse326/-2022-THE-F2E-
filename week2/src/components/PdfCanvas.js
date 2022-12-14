@@ -4,7 +4,7 @@ import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
 
-const PRINT_RATE = 96.0 / 72.0;
+const PRINT_RATE = 150.0 / 72.0;
 const Base64Prefix = "data:application/pdf;base64,";
 
 const Canvas = styled.canvas`
@@ -111,7 +111,7 @@ function PageContainer({ pages }) {
         // 將 canvas 存為圖片
         const image = page.toDataURL({
           format: "jpeg",
-          quality: 1,
+          quality: 0.85,
         });
 
         // 設定背景在 PDF 中的位置及大小
@@ -180,7 +180,7 @@ export function PDFCanvas() {
   }
 
   return (
-    <div>
+    <PageWrapper>
       <input
         type="file"
         className="select"
@@ -188,6 +188,10 @@ export function PDFCanvas() {
         onChange={handleUpload}
       />
       <PageContainer pages={pages} />
-    </div>
+    </PageWrapper>
   );
 }
+
+const PageWrapper = styled.div`
+  width: 900px;
+`;

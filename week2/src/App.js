@@ -1,6 +1,4 @@
 import "./App.css";
-import { SignCanvas } from "./components/SignCanvas";
-import { PdfCanvas } from "./components/PdfCanvas";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import FileView from "./pages/FileView";

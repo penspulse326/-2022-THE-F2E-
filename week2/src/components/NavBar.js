@@ -6,6 +6,7 @@ import Logo from "./Logo";
 
 const NavbarWrapper = styled.div`
   position: relative;
+  top: 0;
   width: 100%;
   height: 97px;
 

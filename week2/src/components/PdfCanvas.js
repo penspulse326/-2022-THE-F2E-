@@ -23,7 +23,9 @@ function PageCanvas({ page, id, setFabricPages }) {
 
   async function printPDF(page) {
     // 設定尺寸及產生 canvas
-    const viewport = page.getViewport({ scale: window.devicePixelRatio });
+    const viewport = page.getViewport({
+      scale: window.devicePixelRatio,
+    });
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
@@ -87,7 +89,7 @@ function PageCanvas({ page, id, setFabricPages }) {
   };
 
   return (
-    <div>
+    <div styled={{}}>
       <Canvas ref={canvasRef} />
       <button onClick={() => handleSign()}>新增簽名</button>
     </div>
@@ -111,16 +113,16 @@ function PageContainer({ pages }) {
         // 將 canvas 存為圖片
         const image = page.toDataURL({
           format: "jpeg",
-          quality: 0.85,
+          quality: 1,
         });
 
         // 設定背景在 PDF 中的位置及大小
         const width = Math.min(
-          page.width / PRINT_RATE,
+          (page.width / PRINT_RATE) * 2,
           pdf.internal.pageSize.width
         );
         const height = Math.min(
-          page.height / PRINT_RATE,
+          (page.height / PRINT_RATE) * 2,
           pdf.internal.pageSize.height
         );
 
@@ -155,6 +157,8 @@ export function PDFCanvas() {
   // 存放讀進來的 PDF 檔
   const [pages, setPages] = useState([]);
 
+  const [scale, setScale] = useState(0.5);
+
   // 將 PDF 檔轉成 Base64 編碼資料 分頁放入 state 並傳給 PageContainer
   const handleUpload = async (e) => {
     const pdf = await readBlob(e.target.files[0]);
@@ -180,18 +184,45 @@ export function PDFCanvas() {
   }
 
   return (
-    <PageWrapper>
-      <input
-        type="file"
-        className="select"
-        accept="application/pdf"
-        onChange={handleUpload}
-      />
-      <PageContainer pages={pages} />
-    </PageWrapper>
+    <>
+      <PageWrapper scale={scale}>
+        <input
+          type="file"
+          className="select"
+          accept="application/pdf"
+          onChange={handleUpload}
+        />
+        <PageContainer pages={pages} />
+      </PageWrapper>
+      <Zoom>
+        <button onClick={() => setScale(scale + 0.1)}>+</button>
+        <button onClick={() => setScale(scale - 0.1)}>-</button>
+      </Zoom>
+    </>
   );
 }
 
 const PageWrapper = styled.div`
+  position: relative;
+  top: -150px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 900px;
+  height: 100%;
+  transform: scale(${(props) => props.scale});
+`;
+
+const Zoom = styled.div`
+  position: fixed;
+  bottom: 100px;
+  width: 500px;
+  height: 50px;
+
+  background-color: grey;
+
+  button {
+    width: 100px;
+    height: 100%;
+  }
 `;

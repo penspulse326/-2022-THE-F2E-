@@ -82,6 +82,9 @@ const CardWrapper = styled.div`
   overflow-y: scroll;
 `;
 const Viewer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
   width: 100%;
   height: calc(100vh - 97px);
   overflow-y: scroll;

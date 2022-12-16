@@ -1,28 +1,68 @@
+import { useState } from "react";
 import styled from "styled-components";
 import Card from "../components/Card";
 import { DarkBtn_Long, LightBtn_Long } from "../components/Button";
 import { BsCalendar2Check, BsPen, BsTextareaT } from "react-icons/bs";
 import { ReactComponent as Logo } from "../components/logo.svg";
-import { PDFCanvas } from "../components/PDFCanvas";
+import PDFCanvas from "../components/PDFCanvas";
+import * as pdfjsLib from "pdfjs-dist/webpack";
+
+const Base64Prefix = "data:application/pdf;base64,";
 
 export default function FileView() {
-  const file = [1, 2, 3, 4];
+  const [activePage, setActivePage] = useState(0);
+  const [pages, setPages] = useState([]);
+
+  // 使用原生 FileReader 轉檔
+  function readBlob(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.addEventListener("load", () => resolve(reader.result));
+      reader.addEventListener("error", reject);
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  // 將 PDF 檔轉成 Base64 編碼資料 分頁放入 state 並傳給 PageContainer
+  const handleUpload = async (e) => {
+    const pdf = await readBlob(e.target.files[0]);
+    const data = window.atob(pdf.substring(Base64Prefix.length));
+    const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
+    const pdfLength = pdfDoc.numPages;
+    let arr = [];
+    for (let i = 1; i <= pdfLength; i++) {
+      const pdfPage = await pdfDoc.getPage(i);
+      arr.push(pdfPage);
+    }
+    setPages(() => arr);
+  };
+
   return (
     <Wrapper>
       <SnapBar>
         <CardWrapper>
           頁面預覽
-          {file.map((item, index) => (
-            <Card key={index} item={item} index={index} />
+          <input
+            type="file"
+            className="select"
+            accept="application/pdf"
+            onChange={handleUpload}
+          />
+          {pages.map((item, index) => (
+            <Card
+              key={index}
+              item={item}
+              index={index}
+              setActivePage={setActivePage}
+            />
           ))}
         </CardWrapper>
       </SnapBar>
       <ViewerWrapper>
         <Viewer>
-          <PDFCanvas></PDFCanvas>
+          <PDFCanvas pages={pages} activePage={activePage} />
         </Viewer>
       </ViewerWrapper>
-
       <OptionBar>
         <div>
           <LightBtn_Long>
@@ -56,6 +96,7 @@ const Wrapper = styled.div`
 
   box-sizing: border-box;
   background-color: red;
+  overflow: hidden;
 `;
 
 const SnapBar = styled.div`
@@ -81,13 +122,16 @@ const CardWrapper = styled.div`
   font-weight: bold;
   overflow-y: scroll;
 `;
+
 const Viewer = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 100%;
+
+  width: calc(100vw - 1000px);
   height: calc(100vh - 97px);
-  overflow-y: scroll;
 `;
 
 const ViewerWrapper = styled.div`

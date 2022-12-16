@@ -1,11 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import * as pdfjsLib from "pdfjs-dist/webpack";
+
 import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
 
-const PRINT_RATE = 150.0 / 72.0;
-const Base64Prefix = "data:application/pdf;base64,";
+const PRINT_RATE = 144.0 / 72.0;
 
 const Canvas = styled.canvas`
   box-shadow: 1px 1px 5px 1px #ccc;
@@ -89,16 +88,28 @@ function PageCanvas({ page, id, setFabricPages }) {
   };
 
   return (
-    <div styled={{}}>
+    <>
       <Canvas ref={canvasRef} />
       <button onClick={() => handleSign()}>新增簽名</button>
-    </div>
+    </>
   );
 }
 
-function PageContainer({ pages }) {
+function PageContainer({ pages, activePage }) {
   // 存 fabaric 生成的 canvas 之後輸出 PDF 要使用
-  const [fabricPages, setFabricPages] = useState(new Array(pages.length));
+  const [fabricPages, setFabricPages] = useState([]);
+  useEffect(() => {
+    let arr = pages?.map((item, index) => (
+      <PageCanvas
+        key={index}
+        id={index}
+        page={item}
+        setFabricPages={setFabricPages}
+        activePage={activePage}
+      />
+    ));
+    setFabricPages(arr);
+  }, [pages]);
 
   const savePDF = () => {
     if (fabricPages.length > 0) {
@@ -118,11 +129,11 @@ function PageContainer({ pages }) {
 
         // 設定背景在 PDF 中的位置及大小
         const width = Math.min(
-          (page.width / PRINT_RATE) * 2,
+          page.width / PRINT_RATE,
           pdf.internal.pageSize.width
         );
         const height = Math.min(
-          (page.height / PRINT_RATE) * 2,
+          page.height / PRINT_RATE,
           pdf.internal.pageSize.height
         );
 
@@ -138,65 +149,44 @@ function PageContainer({ pages }) {
   };
 
   return (
-    <div>
-      {pages.length > 0 &&
-        pages.map((item, index) => (
-          <PageCanvas
-            key={index}
-            id={index}
-            page={item}
-            setFabricPages={setFabricPages}
-          />
-        ))}
-      <button onClick={() => savePDF()}>轉出你的簽名檔案</button>
-    </div>
+    <>
+      {pages.length ? (
+        <PageCanvas
+          id={activePage}
+          page={pages[activePage]}
+          setFabricPages={setFabricPages}
+          activePage={activePage}
+        />
+      ) : (
+        <>123</>
+      )}
+      <button onClick={() => savePDF()}>存檔</button>
+    </>
   );
 }
 
-export function PDFCanvas() {
+export default function PDFCanvas({ pages, activePage }) {
   // 存放讀進來的 PDF 檔
-  const [pages, setPages] = useState([]);
 
   const [scale, setScale] = useState(0.5);
 
-  // 將 PDF 檔轉成 Base64 編碼資料 分頁放入 state 並傳給 PageContainer
-  const handleUpload = async (e) => {
-    const pdf = await readBlob(e.target.files[0]);
-    const data = window.atob(pdf.substring(Base64Prefix.length));
-    const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
-    const pdfLength = pdfDoc.numPages;
-    let arr = [];
-    for (let i = 1; i <= pdfLength; i++) {
-      const pdfPage = await pdfDoc.getPage(i);
-      arr.push(pdfPage);
+  const handleScale = (zoom) => {
+    if (zoom === "+") {
+      setScale(scale + 0.125);
     }
-    setPages(() => arr);
+    if (zoom === "-" && scale > 0.5) {
+      setScale(scale - 0.125);
+    }
   };
-
-  // 使用原生 FileReader 轉檔
-  function readBlob(blob) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => resolve(reader.result));
-      reader.addEventListener("error", reject);
-      reader.readAsDataURL(blob);
-    });
-  }
 
   return (
     <>
-      <PageWrapper scale={scale}>
-        <input
-          type="file"
-          className="select"
-          accept="application/pdf"
-          onChange={handleUpload}
-        />
-        <PageContainer pages={pages} />
+      <PageWrapper className="page__wrapper" scale={scale}>
+        <PageContainer pages={pages} activePage={activePage} />
       </PageWrapper>
-      <Zoom>
-        <button onClick={() => setScale(scale + 0.1)}>+</button>
-        <button onClick={() => setScale(scale - 0.1)}>-</button>
+      <Zoom className="zoom">
+        <button onClick={() => handleScale("+")}>+</button>
+        <button onClick={() => handleScale("-")}>-</button>
       </Zoom>
     </>
   );
@@ -204,25 +194,35 @@ export function PDFCanvas() {
 
 const PageWrapper = styled.div`
   position: relative;
-  top: -150px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 900px;
+  margin: auto;
+  width: 100%;
   height: 100%;
-  transform: scale(${(props) => props.scale});
-`;
 
+  .canvas-container {
+    margin: auto;
+    left: 100px;
+    transform: scale(${(props) => props.scale});
+    transform-origin: 0 0;
+  }
+
+  overflow: scroll;
+`;
 const Zoom = styled.div`
   position: fixed;
-  bottom: 100px;
+  bottom: 50px;
   width: 500px;
   height: 50px;
 
   background-color: grey;
+  opacity: 0.3;
+  transition: 0.3s;
 
   button {
     width: 100px;
     height: 100%;
+  }
+
+  &:hover {
+    opacity: 1;
   }
 `;

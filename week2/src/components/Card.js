@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function Card({ item, index }) {
+export default function Card({ item, index, setActivePage }) {
   return (
-    <SnapCard>
+    <SnapCard onClick={() => setActivePage(index)}>
       <Snap></Snap>
       <PageNumber>{index + 1}</PageNumber>
     </SnapCard>
@@ -16,6 +16,8 @@ const SnapCard = styled.div`
 
   border: 2px solid ${(props) => props.theme.mid_grey};
   border-radius: 5px;
+
+  cursor: pointer;
 `;
 
 const Snap = styled.div`

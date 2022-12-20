@@ -40,28 +40,24 @@ export default function FileView() {
   return (
     <Wrapper>
       <SnapBar>
-        <CardWrapper>
-          頁面預覽
-          <input
-            type="file"
-            className="select"
-            accept="application/pdf"
-            onChange={handleUpload}
+        頁面預覽
+        <input
+          type="file"
+          className="select"
+          accept="application/pdf"
+          onChange={handleUpload}
+        />
+        {pages.map((item, index) => (
+          <Card
+            key={index}
+            item={item}
+            index={index}
+            setActivePage={setActivePage}
           />
-          {pages.map((item, index) => (
-            <Card
-              key={index}
-              item={item}
-              index={index}
-              setActivePage={setActivePage}
-            />
-          ))}
-        </CardWrapper>
+        ))}
       </SnapBar>
       <ViewerWrapper>
-        <Viewer>
-          <PDFCanvas pages={pages} activePage={activePage} />
-        </Viewer>
+        <PDFCanvas pages={pages} activePage={activePage} />
       </ViewerWrapper>
       <OptionBar>
         <div>
@@ -90,65 +86,49 @@ export default function FileView() {
 }
 
 const Wrapper = styled.div`
-  flex-grow: 1;
+  position: relative;
   display: flex;
-  align-items: stretch;
 
-  box-sizing: border-box;
+  width: 100vw;
+  height: 100%;
+
   background-color: red;
   overflow: hidden;
 `;
 
 const SnapBar = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-
-  width: 500px;
-  height: calc(100vh - 97px);
-
-  background-color: white;
-`;
-
-const CardWrapper = styled.div`
-  padding: 30px 0;
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
-  flex-grow: 1;
+  padding: 30px 0;
+  width: 500px;
+  flex-shrink: 0;
+
+  background-color: white;
+
   font-size: 24px;
   font-weight: bold;
+
   overflow-y: scroll;
 `;
 
-const Viewer = styled.div`
-  position: relative;
-
+const ViewerWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
 
-  width: calc(100vw - 1000px);
-  height: calc(100vh - 97px);
-`;
-
-const ViewerWrapper = styled.div`
   flex-grow: 1;
   background-color: ${(props) => props.theme.mid_grey};
+  overflow: scroll;
 `;
 
 const OptionBar = styled(SnapBar)`
-  flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-
-  padding: 10px 0;
-
-  box-sizing: border-box;
 
   div div {
-    margin: 20px 0;
+    margin-bottom: 30px;
   }
+
+  overflow: auto;
 `;

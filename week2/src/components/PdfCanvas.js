@@ -1,16 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-
 import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
 
-const PRINT_RATE = 144.0 / 72.0;
+const PRINT_RATE = 120.0 / 72.0;
 
 const Canvas = styled.canvas`
   box-shadow: 1px 1px 5px 1px #ccc;
 `;
 
-function PageCanvas({ page, id, setFabricPages }) {
+function PageCanvas({ page, id, setFabricPages, activePage, scale }) {
   // 用 useRef 抓取此頁面下的 canvas
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
@@ -18,12 +17,32 @@ function PageCanvas({ page, id, setFabricPages }) {
   useEffect(() => {
     fabricRef.current?.dispose();
     createViewer();
-  }, [page]);
+  }, [page, scale]);
+
+  async function createViewer() {
+    const canvas = new fabric.Canvas(canvasRef.current);
+    fabricRef.current = canvas;
+    canvas.requestRenderAll();
+    const pdfData = await printPDF(page);
+    const pdfImage = await pdfToImage(pdfData);
+
+    // 透過比例設定 canvas 尺寸
+    canvas.setWidth(pdfImage.width / window.devicePixelRatio);
+    canvas.setHeight(pdfImage.height / window.devicePixelRatio);
+
+    // 將 PDF 畫面設定為背景 並存進 state
+    canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
+    setFabricPages((state) => {
+      let arr = [...state];
+      arr[id] = canvas;
+      return arr;
+    });
+  }
 
   async function printPDF(page) {
     // 設定尺寸及產生 canvas
     const viewport = page.getViewport({
-      scale: window.devicePixelRatio,
+      scale: window.devicePixelRatio * scale,
     });
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
@@ -54,26 +73,6 @@ function PageCanvas({ page, id, setFabricPages }) {
     });
   }
 
-  async function createViewer() {
-    const canvas = new fabric.Canvas(canvasRef.current);
-    fabricRef.current = canvas;
-    canvas.requestRenderAll();
-    const pdfData = await printPDF(page);
-    const pdfImage = await pdfToImage(pdfData);
-
-    // 透過比例設定 canvas 尺寸
-    canvas.setWidth(pdfImage.width / window.devicePixelRatio);
-    canvas.setHeight(pdfImage.height / window.devicePixelRatio);
-
-    // 將 PDF 畫面設定為背景 並存進 state
-    canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
-    setFabricPages((state) => {
-      let arr = [...state];
-      arr[id] = canvas;
-      return arr;
-    });
-  }
-
   const handleSign = () => {
     const img = localStorage.getItem("img");
     if (img) {
@@ -87,29 +86,23 @@ function PageCanvas({ page, id, setFabricPages }) {
     }
   };
 
+  const style = {
+    display: activePage === id ? "block" : "none",
+  };
+
   return (
-    <>
+    <div style={style}>
       <Canvas ref={canvasRef} />
       <button onClick={() => handleSign()}>新增簽名</button>
-    </>
+    </div>
   );
 }
 
 function PageContainer({ pages, activePage }) {
   // 存 fabaric 生成的 canvas 之後輸出 PDF 要使用
   const [fabricPages, setFabricPages] = useState([]);
-  useEffect(() => {
-    let arr = pages?.map((item, index) => (
-      <PageCanvas
-        key={index}
-        id={index}
-        page={item}
-        setFabricPages={setFabricPages}
-        activePage={activePage}
-      />
-    ));
-    setFabricPages(arr);
-  }, [pages]);
+  // 縮放倍率
+  const [scale, setScale] = useState(0.5);
 
   const savePDF = () => {
     if (fabricPages.length > 0) {
@@ -148,28 +141,6 @@ function PageContainer({ pages, activePage }) {
     }
   };
 
-  return (
-    <>
-      {pages.length ? (
-        <PageCanvas
-          id={activePage}
-          page={pages[activePage]}
-          setFabricPages={setFabricPages}
-          activePage={activePage}
-        />
-      ) : (
-        <>123</>
-      )}
-      <button onClick={() => savePDF()}>存檔</button>
-    </>
-  );
-}
-
-export default function PDFCanvas({ pages, activePage }) {
-  // 存放讀進來的 PDF 檔
-
-  const [scale, setScale] = useState(0.5);
-
   const handleScale = (zoom) => {
     if (zoom === "+") {
       setScale(scale + 0.125);
@@ -181,10 +152,18 @@ export default function PDFCanvas({ pages, activePage }) {
 
   return (
     <>
-      <PageWrapper className="page__wrapper" scale={scale}>
-        <PageContainer pages={pages} activePage={activePage} />
-      </PageWrapper>
-      <Zoom className="zoom">
+      {pages?.map((item, index) => (
+        <PageCanvas
+          key={index}
+          id={index}
+          page={item}
+          setFabricPages={setFabricPages}
+          activePage={activePage}
+          scale={scale}
+        />
+      ))}
+      <button onClick={() => savePDF()}>存檔</button>
+      <Zoom>
         <button onClick={() => handleScale("+")}>+</button>
         <button onClick={() => handleScale("-")}>-</button>
       </Zoom>
@@ -192,24 +171,29 @@ export default function PDFCanvas({ pages, activePage }) {
   );
 }
 
+export default function PDFCanvas({ pages, activePage }) {
+  return (
+    <PageWrapper className="page__wrapper">
+      <PageContainer pages={pages} activePage={activePage} />
+    </PageWrapper>
+  );
+}
+
 const PageWrapper = styled.div`
   position: relative;
-  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 50px 30px;
   width: 100%;
-  height: 100%;
-
-  .canvas-container {
-    margin: auto;
-    left: 100px;
-    transform: scale(${(props) => props.scale});
-    transform-origin: 0 0;
-  }
-
-  overflow: scroll;
 `;
+
 const Zoom = styled.div`
   position: fixed;
   bottom: 50px;
+
   width: 500px;
   height: 50px;
 

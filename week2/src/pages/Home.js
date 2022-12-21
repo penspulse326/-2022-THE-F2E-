@@ -122,7 +122,7 @@ const Wave_2 = styled(Wave_1)`
 
 const TitleWrapper = styled.div`
   position: relative;
-  top: 50px;
+  top: 0px;
   left: 10%;
 
   display: flex;
@@ -152,7 +152,7 @@ const Subtitle = styled.div`
 
 const UploadWrapper = styled.div`
   position: relative;
-  top: 100px;
+  top: 0px;
   left: 20%;
 
   display: flex;

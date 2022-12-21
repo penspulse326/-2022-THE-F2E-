@@ -1,20 +1,30 @@
 import { useEffect, useRef, useState } from "react";
+import { DarkBtn, LightBtn } from "../components/Button";
+import styled from "styled-components";
+
+const textColor = {
+  black: "#000000",
+  green: "#458227",
+  red: "#EC0303",
+  blue: "#0073E6",
+};
 
 export function SignCanvas() {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
+  const [color, setColor] = useState(textColor.black);
   const [isPainting, setIsPainting] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    canvas.width = 500;
-    canvas.height = 300;
+    canvas.width = 750;
+    canvas.height = 140;
 
     const context = canvas.getContext("2d");
     context.lineCap = "round";
-    context.strokeStyle = "black";
+    context.strokeStyle = color;
     context.shadowBlur = 1;
-    context.shadowColor = "black";
+    context.shadowColor = color;
     context.lineWidth = 3;
     contextRef.current = context;
   }, []);
@@ -72,36 +82,81 @@ export function SignCanvas() {
 
   const saveImage = () => {
     const newImg = canvasRef.current.toDataURL("image/png");
-    document.querySelector(".show-img").src = newImg;
     localStorage.setItem("img", newImg);
   };
 
   return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        style={{ border: "1px solid #000" }}
-        onMouseDown={startPosition}
-        onMouseMove={draw}
-        onMouseUp={finishedPosition}
-        onTouchStart={startPosition}
-        onTouchMove={draw}
-        onTouchEnd={finishedPosition}
-      />
-      <img
-        className="show-img"
-        width="250"
-        height="150"
-        style={{ border: "1px solid #000" }}
-      />
-      <div className="btn-group">
-        <button className="clear" onClick={() => reset()}>
-          Clear
-        </button>
-        <button className="save" onClick={() => saveImage()}>
-          Save
-        </button>
-      </div>
-    </div>
+    <>
+      <SignWrapper>
+        <canvas
+          ref={canvasRef}
+          onMouseDown={startPosition}
+          onMouseMove={draw}
+          onMouseUp={finishedPosition}
+          onTouchStart={startPosition}
+          onTouchMove={draw}
+          onTouchEnd={finishedPosition}
+        />
+        <hr />
+        <div>
+          <a onClick={() => reset()}>清除</a>
+        </div>
+      </SignWrapper>
+      <BtnWrapper>
+        <CancelBtn>取消</CancelBtn>
+        <CreateBtn onClick={() => saveImage()}>建立</CreateBtn>
+      </BtnWrapper>
+    </>
   );
 }
+
+const SignWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 750px;
+  height: auto;
+
+  background-color: ${(props) => props.theme.mid_grey};
+  box-sizing: border-box;
+
+  div {
+    align-self: flex-end;
+    padding: 10px 30px;
+  }
+
+  a {
+    font-size: 18px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  hr {
+    width: 700px;
+    border: 1px solid ${(props) => props.theme.dark_grey};
+  }
+`;
+
+const BtnWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  margin-top: 20px;
+  width: 100%;
+`;
+
+const CancelBtn = styled(LightBtn)`
+  width: auto;
+  height: 61px;
+
+  font-size: 24px;
+`;
+
+const CreateBtn = styled(DarkBtn)`
+  margin-left: 10px;
+  width: auto;
+  height: 61px;
+  font-size: 24px;
+`;

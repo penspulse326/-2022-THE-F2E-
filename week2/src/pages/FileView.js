@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Card from "../components/Card";
+import { SignCanvas } from "../components/SignCanvas";
 import { DarkBtn_Long, LightBtn_Long } from "../components/Button";
 import { BsCalendar2Check, BsPen, BsTextareaT } from "react-icons/bs";
 import { ReactComponent as Logo } from "../components/logo.svg";
@@ -10,8 +11,10 @@ import * as pdfjsLib from "pdfjs-dist/webpack";
 const Base64Prefix = "data:application/pdf;base64,";
 
 export default function FileView() {
-  const [activePage, setActivePage] = useState(0);
+  const [activePage, setActivePage] = useState(null);
   const [pages, setPages] = useState([]);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isMask, setIsMask] = useState(false);
 
   // 使用原生 FileReader 轉檔
   function readBlob(blob) {
@@ -28,17 +31,31 @@ export default function FileView() {
     const pdf = await readBlob(e.target.files[0]);
     const data = window.atob(pdf.substring(Base64Prefix.length));
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
+
     const pdfLength = pdfDoc.numPages;
+
     let arr = [];
     for (let i = 1; i <= pdfLength; i++) {
       const pdfPage = await pdfDoc.getPage(i);
       arr.push(pdfPage);
     }
     setPages(() => arr);
+    setTimeout(() => setActivePage(0), 1000);
+  };
+
+  const handleAddSign = () => {
+    setIsMask(true);
   };
 
   return (
     <Wrapper>
+      {isMask && (
+        <Mask>
+          <AddSign>
+            <SignCanvas></SignCanvas>
+          </AddSign>
+        </Mask>
+      )}
       <SnapBar>
         頁面預覽
         <input
@@ -53,15 +70,21 @@ export default function FileView() {
             item={item}
             index={index}
             setActivePage={setActivePage}
+            activePage={activePage}
           />
         ))}
       </SnapBar>
       <ViewerWrapper>
-        <PDFCanvas pages={pages} activePage={activePage} />
+        <PDFCanvas
+          pages={pages}
+          activePage={activePage}
+          isSaving={isSaving}
+          setIsSaving={setIsSaving}
+        />
       </ViewerWrapper>
       <OptionBar>
         <div>
-          <LightBtn_Long>
+          <LightBtn_Long onClick={() => handleAddSign()}>
             <BsPen />
             新增簽名
           </LightBtn_Long>
@@ -75,7 +98,7 @@ export default function FileView() {
           </LightBtn_Long>
         </div>
         <div>
-          <DarkBtn_Long>
+          <DarkBtn_Long onClick={() => setIsSaving(true)}>
             <Logo />
             完成簽署
           </DarkBtn_Long>
@@ -131,4 +154,36 @@ const OptionBar = styled(SnapBar)`
   }
 
   overflow: auto;
+`;
+
+const Mask = styled.div`
+  position: absolute;
+  left: 0px;
+  top: -97px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(3px);
+
+  z-index: 99;
+`;
+
+const AddSign = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px 50px;
+  width: 850px;
+  height: 420px;
+  box-sizing: border-box;
+
+  background-color: white;
 `;

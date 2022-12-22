@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
+import { UseSignContext } from "../SignContext";
 
 const PRINT_RATE = 120.0 / 72.0;
 
@@ -9,41 +10,24 @@ const Canvas = styled.canvas`
   box-shadow: 1px 1px 5px 1px #ccc;
 `;
 
-function PageCanvas({ page, id, setFabricPages, activePage }) {
+function PageCanvas({ page, id, setFabricPages, activePage, fabricPages }) {
   // 用 useRef 抓取此頁面下的 canvas
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
+  const { selectedSign, setSelectedSign } = UseSignContext();
 
   useEffect(() => {
     fabricRef.current?.dispose();
     createViewer();
   }, [page, activePage]);
 
-  async function createViewer() {
-    const canvas = new fabric.Canvas(canvasRef.current);
-    fabricRef.current = canvas;
-    canvas.requestRenderAll();
-    const pdfData = await printPDF(page);
-    const pdfImage = await pdfToImage(pdfData);
-
-    // 透過比例設定 canvas 尺寸
-    canvas.setWidth(pdfImage.width / window.devicePixelRatio);
-    canvas.setHeight(pdfImage.height / window.devicePixelRatio);
-
-    // 將 PDF 畫面設定為背景 並存進 state
-    canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
-    setFabricPages((state) => {
-      let arr = [...state];
-      arr[id] = canvas;
-      return arr;
-    });
-  }
+  useEffect(() => {
+    handleSign();
+  }, [selectedSign]);
 
   async function printPDF(page) {
     // 設定尺寸及產生 canvas
-    const viewport = page.getViewport({
-      scale: window.devicePixelRatio,
-    });
+    const viewport = page.getViewport({ scale: window.devicePixelRatio });
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
@@ -73,8 +57,28 @@ function PageCanvas({ page, id, setFabricPages, activePage }) {
     });
   }
 
+  async function createViewer() {
+    const canvas = new fabric.Canvas(canvasRef.current);
+    fabricRef.current = canvas;
+    canvas.requestRenderAll();
+    const pdfData = await printPDF(page);
+    const pdfImage = await pdfToImage(pdfData);
+
+    // 透過比例設定 canvas 尺寸
+    canvas.setWidth(pdfImage.width / window.devicePixelRatio);
+    canvas.setHeight(pdfImage.height / window.devicePixelRatio);
+
+    // 將 PDF 畫面設定為背景 並存進 state
+    canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
+    setFabricPages((state) => {
+      let arr = [...state];
+      arr[id] = canvas;
+      return arr;
+    });
+  }
+
   const handleSign = () => {
-    const img = localStorage.getItem("img");
+    const img = localStorage.getItem("sign");
     if (img) {
       fabric.Image.fromURL(img, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
@@ -82,6 +86,13 @@ function PageCanvas({ page, id, setFabricPages, activePage }) {
         image.scaleX = 0.5;
         image.scaleY = 0.5;
         fabricRef.current.add(image);
+
+        setFabricPages((state) => {
+          let arr = [...state];
+          arr[id] = fabricRef.current;
+          return arr;
+        });
+        setSelectedSign(null);
       });
     }
   };
@@ -152,6 +163,7 @@ function PageContainer({ pages, activePage, isSaving, setIsSaving }) {
           key={index}
           id={index}
           page={item}
+          fabricPages={fabricPages}
           setFabricPages={setFabricPages}
           activePage={activePage}
         />

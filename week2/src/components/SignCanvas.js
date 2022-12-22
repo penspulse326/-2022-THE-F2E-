@@ -9,10 +9,9 @@ const textColor = {
   blue: "#0073E6",
 };
 
-export function SignCanvas() {
+export function SignCanvas({ setIsMask, setSigns }) {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
-  const [color, setColor] = useState(textColor.black);
   const [isPainting, setIsPainting] = useState(false);
 
   useEffect(() => {
@@ -22,9 +21,9 @@ export function SignCanvas() {
 
     const context = canvas.getContext("2d");
     context.lineCap = "round";
-    context.strokeStyle = color;
+    context.strokeStyle = textColor.black;
     context.shadowBlur = 1;
-    context.shadowColor = color;
+    context.shadowColor = textColor.black;
     context.lineWidth = 3;
     contextRef.current = context;
   }, []);
@@ -82,11 +81,24 @@ export function SignCanvas() {
 
   const saveImage = () => {
     const newImg = canvasRef.current.toDataURL("image/png");
-    localStorage.setItem("img", newImg);
+    setSigns((state) => [...state, newImg]);
+    setIsMask(false);
+  };
+
+  const changeColor = (color) => {
+    const context = canvasRef.current.getContext("2d");
+    context.strokeStyle = color;
+    context.shadowColor = color;
   };
 
   return (
     <>
+      <ColorSelect>
+        <BlackStroke onClick={() => changeColor(textColor.black)} />
+        <RedStroke onClick={() => changeColor(textColor.red)} />
+        <GreenStroke onClick={() => changeColor(textColor.green)} />
+        <BlueStroke onClick={() => changeColor(textColor.blue)} />
+      </ColorSelect>
       <SignWrapper>
         <canvas
           ref={canvasRef}
@@ -103,7 +115,7 @@ export function SignCanvas() {
         </div>
       </SignWrapper>
       <BtnWrapper>
-        <CancelBtn>取消</CancelBtn>
+        <CancelBtn onClick={() => setIsMask(false)}>取消</CancelBtn>
         <CreateBtn onClick={() => saveImage()}>建立</CreateBtn>
       </BtnWrapper>
     </>
@@ -136,6 +148,37 @@ const SignWrapper = styled.div`
     width: 700px;
     border: 1px solid ${(props) => props.theme.dark_grey};
   }
+`;
+
+const ColorSelect = styled.div`
+  display: flex;
+  align-self: flex-start;
+  padding: 10px 0;
+  margin: 10px 0;
+  border: 1px solid ${(props) => props.theme.dark_grey};
+  border-radius: 5px;
+`;
+
+const BlackStroke = styled.div`
+  margin: 0 10px;
+  width: 30px;
+  height: 30px;
+  background-color: ${({ theme }) => theme.text.black};
+  border-radius: 50%;
+
+  cursor: pointer;
+`;
+
+const GreenStroke = styled(BlackStroke)`
+  background-color: ${({ theme }) => theme.text.green};
+`;
+
+const RedStroke = styled(BlackStroke)`
+  background-color: ${({ theme }) => theme.text.red};
+`;
+
+const BlueStroke = styled(BlackStroke)`
+  background-color: ${({ theme }) => theme.text.blue};
 `;
 
 const BtnWrapper = styled.div`

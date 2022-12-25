@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { fabric } from "fabric";
+import { MQ_MD } from "../constants/breakpoint";
 
 export default function Card({ item, index, setActivePage, activePage }) {
   // 用 useRef 抓取此頁面下的 canvas
@@ -94,6 +95,11 @@ const SnapCard = styled.div`
   border-radius: 5px;
 
   cursor: pointer;
+
+  ${MQ_MD} {
+    width: ${(props) => props.orientation.width / 1.7 + "px"};
+    height: ${(props) => props.orientation.height / 1.7 + "px"};
+  }
 `;
 
 const Snap = styled.div`
@@ -101,7 +107,12 @@ const Snap = styled.div`
   height: ${(props) => props.orientation.height};
   border-radius: 3px;
   background-color: aliceblue;
+
+  ${MQ_MD} {
+    height: ${(props) => props.orientation.height / 1.7 + "px"};
+  }
 `;
+
 const PageNumber = styled.div`
   display: flex;
   justify-content: center;
@@ -114,4 +125,9 @@ const PageNumber = styled.div`
 
   color: ${(props) => (props.isActive ? "white" : "black")};
   font-size: 18px;
+
+  ${MQ_MD} {
+    height: 24px;
+    font-size: 14px;
+  }
 `;

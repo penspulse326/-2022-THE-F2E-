@@ -8,8 +8,9 @@ const LayoutWrapper = styled.div`
   height: 100vh;
   width: 100vw;
 
-  background-image: url("./images/bk.png");
+
   background-repeat: no-repeat;
+
   background-position: bottom;
   box-sizing: border-box;
 `;

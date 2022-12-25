@@ -14,6 +14,7 @@ import { ReactComponent as Logo } from "../components/logo.svg";
 import PDFCanvas from "../components/PDFCanvas";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { SignContext } from "../SignContext";
+import { MQ_MD } from "../constants/breakpoint";
 
 const Base64Prefix = "data:application/pdf;base64,";
 
@@ -171,6 +172,10 @@ const SnapBar = styled.div`
   font-weight: bold;
 
   overflow-y: scroll;
+
+  ${MQ_MD} {
+    width: 300px;
+  }
 `;
 
 const ViewerWrapper = styled.div`

@@ -3,6 +3,7 @@ import Logo from "../components/Logo";
 import { DarkBtn, LightBtn } from "../components/Button";
 import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
+import { MQ_MD} from "../constants/breakpoint"
 
 const FILE_MAX_SIZE = 1 * 1024 * 1024;
 
@@ -25,6 +26,7 @@ export default function Home() {
       setErrorMessage("檔案尺寸太大");
     }
   };
+
   return (
     <Wrapper>
       <Wave_1 />
@@ -135,11 +137,16 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   font-size: 64px;
   font-weight: bold;
 
   a {
     transform: scale(1.1);
+  }
+
+  ${MQ_MD} {
+    font-size: 56px;
   }
 `;
 
@@ -147,7 +154,11 @@ const Subtitle = styled.div`
   margin-top: 30px;
   font-size: 24px;
   line-height: 50px;
-  font-weight: 600;
+  font-weight: bold;
+
+  ${MQ_MD} {
+    font-size: 20px;
+  }
 `;
 
 const UploadWrapper = styled.div`
@@ -162,6 +173,11 @@ const UploadWrapper = styled.div`
 
   width: 960px;
   height: 650px;
+
+  ${MQ_MD} {
+    width: 660px;
+    height: 420px;
+  }
 `;
 
 const Frame = styled.div`
@@ -169,8 +185,10 @@ const Frame = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   width: 100%;
-  height: 500px;
+  height: 300px;
+  
   border: 4px dashed ${(props) => props.theme.primary};
 `;
 
@@ -180,4 +198,9 @@ const Description = styled.div`
   font-size: 18px;
   font-weight: 700;
   text-align: center;
+
+  ${MQ_MD} {
+    margin-top: 18px;
+    font-size: 14px;
+  }
 `;

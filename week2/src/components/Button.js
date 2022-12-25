@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MQ_LG, MQ_MD} from "../constants/breakpoint"
 
 export const DarkBtn = styled.div`
   display: flex;
@@ -27,6 +28,13 @@ export const DarkBtn = styled.div`
 
   svg {
     margin-right: 12px;
+  }
+
+  ${MQ_MD} {
+    padding: 20px 5px;
+    width: 176px;
+    height: 60px;
+    font-size: 20px;
   }
 `;
 

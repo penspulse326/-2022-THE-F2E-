@@ -14,7 +14,7 @@ import { ReactComponent as Logo } from "../components/logo.svg";
 import PDFCanvas from "../components/PDFCanvas";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { SignContext } from "../SignContext";
-import { MQ_MD } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG } from "../constants/breakpoint";
 
 const Base64Prefix = "data:application/pdf;base64,";
 
@@ -65,36 +65,33 @@ export default function FileView() {
   };
 
   return (
-    <SignContext.Provider value={{ selectedSign, setSelectedSign }}>
-      <Wrapper>
-        {isMask && (
-          <Mask>
-            <SignBoard>
-              <SignCanvas
-                setIsMask={setIsMask}
-                setSigns={setSigns}
-              ></SignCanvas>
-            </SignBoard>
-          </Mask>
-        )}
-        <SnapBar>
-          頁面預覽
-          <input
-            type="file"
-            className="select"
-            accept="application/pdf"
-            onChange={handleUpload}
+    <Wrapper>
+      {isMask && (
+        <Mask>
+          <SignBoard>
+            <SignCanvas setIsMask={setIsMask} setSigns={setSigns}></SignCanvas>
+          </SignBoard>
+        </Mask>
+      )}
+      <SnapBar>
+        頁面預覽
+        <input
+          type="file"
+          className="select"
+          accept="application/pdf"
+          onChange={handleUpload}
+        />
+        {pages.map((item, index) => (
+          <Card
+            key={index}
+            item={item}
+            index={index}
+            setActivePage={setActivePage}
+            activePage={activePage}
           />
-          {pages.map((item, index) => (
-            <Card
-              key={index}
-              item={item}
-              index={index}
-              setActivePage={setActivePage}
-              activePage={activePage}
-            />
-          ))}
-        </SnapBar>
+        ))}
+      </SnapBar>
+      <SignContext.Provider value={{ selectedSign, setSelectedSign }}>
         <ViewerWrapper>
           <PDFCanvas
             pages={pages}
@@ -103,45 +100,45 @@ export default function FileView() {
             setIsSaving={setIsSaving}
           />
         </ViewerWrapper>
-        <OptionBar>
-          <div>
-            <AddSignBtn className="Add" onClick={(e) => handleAddSign(e)}>
-              <div className="Add">
-                <BsPen />
-                新增簽名
-              </div>
-              {signs.length > 0 && (
-                <SignWrapper>
-                  {signs.map((item, index) => (
-                    <SignCard
-                      key={index}
-                      item={item}
-                      id={index}
-                      setSigns={setSigns}
-                      setSelectedSign={setSelectedSign}
-                    ></SignCard>
-                  ))}
-                </SignWrapper>
-              )}
-            </AddSignBtn>
-            <LightBtn_Long>
-              <BsTextareaT />
-              新增文字
-            </LightBtn_Long>
-            <LightBtn_Long>
-              <BsCalendar2Check />
-              新增日期
-            </LightBtn_Long>
-          </div>
-          <div>
-            <DarkBtn_Long onClick={() => setIsSaving(true)}>
-              <Logo />
-              完成簽署
-            </DarkBtn_Long>
-          </div>
-        </OptionBar>
-      </Wrapper>
-    </SignContext.Provider>
+      </SignContext.Provider>
+      <OptionBar>
+        <div>
+          <AddSignBtn className="Add" onClick={(e) => handleAddSign(e)}>
+            <div className="Add">
+              <BsPen />
+              新增簽名
+            </div>
+            {signs.length > 0 && (
+              <SignWrapper>
+                {signs.map((item, index) => (
+                  <SignCard
+                    key={index}
+                    item={item}
+                    id={index}
+                    setSigns={setSigns}
+                    setSelectedSign={setSelectedSign}
+                  ></SignCard>
+                ))}
+              </SignWrapper>
+            )}
+          </AddSignBtn>
+          <LightBtn_Long>
+            <BsTextareaT />
+            新增文字
+          </LightBtn_Long>
+          <LightBtn_Long>
+            <BsCalendar2Check />
+            新增日期
+          </LightBtn_Long>
+        </div>
+        <div>
+          <DarkBtn_Long onClick={() => setIsSaving(true)}>
+            <Logo />
+            完成簽署
+          </DarkBtn_Long>
+        </div>
+      </OptionBar>
+    </Wrapper>
   );
 }
 
@@ -163,7 +160,8 @@ const SnapBar = styled.div`
   align-items: center;
 
   padding: 30px 0;
-  width: 500px;
+  width: 250px;
+
   flex-shrink: 0;
 
   background-color: white;
@@ -174,7 +172,11 @@ const SnapBar = styled.div`
   overflow-y: scroll;
 
   ${MQ_MD} {
-    width: 300px;
+    width: 15%;
+  }
+
+  ${MQ_LG} {
+    width: 25%;
   }
 `;
 

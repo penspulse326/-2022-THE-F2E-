@@ -3,7 +3,7 @@ import Logo from "../components/Logo";
 import { DarkBtn, LightBtn } from "../components/Button";
 import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
-import { MQ_MD} from "../constants/breakpoint"
+import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
 
 const FILE_MAX_SIZE = 1 * 1024 * 1024;
 
@@ -95,21 +95,33 @@ const ErrorMessage = styled.span`
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
 
   width: 100%;
   height: 100%;
+
+  ${MQ_MD} {
+    flex-direction: row;
+    justify-content: center;
+  }
 `;
 
 const Wave_1 = styled.div`
+  display: none;
   position: absolute;
   bottom: 0;
   width: 100vw;
   height: 215px;
-  background-image: url("./images/wave1.svg");
+
   background-repeat: no-repeat;
   background-position: bottom;
+
+  ${MQ_MD} {
+    display: block;
+    background-image: url("./images/wave1.svg");
+  }
 `;
 
 const Wave_2 = styled(Wave_1)`
@@ -117,15 +129,18 @@ const Wave_2 = styled(Wave_1)`
   bottom: 0;
   width: 100vw;
   height: 244px;
-  background-image: url("./images/wave2.svg");
+
   background-repeat: no-repeat;
   background-position: right;
+
+  ${MQ_MD} {
+    display: block;
+    background-image: url("./images/wave2.svg");
+  }
 `;
 
 const TitleWrapper = styled.div`
   position: relative;
-  top: 0px;
-  left: 10%;
 
   display: flex;
   flex-direction: column;
@@ -138,7 +153,9 @@ const Title = styled.div`
   justify-content: center;
   align-items: center;
 
-  font-size: 64px;
+  margin-top: 90px;
+
+  font-size: 48px;
   font-weight: bold;
 
   a {
@@ -148,35 +165,47 @@ const Title = styled.div`
   ${MQ_MD} {
     font-size: 56px;
   }
+  ${MQ_LG} {
+    font-size: 64px;
+  }
 `;
 
 const Subtitle = styled.div`
   margin-top: 30px;
-  font-size: 24px;
-  line-height: 50px;
+
+  line-height: 40px;
+  text-align: center;
   font-weight: bold;
 
   ${MQ_MD} {
     font-size: 20px;
+  }
+  ${MQ_LG} {
+    font-size: 24px;
   }
 `;
 
 const UploadWrapper = styled.div`
   position: relative;
   top: 0px;
-  left: 20%;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
 
-  width: 960px;
-  height: 650px;
+  margin-top: 90px;
+  width: 80%;
+  height: auto;
 
   ${MQ_MD} {
-    width: 660px;
-    height: 420px;
+    left: 5%;
+    justify-content: space-between;
+    width: 40%;
+    height: 450px;
+  }
+
+  ${MQ_LG} {
+    height: 650px;
   }
 `;
 
@@ -186,21 +215,27 @@ const Frame = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
-  height: 300px;
-  
-  border: 4px dashed ${(props) => props.theme.primary};
+  border: none;
+
+  ${MQ_MD} {
+    width: 100%;
+    height: 70%;
+    border: 4px dashed ${(props) => props.theme.primary};
+  }
 `;
 
 const Description = styled.div`
-  margin-top: 30px;
-
-  font-size: 18px;
   font-weight: 700;
   text-align: center;
+  display: none;
 
   ${MQ_MD} {
+    display: block;
     margin-top: 18px;
     font-size: 14px;
+  }
+  ${MQ_LG} {
+    margin-top: 30px;
+    font-size: 18px;
   }
 `;

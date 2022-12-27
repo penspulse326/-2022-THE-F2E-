@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "./Logo";
-import { MQ_MD, MQ_LG} from "../constants/breakpoint"
+import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
 
 const NavbarWrapper = styled.div`
   position: relative;
   top: 0;
-  
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   padding: 10px 40px;
+  height: 70px;
   width: 100%;
 
   background: #ffffff;
@@ -21,12 +22,11 @@ const NavbarWrapper = styled.div`
 
   z-index: 99;
 
+  ${MQ_MD} {
+    height: 80px;
+  }
   ${MQ_LG} {
     height: 97px;
-  }
-
-  ${MQ_MD} {
-    height: 60px;
   }
 `;
 
@@ -37,7 +37,6 @@ const Info = styled.div`
 
 const Progress = styled.div`
   margin-left: 67px;
-  width: 632px;
 
   ${(props) =>
     props.progress === 1 && "background-image: url(./images/progress_1.png)"}
@@ -49,12 +48,17 @@ const Progress = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
 
-  ${MQ_LG} {
-    height: 75px;
-  }
-
   ${MQ_MD} {
+    width: 0;
     height: 45px;
+  }
+  ${MQ_MD} {
+    width: 532px;
+    height: 45px;
+  }
+  ${MQ_LG} {
+    width: 632px;
+    height: 75px;
   }
 `;
 
@@ -63,21 +67,20 @@ const Login = styled(Link)`
   justify-content: center;
   align-items: center;
 
-  margin-right: 52px;
-  width: 152px;
-  height: 77px;
-
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   text-decoration: none;
 
   transition: 0.3s;
+
   &:hover {
     color: ${(props) => props.theme.primary_hover};
   }
 
   ${MQ_MD} {
-    font-size: 18px;
+    width: 152px;
+    height: 77px;
+    font-size: 24px;
   }
 `;
 

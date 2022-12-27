@@ -10,19 +10,21 @@ const Canvas = styled.canvas`
   box-shadow: 1px 1px 5px 1px #ccc;
 `;
 
-function PageCanvas({ page, id, setFabricPages, activePage, fabricPages }) {
+function PageCanvas({ page, id, setFabricPages, activePage }) {
   // 用 useRef 抓取此頁面下的 canvas
   const canvasRef = useRef(null);
   const fabricRef = useRef(null);
+
   const { selectedSign, setSelectedSign } = UseSignContext();
 
   useEffect(() => {
-    fabricRef.current?.dispose();
     createViewer();
-  }, [page, activePage]);
+  }, []);
 
   useEffect(() => {
-    handleSign();
+    if (selectedSign && id === activePage) {
+      handleSign();
+    }
   }, [selectedSign]);
 
   async function printPDF(page) {
@@ -60,7 +62,7 @@ function PageCanvas({ page, id, setFabricPages, activePage, fabricPages }) {
   async function createViewer() {
     const canvas = new fabric.Canvas(canvasRef.current);
     fabricRef.current = canvas;
-    canvas.requestRenderAll();
+
     const pdfData = await printPDF(page);
     const pdfImage = await pdfToImage(pdfData);
 
@@ -70,6 +72,7 @@ function PageCanvas({ page, id, setFabricPages, activePage, fabricPages }) {
 
     // 將 PDF 畫面設定為背景 並存進 state
     canvas.setBackgroundImage(pdfImage, canvas.renderAll.bind(canvas));
+    canvas.requestRenderAll();
     setFabricPages((state) => {
       let arr = [...state];
       arr[id] = canvas;
@@ -77,23 +80,18 @@ function PageCanvas({ page, id, setFabricPages, activePage, fabricPages }) {
     });
   }
 
-  const handleSign = () => {
+  const handleSign = async () => {
     const img = localStorage.getItem("sign");
+    const canvas = fabricRef.current;
     if (img) {
       fabric.Image.fromURL(img, function (image) {
         // 設定簽名出現的位置及大小，後續可調整
         image.top = 30;
         image.scaleX = 0.5;
         image.scaleY = 0.5;
-        fabricRef.current.add(image);
-
-        setFabricPages((state) => {
-          let arr = [...state];
-          arr[id] = fabricRef.current;
-          return arr;
-        });
-        setSelectedSign(null);
+        canvas.add(image);
       });
+      setSelectedSign(null);
     }
   };
 
@@ -163,7 +161,6 @@ function PageContainer({ pages, activePage, isSaving, setIsSaving }) {
           key={index}
           id={index}
           page={item}
-          fabricPages={fabricPages}
           setFabricPages={setFabricPages}
           activePage={activePage}
         />

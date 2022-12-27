@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MQ_LG, MQ_MD} from "../constants/breakpoint"
+import { MQ_MD } from "../constants/breakpoint";
 
 export const DarkBtn = styled.div`
   display: flex;
@@ -7,16 +7,17 @@ export const DarkBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 24px 30px;
-  width: 236px;
-  height: 87px;
+  padding: 20px 5px;
+  margin-bottom: 20px;
+  width: 196px;
+  height: 77px;
 
   background: ${(props) => props.theme.primary};
   border-radius: 15px;
   box-sizing: border-box;
 
   color: white;
-  font-size: 32px;
+  font-size: 20px;
 
   cursor: pointer;
 
@@ -31,10 +32,10 @@ export const DarkBtn = styled.div`
   }
 
   ${MQ_MD} {
-    padding: 20px 5px;
-    width: 176px;
-    height: 60px;
-    font-size: 20px;
+    padding: 24px 30px;
+    width: 236px;
+    height: 87px;
+    font-size: 32px;
   }
 `;
 

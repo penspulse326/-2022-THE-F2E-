@@ -18,7 +18,10 @@ function PageCanvas({ page, id, setFabricPages, activePage }) {
   const { selectedSign, setSelectedSign } = UseSignContext();
 
   useEffect(() => {
-    createViewer();
+    fabricRef.current?.dispose();
+    setTimeout(() => {
+      createViewer();
+    }, 500);
   }, []);
 
   useEffect(() => {
@@ -81,7 +84,7 @@ function PageCanvas({ page, id, setFabricPages, activePage }) {
   }
 
   const handleSign = async () => {
-    const img = localStorage.getItem("sign");
+    const img = selectedSign[0];
     const canvas = fabricRef.current;
     if (img) {
       fabric.Image.fromURL(img, function (image) {

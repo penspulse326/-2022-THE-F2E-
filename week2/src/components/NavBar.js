@@ -48,7 +48,7 @@ const Progress = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
 
-  ${MQ_MD} {
+  ${MQ_MB} {
     width: 0;
     height: 45px;
   }

@@ -11,7 +11,7 @@ import {
   BsTrash,
 } from "react-icons/bs";
 import { ReactComponent as Logo } from "../components/logo.svg";
-import PDFCanvas from "../components/PDFCanvas";
+import PDFCanvas from "../components/PdfCanvas";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { SignContext } from "../SignContext";
 import { MQ_MD, MQ_LG } from "../constants/breakpoint";
@@ -102,7 +102,7 @@ export default function FileView() {
         </ViewerWrapper>
       </SignContext.Provider>
       <OptionBar>
-        <div>
+        <div className="btn-group">
           <AddSignBtn className="Add" onClick={(e) => handleAddSign(e)}>
             <div className="Add">
               <BsPen />
@@ -131,12 +131,10 @@ export default function FileView() {
             新增日期
           </LightBtn_Long>
         </div>
-        <div>
-          <DarkBtn_Long onClick={() => setIsSaving(true)}>
-            <Logo />
-            完成簽署
-          </DarkBtn_Long>
-        </div>
+        <DarkBtn_Long onClick={() => setIsSaving(true)}>
+          <Logo />
+          完成簽署
+        </DarkBtn_Long>
       </OptionBar>
     </Wrapper>
   );
@@ -195,6 +193,14 @@ const OptionBar = styled(SnapBar)`
 
   ${LightBtn_Long} {
     margin-bottom: 30px;
+  }
+
+  .btn-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 

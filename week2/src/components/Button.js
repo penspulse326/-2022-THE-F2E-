@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MQ_MD } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG } from "../constants/breakpoint";
 
 export const DarkBtn = styled.div`
   display: flex;
@@ -52,15 +52,25 @@ export const LightBtn = styled(DarkBtn)`
 `;
 
 export const DarkBtn_Long = styled(DarkBtn)`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
-  width: 360px;
+  width: 10%;
   height: 77px;
+
+  ${MQ_MD} {
+    font-size: 24px;
+    width: 90%;
+  }
 `;
 
 export const LightBtn_Long = styled(LightBtn)`
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
-  width: 360px;
+  width: 10%;
   height: 77px;
+
+  ${MQ_MD} {
+    font-size: 24px;
+    width: 90%;
+  }
 `;

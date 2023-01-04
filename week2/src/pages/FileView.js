@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Card from "../components/Card";
 import { SignCanvas } from "../components/SignCanvas";
 import { DarkBtn_Long, LightBtn_Long } from "../components/Button";
+import { ReactComponent as Logo } from "../components/logo.svg";
 import {
   BsCalendar2Check,
   BsPen,
@@ -10,11 +12,12 @@ import {
   BsPencilSquare,
   BsTrash,
 } from "react-icons/bs";
-import { ReactComponent as Logo } from "../components/logo.svg";
 import PDFCanvas from "../components/PdfCanvas";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { SignContext } from "../SignContext";
 import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { UseFileContext } from "../FileContext";
+import { Mask } from "../components/Mask";
 
 const Base64Prefix = "data:application/pdf;base64,";
 
@@ -25,6 +28,18 @@ export default function FileView() {
   const [selectedSign, setSelectedSign] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isMask, setIsMask] = useState(false);
+
+  const { file } = UseFileContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (file) {
+      LoadFile(file);
+    } else {
+      alert("讀取文件時發生錯誤，導回到首頁後請重新上傳");
+      navigate("/");
+    }
+  }, [file]);
 
   // 使用原生 FileReader 轉檔
   function readBlob(blob) {
@@ -37,8 +52,8 @@ export default function FileView() {
   }
 
   // 將 PDF 檔轉成 Base64 編碼資料 分頁放入 state 並傳給 PageContainer
-  const handleUpload = async (e) => {
-    const pdf = await readBlob(e.target.files[0]);
+  const LoadFile = async (file) => {
+    const pdf = await readBlob(file);
     const data = window.atob(pdf.substring(Base64Prefix.length));
     const pdfDoc = await pdfjsLib.getDocument({ data }).promise;
 
@@ -75,12 +90,6 @@ export default function FileView() {
       )}
       <SnapBar>
         頁面預覽
-        <input
-          type="file"
-          className="select"
-          accept="application/pdf"
-          onChange={handleUpload}
-        />
         {pages.map((item, index) => (
           <Card
             key={index}
@@ -202,24 +211,6 @@ const OptionBar = styled(SnapBar)`
     justify-content: center;
     align-items: center;
   }
-`;
-
-const Mask = styled.div`
-  position: absolute;
-  left: 0px;
-  top: -97px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 100vw;
-  height: 100vh;
-
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(3px);
-
-  z-index: 99;
 `;
 
 const SignBoard = styled.div`

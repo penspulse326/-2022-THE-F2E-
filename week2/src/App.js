@@ -4,6 +4,8 @@ import Home from "./pages/Home";
 import FileView from "./pages/FileView";
 import Layout from "./components/Layout";
 import { ThemeProvider } from "styled-components";
+import { FileContext } from "./FileContext";
+import { useState } from "react";
 
 const colors = {
   primary: "#5C45D2",
@@ -20,18 +22,21 @@ const colors = {
 };
 
 function App() {
+  const [file, setFile] = useState(null);
   return (
     <div className="App">
       <ThemeProvider theme={colors}>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="fileview" element={<FileView />} />
-              <Route path="*" element={<Home />} />
-            </Route>
-          </Routes>
-        </HashRouter>
+        <FileContext.Provider value={{ file, setFile }}>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="fileview" element={<FileView />} />
+                <Route path="*" element={<Home />} />
+              </Route>
+            </Routes>
+          </HashRouter>
+        </FileContext.Provider>
       </ThemeProvider>
     </div>
   );

@@ -3,17 +3,22 @@ import Logo from "../components/Logo";
 import { DarkBtn, LightBtn } from "../components/Button";
 import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
-import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { UseFileContext } from "../FileContext";
+import { useNavigate } from "react-router-dom";
+import { Mask } from "../components/Mask";
 
 const FILE_MAX_SIZE = 1 * 1024 * 1024;
 
 export default function Home() {
+  const [isMask, setIsMask] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { File, setFile } = UseFileContext();
+  const navigate = useNavigate();
 
   const handleUpload = ({ target }) => {
     setErrorMessage(null);
     const file = target.files[0];
-    console.log(file.type);
     if (
       file.type !== "application/pdf" &&
       file.type !== "image/png" &&
@@ -21,9 +26,12 @@ export default function Home() {
       file.type !== "image/jpeg"
     ) {
       setErrorMessage("不接受該檔案類型");
-    }
-    if (file.size > FILE_MAX_SIZE) {
+    } else if (file.size > FILE_MAX_SIZE) {
       setErrorMessage("檔案尺寸太大");
+    } else {
+      setFile(() => file);
+      setIsMask(true);
+      setTimeout(() => navigate("fileview"), 1500);
     }
   };
 
@@ -75,9 +83,21 @@ export default function Home() {
           拍攝文件
         </LightBtn>
       </UploadWrapper>
+      {isMask && (
+        <Mask>
+          <LoadingText>上傳中</LoadingText>
+        </Mask>
+      )}
     </Wrapper>
   );
 }
+
+const LoadingText = styled.span`
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+  text-shadow: 1 1 1 1 #333;
+`;
 
 const ErrorMessage = styled.span`
   display: flex;

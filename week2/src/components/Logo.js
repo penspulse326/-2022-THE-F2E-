@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD } from "../constants/breakpoint";
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.img`
   margin-right: 20px;
   width: 40px;
   height: 40px;
 
-  background-image: url("./images/logo.png");
+  content: url("./images/logo.png");
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -20,6 +20,7 @@ const LogoWrapper = styled.div`
 
 const LogoLink = styled(Link)`
   margin: 0;
+
   ${MQ_MD} {
     margin: 0 30px;
   }

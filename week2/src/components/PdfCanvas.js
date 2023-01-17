@@ -3,6 +3,13 @@ import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
 import { UseSignContext } from "../SignContext";
+import {
+  RxCursorArrow,
+  RxHand,
+  RxZoomIn,
+  RxZoomOut,
+  RxWidth,
+} from "react-icons/rx";
 
 const PRINT_RATE = 120.0 / 72.0;
 
@@ -201,12 +208,40 @@ export default function PDFCanvas({
         />
       </PageWrapper>
       <Zoom>
-        <button onClick={() => handleScale("+")}>+</button>
-        <button onClick={() => handleScale("-")}>-</button>
+        <PanelBtn>
+          <RxCursorArrow />
+        </PanelBtn>
+        <PanelBtn>
+          <RxHand />
+        </PanelBtn>
+        <PanelBtn onClick={() => handleScale("+")}>
+          <RxZoomIn />
+        </PanelBtn>
+        <PanelBtn onClick={() => handleScale("-")}>
+          <RxZoomOut />
+        </PanelBtn>
+        <PanelBtn>
+          <RxWidth />
+        </PanelBtn>
       </Zoom>
     </>
   );
 }
+
+const PanelBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 64px;
+  height: 64px;
+
+  cursor: pointer;
+
+  svg {
+    transform: scale(1.5);
+  }
+`;
 
 const PageWrapper = styled.div`
   position: relative;
@@ -229,17 +264,16 @@ const Zoom = styled.div`
   position: fixed;
   bottom: 50px;
 
-  width: 500px;
-  height: 50px;
+  display: flex;
 
-  background-color: grey;
+  padding: 5px 10px;
+
+  background-color: #222;
+  color: white;
   opacity: 0.3;
-  transition: 0.3s;
+  border-radius: 5px;
 
-  button {
-    width: 100px;
-    height: 100%;
-  }
+  transition: 0.3s;
 
   &:hover {
     opacity: 1;

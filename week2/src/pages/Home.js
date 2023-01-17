@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import Logo from "../components/Logo";
-import { DarkBtn, LightBtn } from "../components/Button";
-import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
+import Logo from "../components/Logo";
 import { MQ_MD, MQ_LG } from "../constants/breakpoint";
 import { UseFileContext } from "../FileContext";
-import { useNavigate } from "react-router-dom";
+import { DarkBtn, LightBtn } from "../components/Button";
 import { Mask } from "../components/Mask";
 
 const FILE_MAX_SIZE = 1 * 1024 * 1024;
@@ -13,7 +13,7 @@ const FILE_MAX_SIZE = 1 * 1024 * 1024;
 export default function Home() {
   const [isMask, setIsMask] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const { File, setFile } = UseFileContext();
+  const { setFile } = UseFileContext();
   const navigate = useNavigate();
 
   const handleUpload = ({ target }) => {

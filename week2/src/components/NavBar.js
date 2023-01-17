@@ -1,8 +1,28 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "./Logo";
 import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
+
+export default function NavBar() {
+  const [progress, setProgress] = useState(1);
+  const location = useLocation();
+  useEffect(() => {
+    setProgress(() => {
+      if (location.pathname === "/") return 1;
+      if (location.pathname === "/fileview") return 2;
+      if (location.pathname === "/download") return 3;
+    });
+  }, [location]);
+
+  return (
+    <NavbarWrapper>
+      <Logo />
+      <Progress progress={progress} />
+      <Login>登入</Login>
+    </NavbarWrapper>
+  );
+}
 
 const NavbarWrapper = styled.div`
   position: relative;
@@ -30,14 +50,7 @@ const NavbarWrapper = styled.div`
   }
 `;
 
-const Info = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 const Progress = styled.div`
-  margin-left: 67px;
-
   ${(props) =>
     props.progress === 1 && "background-image: url(./images/progress_1.png)"}
   ${(props) =>
@@ -62,19 +75,22 @@ const Progress = styled.div`
   }
 `;
 
-const Login = styled(Link)`
+const Login = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 
+  color: ${({ theme }) => theme.primary};
   font-size: 18px;
   font-weight: bold;
   text-decoration: none;
 
   transition: 0.3s;
 
+  cursor: pointer;
+
   &:hover {
-    color: ${(props) => props.theme.primary_hover};
+    color: ${({ theme }) => theme.primary_hover};
   }
 
   ${MQ_MD} {
@@ -83,25 +99,3 @@ const Login = styled(Link)`
     font-size: 24px;
   }
 `;
-
-export default function NavBar() {
-  const [progress, setProgress] = useState(1);
-  const location = useLocation();
-  useEffect(() => {
-    setProgress(() => {
-      if (location.pathname === "/") return 1;
-      if (location.pathname === "/fileview") return 2;
-      if (location.pathname === "/download") return 3;
-    });
-  }, [location]);
-
-  return (
-    <NavbarWrapper>
-      <Info>
-        <Logo />
-        <Progress progress={progress} />
-      </Info>
-      <Login to="/">登入</Login>
-    </NavbarWrapper>
-  );
-}

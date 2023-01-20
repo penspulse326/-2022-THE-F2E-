@@ -33,9 +33,15 @@ export const DarkBtn = styled.div`
 
   ${MQ_MD} {
     padding: 24px 30px;
-    width: 236px;
+    width: 186px;
+    font-size: 24px;
+  }
+
+  ${MQ_LG} {
+    padding: 24px 30px;
+    width: 216px;
     height: 87px;
-    font-size: 32px;
+    font-size: 28px;
   }
 `;
 

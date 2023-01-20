@@ -120,7 +120,7 @@ const Wrapper = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 100%;
+  height: 100vh;
 
   ${MQ_MD} {
     flex-direction: row;
@@ -225,7 +225,7 @@ const UploadWrapper = styled.div`
   }
 
   ${MQ_LG} {
-    height: 650px;
+    height: 500px;
   }
 `;
 
@@ -251,11 +251,9 @@ const Description = styled.div`
 
   ${MQ_MD} {
     display: block;
-    margin-top: 18px;
     font-size: 14px;
   }
   ${MQ_LG} {
-    margin-top: 30px;
     font-size: 18px;
   }
 `;

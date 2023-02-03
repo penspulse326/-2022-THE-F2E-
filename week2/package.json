@@ -18,11 +18,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "copy-assets": "cp ./node_modules/pdfjs-dist/build/pdf.worker.min.js ./public/",
-    "dev": "npm run copy-assets && next dev",
-    "build": "npm run copy-assets && next build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

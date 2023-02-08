@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-light navbar-light">
+    <nav className="navbar navbar-expand-lg bg-light navbar-light fixed-top">
       <div className="container">
         <a className="col-sm-1 col-2" href="#">
           <Logo />
@@ -35,6 +35,6 @@ export default function Navbar() {
 }
 
 const Logo = styled.img`
-  content: url("../images/logo.png");
+  content: url("../images/logo.svg");
   width: 100%;
 `;

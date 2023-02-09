@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MQ_SM, MQ_XS } from "../constants";
+import { MQ_SM, MQ_XS, MQ_MD } from "../constants/breakpoint";
 
 export default function Home() {
   return (
@@ -26,12 +26,18 @@ const Title = styled.img`
   content: url("./images/logo.svg");
 
   position: relative;
-  top: 20%;
-  justify-self: center;
+  top: 219px;
+  left: 55%;
 
   ${MQ_XS} {
     display: flex;
     justify-content: center;
     width: 200px;
+  }
+
+  ${MQ_SM} {
+  }
+
+  ${MQ_MD} {
   }
 `;

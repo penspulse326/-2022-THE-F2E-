@@ -1,8 +1,6 @@
-import "./stylesheets/all.scss";
-import { ThemeProvider } from "styled-components";
 import { HashRouter, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/js/bootstrap.bundle";
-import Layout from "./components/UI/Layout";
+import { ThemeProvider } from "styled-components";
+import Layout from "./components/Layout";
 import Home from "./pages/Home";
 
 const colors = {

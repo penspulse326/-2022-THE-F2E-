@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 export default function Layout() {
   return (
     <>
-      <div className="vh-100 layout">
+      <div style={{ width: "100vw" }}>
         <Navbar />
         <Outlet />
       </div>

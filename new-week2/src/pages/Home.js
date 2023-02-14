@@ -9,11 +9,7 @@ export default function Home() {
           <Title />
           <TitleText>線上簽署，方便快速。</TitleText>
         </div>
-        <AddButton>
-          <div>
-            <span>簽署新文件</span>
-          </div>
-        </AddButton>
+        <AddButton>簽署新文件</AddButton>
       </TitleWrapper>
     </Container>
   );
@@ -89,10 +85,13 @@ const TitleText = styled.p`
 
 const AddButton = styled.div`
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   margin-top: 6rem;
-  padding: 2rem 6rem;
   width: 100%;
+  height: 100px;
 
   background-color: ${({ theme }) => theme.main};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -101,41 +100,37 @@ const AddButton = styled.div`
   font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: 1rem;
-  text-align: center;
   text-indent: 1rem;
 
   cursor: pointer;
 
   ${MQ_XS} {
     margin-top: 23rem;
-    padding: 1rem 0;
+    height: 2.5rem;
     font-size: 0.5rem;
     letter-spacing: 0.5rem;
   }
 
-  div {
-    span {
-      position: relative;
-      z-index: 99;
-    }
+  transform: perspective(1px) translateZ(0);
+  transition: color 0.3s;
 
-    &::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0px;
-      bottom: 0px;
-      right: 0;
-      background: ${({ theme }) => theme.primary};
-      transition: 0.5s;
-      transform: scaleX(0);
-      transform-origin: left;
-
-      z-index: 0;
-    }
-
-    &:hover::after {
-      transform: scaleX(1);
-    }
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: ${({ theme }) => theme.primary};
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.3s ease-out;
+  }
+  &:hover {
+    color: white;
+  }
+  &:hover:before {
+    transform: scaleX(1);
   }
 `;

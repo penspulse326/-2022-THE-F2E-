@@ -11,6 +11,28 @@ export default function Home() {
         </div>
         <AddButton>簽署新文件</AddButton>
       </TitleWrapper>
+      <Mask>
+        <LoginWrapper>
+          <div>
+            <div className="text-login">快速登入</div>
+            <Title />
+          </div>
+          <div>
+            <div className="text-choose">請選擇登入點點簽的方式</div>
+            <div className="icon-box">
+              <img src="./images/icon_fb.svg" alt="facebook" />
+              <img src="./images/icon_google.svg" alt="google" />
+            </div>
+          </div>
+          <div className="info-box">
+            <span>
+              登入後即表示您接受我們的
+              <a href="#">服務條款</a> 和<a href="#">隱私政策</a>。
+            </span>
+            <CancelButton>取消</CancelButton>
+          </div>
+        </LoginWrapper>
+      </Mask>
     </Container>
   );
 }
@@ -48,19 +70,25 @@ const Title = styled.img`
 `;
 
 const TitleWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   justify-self: flex-end;
+
   position: relative;
   top: 220px;
+
   margin-right: 20%;
-  height: 117px;
+  height: 40%;
 
   ${MQ_MD} {
     margin-right: 5%;
   }
   ${MQ_SM} {
-    margin: 0;
-    top: 100px;
     justify-self: center;
+    top: 100px;
+    margin: 0;
+    height: 75%;
   }
 `;
 
@@ -89,7 +117,6 @@ const AddButton = styled.div`
   justify-content: center;
   align-items: center;
 
-  margin-top: 6rem;
   width: 100%;
   height: 100px;
 
@@ -105,7 +132,6 @@ const AddButton = styled.div`
   cursor: pointer;
 
   ${MQ_XS} {
-    margin-top: 23rem;
     height: 2.5rem;
     font-size: 0.5rem;
     letter-spacing: 0.5rem;
@@ -133,4 +159,90 @@ const AddButton = styled.div`
   &:hover:before {
     transform: scaleX(1);
   }
+`;
+
+const Mask = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  z-index: 99;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.2);
+`;
+
+const LoginWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 60px 30px 20px 30px;
+  height: 650px;
+  width: 830px;
+
+  background: white;
+  border-radius: 35px;
+
+  color: ${({ theme }) => theme.grey.dark};
+  letter-spacing: 5px;
+  text-indent: 5px;
+  text-align: center;
+
+  .text-login {
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+  }
+
+  .text-choose {
+    font-size: 1.25rem;
+  }
+
+  .icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-top: 2.25rem;
+
+    img {
+      width: 90px;
+      height: 90px;
+      margin: 0 1rem;
+    }
+  }
+
+  .info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      margin-right: 50px;
+    }
+  }
+
+  ${Title} {
+    width: 300px;
+  }
+`;
+
+const CancelButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 60px;
+  width: 180px;
+
+  background: #fffaf4;
+  box-shadow: 0px 4px 4px #eeede8;
+  border-radius: 35px;
+
+  color: ${({ theme }) => theme.secondary};
 `;

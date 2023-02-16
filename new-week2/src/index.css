@@ -53,3 +53,11 @@ table {
 	box-sizing: border-box;
   }
 
+  button {
+	padding: 0;
+	border: none 0;
+	font: inherit;
+	color: inherit;
+	background-color: transparent;
+	cursor: pointer;
+	}

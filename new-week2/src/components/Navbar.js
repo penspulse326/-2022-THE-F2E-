@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { MQ_XS, MQ_MD } from "../constants/breakpoint";
 import { BurgerButton, BurgerList, BurgerController } from "./UI/Burger";
+import { LoginBox } from "./UI/Login";
+import Mask from "./UI/Mask";
 
 export default function Navbar() {
   const [showList, setShowList] = useState(false);
+  const [loginUI, setLoginUI] = useState(false);
 
   const handleShowList = () => {
     setShowList((state) => !state);
@@ -13,19 +17,22 @@ export default function Navbar() {
   return (
     <>
       <NavWrapper>
-        <a href="#">
+        <Link to="/">
           <Logo />
-        </a>
+        </Link>
         <NavGroup>
-          <MenuItems />
+          <MenuItems setLoginUI={setLoginUI} />
         </NavGroup>
         <BurgerController onClick={() => handleShowList()}>
           <BurgerButton />
         </BurgerController>
       </NavWrapper>
       <BurgerList showList={showList}>
-        <MenuItems />
+        <MenuItems setLoginUI={setLoginUI} />
       </BurgerList>
+      <Mask state={loginUI}>
+        <LoginBox setLoginUI={setLoginUI} />
+      </Mask>
     </>
   );
 }
@@ -63,6 +70,11 @@ const NavGroup = styled.div`
     cursor: pointer;
   }
 
+  a:hover,
+  div:hover {
+    color: ${({ theme }) => theme.primary};
+  }
+
   ${MQ_XS} {
     display: none;
   }
@@ -77,12 +89,24 @@ const Logo = styled.img`
   }
 `;
 
-const MenuItems = () => {
+const MenuItems = ({ setLoginUI }) => {
+  const handleLoginClick = () => {
+    setLoginUI(true);
+  };
   return (
     <>
       <div style={{ color: "#EEEDE8" }}>邀請他人簽署</div>
-      <div>簽署新文件</div>
-      <div>登入</div>
+      <div>
+        <CleanLink to="upload" style={{ textDecoration: "none" }}>
+          簽署新文件
+        </CleanLink>
+      </div>
+      <div onClick={() => handleLoginClick()}>登入</div>
     </>
   );
 };
+
+const CleanLink = styled(Link)`
+  text-decoration: none;
+  color: ${({ theme }) => theme.secondary};
+`;

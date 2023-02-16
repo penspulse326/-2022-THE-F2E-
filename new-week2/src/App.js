@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
+import Upload from "./pages/Upload";
 
 const colors = {
   primary: "#F9B471",
@@ -23,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="upload" element={<Upload />} />
           </Route>
         </Routes>
       </HashRouter>

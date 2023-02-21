@@ -89,6 +89,6 @@ const UploadBox = styled.div`
   height: 80%;
 
   background-color: ${({ theme }) => theme.main};
-  border: 1px dashed #a5a39c;
+  border: 1px dashed ${({ theme }) => theme.grey.dark};
   border-radius: 35px;
 `;

@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
-import Logo from "../components/Logo";
 import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import styled from "styled-components";
+import Logo from "../assets/Logo";
 import { UseFileContext } from "../FileContext";
 import { DarkBtn, LightBtn } from "../components/Button";
-import { Mask } from "../components/Mask";
+import Wave from "../assets/Wave";
+import Mask from "../components/Mask";
 
 const FILE_MAX_SIZE = 1 * 1024 * 1024;
 
@@ -19,12 +20,7 @@ export default function Home() {
   const handleUpload = ({ target }) => {
     setErrorMessage(null);
     const file = target.files[0];
-    if (
-      file.type !== "application/pdf" &&
-      file.type !== "image/png" &&
-      file.type !== "image/jpg" &&
-      file.type !== "image/jpeg"
-    ) {
+    if (file.type !== "application/pdf") {
       setErrorMessage("不接受該檔案類型");
     } else if (file.size > FILE_MAX_SIZE) {
       setErrorMessage("檔案尺寸太大");
@@ -37,8 +33,7 @@ export default function Home() {
 
   return (
     <Wrapper>
-      <Wave_1 />
-      <Wave_2 />
+      <Wave />
       <TitleWrapper>
         <Title>
           <Logo />
@@ -51,7 +46,7 @@ export default function Home() {
         </Subtitle>
       </TitleWrapper>
       <UploadWrapper>
-        <Frame>
+        <UploadFrame>
           <label htmlFor="upload">
             <DarkBtn>
               <BsCloudUpload />
@@ -60,7 +55,7 @@ export default function Home() {
                 id="upload"
                 type="file"
                 className="select"
-                accept="application/pdf image/jpg+jpeg+png"
+                accept="application/pdf"
                 onChange={(e) => handleUpload(e)}
                 style={{ display: "none" }}
               />
@@ -69,7 +64,7 @@ export default function Home() {
           <Description>
             或拖曳檔案到此處
             <br />
-            接受檔案類型：pdf、jpg、png
+            接受檔案類型：pdf
             {errorMessage && (
               <ErrorMessage>
                 <BsExclamationCircle></BsExclamationCircle>
@@ -77,7 +72,7 @@ export default function Home() {
               </ErrorMessage>
             )}
           </Description>
-        </Frame>
+        </UploadFrame>
         <LightBtn>
           <BsCamera />
           拍攝文件
@@ -93,6 +88,7 @@ export default function Home() {
 }
 
 const LoadingText = styled.span`
+  -webkit-text-stroke: 1px black;
   color: white;
   font-size: 48px;
   font-weight: bold;
@@ -125,37 +121,6 @@ const Wrapper = styled.div`
   ${MQ_MD} {
     flex-direction: row;
     justify-content: center;
-  }
-`;
-
-const Wave_1 = styled.div`
-  display: none;
-  position: absolute;
-  bottom: 0;
-  width: 100vw;
-  height: 215px;
-
-  background-repeat: no-repeat;
-  background-position: bottom;
-
-  ${MQ_MD} {
-    display: block;
-    background-image: url("./images/wave1.svg");
-  }
-`;
-
-const Wave_2 = styled(Wave_1)`
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 244px;
-
-  background-repeat: no-repeat;
-  background-position: right;
-
-  ${MQ_MD} {
-    display: block;
-    background-image: url("./images/wave2.svg");
   }
 `;
 
@@ -213,7 +178,7 @@ const UploadWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
-  margin-top: 90px;
+  margin-top: 10%;
   width: 80%;
   height: auto;
 
@@ -229,7 +194,7 @@ const UploadWrapper = styled.div`
   }
 `;
 
-const Frame = styled.div`
+const UploadFrame = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

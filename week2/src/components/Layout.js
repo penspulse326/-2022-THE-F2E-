@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import Footer from "./Footer";
 import Navbar from "./NavBar";
 
 const LayoutWrapper = styled.div`
@@ -7,7 +8,6 @@ const LayoutWrapper = styled.div`
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-
 
   background-repeat: no-repeat;
 
@@ -20,6 +20,7 @@ function Layout() {
     <LayoutWrapper>
       <Navbar />
       <Outlet />
+      <Footer />
     </LayoutWrapper>
   );
 }

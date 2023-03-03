@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-export const Mask = styled.div`
+const Mask = styled.div`
   position: absolute;
-  left: 0px;
+  top: 0;
+  left: 0;
 
   display: flex;
   justify-content: center;
@@ -16,3 +17,5 @@ export const Mask = styled.div`
 
   z-index: 99;
 `;
+
+export default Mask;

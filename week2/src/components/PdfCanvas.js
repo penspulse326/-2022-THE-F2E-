@@ -3,13 +3,8 @@ import { fabric } from "fabric";
 import { jsPDF } from "jspdf";
 import styled from "styled-components";
 import { UseSignContext } from "../SignContext";
-import {
-  RxCursorArrow,
-  RxHand,
-  RxZoomIn,
-  RxZoomOut,
-  RxWidth,
-} from "react-icons/rx";
+import ZoomPanel from "./ZoomPanel";
+import { MQ_MB } from "../constants/breakpoint";
 
 const PRINT_RATE = 120.0 / 72.0;
 
@@ -188,15 +183,6 @@ export default function PDFCanvas({
   // 縮放倍率
   const [scale, setScale] = useState(0.5);
 
-  const handleScale = (zoom) => {
-    if (zoom === "+") {
-      setScale(scale + 0.125);
-    }
-    if (zoom === "-" && scale > 0.5) {
-      setScale(scale - 0.125);
-    }
-  };
-
   return (
     <>
       <PageWrapper className="page__wrapper" scale={scale}>
@@ -207,41 +193,10 @@ export default function PDFCanvas({
           setIsSaving={setIsSaving}
         />
       </PageWrapper>
-      <Zoom>
-        <PanelBtn>
-          <RxCursorArrow />
-        </PanelBtn>
-        <PanelBtn>
-          <RxHand />
-        </PanelBtn>
-        <PanelBtn onClick={() => handleScale("+")}>
-          <RxZoomIn />
-        </PanelBtn>
-        <PanelBtn onClick={() => handleScale("-")}>
-          <RxZoomOut />
-        </PanelBtn>
-        <PanelBtn>
-          <RxWidth />
-        </PanelBtn>
-      </Zoom>
+      <ZoomPanel scale={scale} setScale={setScale} />
     </>
   );
 }
-
-const PanelBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  width: 64px;
-  height: 64px;
-
-  cursor: pointer;
-
-  svg {
-    transform: scale(1.5);
-  }
-`;
 
 const PageWrapper = styled.div`
   position: relative;
@@ -253,29 +208,16 @@ const PageWrapper = styled.div`
   width: 100%;
 
   .canvas-container {
-    margin-bottom: -500px;
-    margin-right: -800px;
-    transform: scale(${(props) => props.scale});
+    transform: scale(0.4);
     transform-origin: 0 0;
   }
-`;
 
-const Zoom = styled.div`
-  position: fixed;
-  bottom: 50px;
-
-  display: flex;
-
-  padding: 5px 10px;
-
-  background-color: #222;
-  color: white;
-  opacity: 0.3;
-  border-radius: 5px;
-
-  transition: 0.3s;
-
-  &:hover {
-    opacity: 1;
+  ${MQ_MB} {
+    .canvas-container {
+      margin-bottom: -500px;
+      margin-right: -800px;
+      transform: scale(${(props) => props.scale});
+      transform-origin: 0 0;
+    }
   }
 `;

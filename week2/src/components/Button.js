@@ -7,41 +7,37 @@ export const DarkBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 20px 5px;
+  padding: 15px 30px;
   margin-bottom: 20px;
-  width: 196px;
-  height: 77px;
 
   background: ${(props) => props.theme.primary};
   border-radius: 15px;
+  border: 2px solid ${(props) => props.theme.primary};
   box-sizing: border-box;
 
   color: white;
-  font-size: 20px;
 
   cursor: pointer;
 
   transition: 0.3s;
 
-  &:hover {
-    background: ${(props) => props.theme.primary_hover};
-  }
-
-  svg {
-    margin-right: 12px;
-  }
-
   ${MQ_MD} {
-    padding: 24px 30px;
-    width: 186px;
-    font-size: 24px;
+    width: 180px;
+    font-size: 20px;
+
+    svg {
+      margin-right: 12px;
+    }
   }
 
   ${MQ_LG} {
-    padding: 24px 30px;
-    width: 216px;
-    height: 87px;
+    width: 220px;
+    height: 90px;
     font-size: 28px;
+  }
+
+  &:hover {
+    background: ${(props) => props.theme.primary_hover};
   }
 `;
 
@@ -60,8 +56,8 @@ export const LightBtn = styled(DarkBtn)`
 export const DarkBtn_Long = styled(DarkBtn)`
   font-size: 18px;
   font-weight: 600;
-  width: 10%;
-  height: 77px;
+  width: 40px;
+  height: 40px;
 
   ${MQ_MD} {
     font-size: 24px;
@@ -72,8 +68,8 @@ export const DarkBtn_Long = styled(DarkBtn)`
 export const LightBtn_Long = styled(LightBtn)`
   font-size: 18px;
   font-weight: 600;
-  width: 10%;
-  height: 77px;
+  width: 40px;
+  height: 40px;
 
   ${MQ_MD} {
     font-size: 24px;

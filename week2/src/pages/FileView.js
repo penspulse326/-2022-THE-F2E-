@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Card from "../components/Card";
 import { SignCanvas } from "../components/SignCanvas";
 import { DarkBtn_Long, LightBtn_Long } from "../components/Button";
-import { ReactComponent as Logo } from "../components/logo.svg";
+import { ReactComponent as Logo } from "../assets/logo.svg";
 import {
   BsCalendar2Check,
   BsPen,
@@ -15,9 +15,9 @@ import {
 import PDFCanvas from "../components/PdfCanvas";
 import * as pdfjsLib from "pdfjs-dist/webpack";
 import { SignContext } from "../SignContext";
-import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG, MQ_MB } from "../constants/breakpoint";
 import { UseFileContext } from "../FileContext";
-import { Mask } from "../components/Mask";
+import Mask from "../components/Mask";
 
 const Base64Prefix = "data:application/pdf;base64,";
 
@@ -112,10 +112,13 @@ export default function FileView() {
       </SignContext.Provider>
       <OptionBar>
         <div className="btn-group">
-          <AddSignBtn className="Add" onClick={(e) => handleAddSign(e)}>
-            <div className="Add">
+          <AddSignBtn
+            text="新增簽名"
+            className="Add"
+            onClick={(e) => handleAddSign(e)}
+          >
+            <div>
               <BsPen />
-              新增簽名
             </div>
             {signs.length > 0 && (
               <SignWrapper>
@@ -131,13 +134,11 @@ export default function FileView() {
               </SignWrapper>
             )}
           </AddSignBtn>
-          <LightBtn_Long>
+          <LightBtn_Long text="新增文字">
             <BsTextareaT />
-            新增文字
           </LightBtn_Long>
-          <LightBtn_Long>
+          <LightBtn_Long text="新增日期">
             <BsCalendar2Check />
-            新增日期
           </LightBtn_Long>
         </div>
         <DarkBtn_Long onClick={() => setIsSaving(true)}>
@@ -167,7 +168,7 @@ const SnapBar = styled.div`
   align-items: center;
 
   padding: 30px 0;
-  width: 250px;
+  width: 0px;
 
   flex-shrink: 0;
 
@@ -181,7 +182,6 @@ const SnapBar = styled.div`
   ${MQ_MD} {
     width: 15%;
   }
-
   ${MQ_LG} {
     width: 25%;
   }
@@ -196,20 +196,49 @@ const ViewerWrapper = styled.div`
   overflow: scroll;
 `;
 
-const OptionBar = styled(SnapBar)`
-  justify-content: space-between;
-  overflow: auto;
+const OptionBar = styled.div`
+  position: absolute;
+  left: 0;
+  bottom: 0;
 
-  ${LightBtn_Long} {
-    margin-bottom: 30px;
-  }
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  height: 60px;
+
+  background-color: white;
+  overflow: none;
+  border-top: 1px solid #eeeeee;
 
   .btn-group {
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
+    width: 100%;
+  }
+
+  ${MQ_MD} {
+    position: relative;
+    right: 0;
+
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 20px 0;
+    width: 15%;
+    height: calc(100% - 20px);
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+  }
+  ${MQ_LG} {
+    width: 25%;
   }
 `;
 

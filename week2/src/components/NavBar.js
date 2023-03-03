@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Logo from "./Logo";
+import Logo from "../assets/Logo";
 import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
 
 export default function NavBar() {
@@ -17,8 +17,10 @@ export default function NavBar() {
 
   return (
     <NavbarWrapper>
-      <Logo />
-      <Progress progress={progress} />
+      <LogoGroup>
+        <Logo />
+        <Progress progress={progress} />
+      </LogoGroup>
       <Login>登入</Login>
     </NavbarWrapper>
   );
@@ -62,10 +64,10 @@ const Progress = styled.div`
   background-size: contain;
 
   ${MQ_MB} {
-    width: 0;
-    height: 45px;
+    display: none;
   }
   ${MQ_MD} {
+    display: block;
     width: 532px;
     height: 45px;
   }
@@ -98,4 +100,8 @@ const Login = styled.div`
     height: 77px;
     font-size: 24px;
   }
+`;
+
+const LogoGroup = styled.div`
+  display: flex;
 `;

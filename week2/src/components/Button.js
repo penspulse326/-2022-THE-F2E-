@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG, MQ_MB } from "../constants/breakpoint";
 
 export const DarkBtn = styled.div`
   display: flex;
@@ -7,7 +7,7 @@ export const DarkBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 15px 30px;
+  padding:0 ;
   margin-bottom: 20px;
 
   background: ${(props) => props.theme.primary};
@@ -16,18 +16,22 @@ export const DarkBtn = styled.div`
   box-sizing: border-box;
 
   color: white;
+  font-size: 16px;
 
   cursor: pointer;
 
   transition: 0.3s;
 
+  
+
   ${MQ_MD} {
+    padding: 15px 30px;
     width: 180px;
     font-size: 20px;
 
     svg {
-      margin-right: 12px;
-    }
+    margin-right: 12px;
+  }
   }
 
   ${MQ_LG} {
@@ -54,25 +58,52 @@ export const LightBtn = styled(DarkBtn)`
 `;
 
 export const DarkBtn_Long = styled(DarkBtn)`
-  font-size: 18px;
-  font-weight: 600;
+  margin: 0 2px;
+  padding: 0;
   width: 40px;
   height: 40px;
 
-  ${MQ_MD} {
-    font-size: 24px;
+  border-radius: 10px;
+  
+  font-size: 18px;
+  font-weight: 600;
+  
+  ${MQ_MB} {
+    margin-bottom: 20px;
     width: 90%;
+    height: 76px;
+
+    border-radius: 15px;
+    font-size: 24px;
+
+    span::before{
+      content: "${({ text }) => text}";
+    }
   }
 `;
 
 export const LightBtn_Long = styled(LightBtn)`
-  font-size: 18px;
-  font-weight: 600;
+  margin: 0 2px;
+  padding: 0;
   width: 40px;
   height: 40px;
 
-  ${MQ_MD} {
-    font-size: 24px;
+  border-radius: 10px;
+  
+  font-size: 18px;
+  font-weight: 600;
+
+
+  ${MQ_MB} {
+    margin-bottom: 20px;
     width: 90%;
+    height: 76px;
+
+    border-radius: 15px;
+    font-size: 24px;
+
+    span::before{
+      content: "${({ text }) => text}";
+    }
   }
 `;

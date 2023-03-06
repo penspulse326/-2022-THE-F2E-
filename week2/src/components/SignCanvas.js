@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DarkBtn, LightBtn } from "../components/Button";
 import styled from "styled-components";
+import { MQ_MD } from "../constants/breakpoint";
 
 const textColor = {
   black: "#000000",
@@ -127,7 +128,7 @@ const SignWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 
-  width: 750px;
+  width: 100%;
   height: auto;
 
   background-color: ${(props) => props.theme.mid_grey};
@@ -145,7 +146,7 @@ const SignWrapper = styled.div`
   }
 
   hr {
-    width: 700px;
+    width: 90%;
     border: 1px solid ${(props) => props.theme.dark_grey};
   }
 `;
@@ -191,15 +192,26 @@ const BtnWrapper = styled.div`
 `;
 
 const CancelBtn = styled(LightBtn)`
-  width: auto;
-  height: 61px;
+  padding: 10px;
+  width: 80px;
 
-  font-size: 24px;
+  ${MQ_MD} {
+    padding: 0px;
+    width: 100px;
+    height: 60px;
+    font-size: 20px;
+  }
 `;
 
 const CreateBtn = styled(DarkBtn)`
   margin-left: 10px;
-  width: auto;
-  height: 61px;
-  font-size: 24px;
+  padding: 10px;
+  width: 80px;
+
+  ${MQ_MD} {
+    padding: 0px;
+    width: 100px;
+    height: 60px;
+    font-size: 20px;
+  }
 `;

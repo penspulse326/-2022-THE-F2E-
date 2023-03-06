@@ -92,8 +92,6 @@ const SnapCard = styled.div`
       : "2px solid" + props.theme.mid_grey};
   border-radius: 5px;
 
-  cursor: pointer;
-
   ${MQ_MD} {
     width: ${(props) => props.orientation.width / 1.7 + "px"};
   }
@@ -128,9 +126,4 @@ const PageNumber = styled.div`
 
   color: ${(props) => (props.isActive ? "white" : "black")};
   font-size: 18px;
-
-  ${MQ_MD} {
-  }
-  ${MQ_LG} {
-  }
 `;

@@ -82,7 +82,7 @@ export default function FileView() {
 
   const showSign = () => {
     setIsShowSign(true);
-  }
+  };
 
   return (
     <Wrapper>
@@ -106,7 +106,9 @@ export default function FileView() {
                 setIsShowSign={setIsShowSign}
               ></SignCard>
             ))}
-            <CloseSignList onClick={() => setIsShowSign(false)}>關閉</CloseSignList>
+            <CloseSignList onClick={() => setIsShowSign(false)}>
+              關閉
+            </CloseSignList>
           </SignList>
         </Mask>
       )}
@@ -157,10 +159,9 @@ export default function FileView() {
               </SignWrapper>
             )}
           </AddSignBtn>
-          {signs.length > 0 &&
-            <SignListBtn onClick={() => showSign()}>
-              選擇簽名
-            </SignListBtn>}
+          {signs.length > 0 && (
+            <SignListBtn onClick={() => showSign()}>選擇簽名</SignListBtn>
+          )}
           <LightBtn_Long text="新增文字">
             <BsTextareaT />
             <span></span>
@@ -314,7 +315,7 @@ const AddSignBtn = styled(LightBtn_Long)`
 
     font-size: 24px;
 
-    span::before{
+    span::before {
       content: "${({ text }) => text}";
     }
   }
@@ -323,18 +324,18 @@ const AddSignBtn = styled(LightBtn_Long)`
 const SignWrapper = styled.div`
   display: none;
   ${MQ_MB} {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
-  margin-top: 10px;
-  margin-bottom: -10px;
+    margin-top: 10px;
+    margin-bottom: -10px;
 
-  border-radius: 12px;
-  box-sizing: border-box;
+    border-radius: 12px;
+    box-sizing: border-box;
 
-  cursor: default;
+    cursor: default;
   }
 `;
 
@@ -405,7 +406,7 @@ const Download = styled(DarkBtn_Long)`
     width: 90%;
     font-size: 24px;
   }
-`
+`;
 const SignListBtn = styled.div`
   display: flex;
   justify-content: center;
@@ -422,22 +423,22 @@ const SignListBtn = styled.div`
   color: ${(props) => props.theme.primary};
   font-size: 16px;
   font-weight: 600;
-  
+
   ${MQ_MB} {
     display: none;
   }
-`
+`;
 const SignList = styled.div`
   display: flex;
   flex-direction: column;
 
   padding: 10px;
-  width:90%;
+  width: 90%;
   background: ${(props) => props.theme.mid_grey};
-`
+`;
 const CloseSignList = styled.div`
   align-self: flex-end;
   margin-top: 10px;
   color: ${(props) => props.theme.primary};
   font-weight: 700;
-`
+`;

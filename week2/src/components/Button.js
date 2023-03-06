@@ -7,11 +7,11 @@ export const DarkBtn = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding:0 ;
+  padding: 10px;
   margin-bottom: 20px;
 
   background: ${(props) => props.theme.primary};
-  border-radius: 15px;
+  border-radius: 10px;
   border: 2px solid ${(props) => props.theme.primary};
   box-sizing: border-box;
 
@@ -22,16 +22,14 @@ export const DarkBtn = styled.div`
 
   transition: 0.3s;
 
-  
-
   ${MQ_MD} {
     padding: 15px 30px;
     width: 180px;
     font-size: 20px;
 
     svg {
-    margin-right: 12px;
-  }
+      margin-right: 12px;
+    }
   }
 
   ${MQ_LG} {
@@ -64,10 +62,10 @@ export const DarkBtn_Long = styled(DarkBtn)`
   height: 40px;
 
   border-radius: 10px;
-  
+
   font-size: 18px;
   font-weight: 600;
-  
+
   ${MQ_MB} {
     margin-bottom: 20px;
     width: 90%;
@@ -76,7 +74,7 @@ export const DarkBtn_Long = styled(DarkBtn)`
     border-radius: 15px;
     font-size: 24px;
 
-    span::before{
+    span::before {
       content: "${({ text }) => text}";
     }
   }
@@ -89,10 +87,9 @@ export const LightBtn_Long = styled(LightBtn)`
   height: 40px;
 
   border-radius: 10px;
-  
+
   font-size: 18px;
   font-weight: 600;
-
 
   ${MQ_MB} {
     margin-bottom: 20px;
@@ -102,7 +99,7 @@ export const LightBtn_Long = styled(LightBtn)`
     border-radius: 15px;
     font-size: 24px;
 
-    span::before{
+    span::before {
       content: "${({ text }) => text}";
     }
   }

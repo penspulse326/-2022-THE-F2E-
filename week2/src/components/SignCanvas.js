@@ -112,7 +112,9 @@ export function SignCanvas({ setIsMask, setSigns }) {
         />
         <hr />
         <div>
-          <a onClick={() => reset()}>清除</a>
+          <a href="" onClick={() => reset()}>
+            清除
+          </a>
         </div>
       </SignWrapper>
       <BtnWrapper>

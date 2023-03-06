@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { MQ_MB, MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD } from "../constants/breakpoint";
 
 export default function Footer() {
   const [progress, setProgress] = useState(1);

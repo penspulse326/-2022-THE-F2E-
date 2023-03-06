@@ -55,7 +55,7 @@ export const LightBtn = styled(DarkBtn)`
   }
 `;
 
-export const DarkBtn_Long = styled(DarkBtn)`
+export const DarkBtnLong = styled(DarkBtn)`
   margin: 0 2px;
   padding: 0;
   width: 40px;
@@ -80,7 +80,7 @@ export const DarkBtn_Long = styled(DarkBtn)`
   }
 `;
 
-export const LightBtn_Long = styled(LightBtn)`
+export const LightBtnLong = styled(LightBtn)`
   margin: 0 2px;
   padding: 0;
   width: 40px;

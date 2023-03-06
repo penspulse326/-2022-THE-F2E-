@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Card from "../components/Card";
 import { SignCanvas } from "../components/SignCanvas";
-import { DarkBtn_Long, LightBtn, LightBtn_Long } from "../components/Button";
+import { DarkBtnLong, LightBtnLong } from "../components/Button";
 import { ReactComponent as Logo } from "../assets/logo.svg";
 import {
   BsCalendar2Check,
@@ -162,14 +162,14 @@ export default function FileView() {
           {signs.length > 0 && (
             <SignListBtn onClick={() => showSign()}>選擇簽名</SignListBtn>
           )}
-          <LightBtn_Long text="新增文字">
+          <LightBtnLong text="新增文字">
             <BsTextareaT />
             <span></span>
-          </LightBtn_Long>
-          <LightBtn_Long text="新增日期">
+          </LightBtnLong>
+          <LightBtnLong text="新增日期">
             <BsCalendar2Check />
             <span></span>
-          </LightBtn_Long>
+          </LightBtnLong>
         </div>
         <Download onClick={() => setIsSaving(true)}>
           <Logo />
@@ -293,7 +293,7 @@ const SignBoard = styled.div`
   }
 `;
 
-const AddSignBtn = styled(LightBtn_Long)`
+const AddSignBtn = styled(LightBtnLong)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -393,7 +393,7 @@ function SignCard({ item, id, setSigns, setSelectedSign, setIsShowSign }) {
   );
 }
 
-const Download = styled(DarkBtn_Long)`
+const Download = styled(DarkBtnLong)`
   width: 120px;
 
   font-size: 16px;

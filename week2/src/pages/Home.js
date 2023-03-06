@@ -126,7 +126,7 @@ const Wrapper = styled.div`
 
 const TitleWrapper = styled.div`
   position: relative;
-
+  top: -50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -137,8 +137,6 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin-top: 90px;
 
   font-size: 48px;
   font-weight: bold;
@@ -172,7 +170,7 @@ const Subtitle = styled.div`
 
 const UploadWrapper = styled.div`
   position: relative;
-  top: 0px;
+  top: -50px;
 
   display: flex;
   flex-direction: column;

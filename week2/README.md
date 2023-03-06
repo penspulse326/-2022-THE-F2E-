@@ -1,5 +1,7 @@
 # 今晚，我想來點點簽 
 
+![image](https://user-images.githubusercontent.com/22139550/223084406-62fdfea2-3aa5-4d1d-8390-0b9fa81c8b4d.png)
+
 ![image](https://user-images.githubusercontent.com/22139550/223066068-444fc6b3-09a6-49ee-b73b-5dd348b5df58.png)
 
 [關卡資訊](https://2022.thef2e.com/news/week2)
@@ -18,8 +20,9 @@ UI 設計稿件：[Figma](https://www.figma.com/file/xINlkpj0AowEGQDVwahjqj/Week
 
 ***未實作部份***
 - 登入
-- 拍照功能
-- 新增文字功能
+- 拍照
+- PDF 功能列僅有縮放功能
+- 新增文字
 - 新增日期
 - Mobile 版無法預覽其他分頁
 
@@ -63,11 +66,13 @@ Mobile 版則要按下***選擇按鈕***顯示
 <br>
 ### 4. PDF 區塊
 
-新增在 PDF 頁面上的簽名，點選後可以調整位置或大小
+新增在 PDF 頁面上的簽名，點選後可以調整位置或大小，可以同時新增多個簽名
 
 ![image](https://user-images.githubusercontent.com/22139550/223068123-0f6cedc2-10a3-4e52-95cd-bc4ea9c87650.png)
 
-可以同時新增多個簽名
+操作面板僅實作縮放功能
+
+![image](https://user-images.githubusercontent.com/22139550/223085171-9f46f5e1-4c3d-4ce1-8c89-31cffe2a7509.png)
 <br>
 <br>
 <br>

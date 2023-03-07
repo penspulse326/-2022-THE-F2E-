@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsCloudUpload, BsCamera, BsExclamationCircle } from "react-icons/bs";
-import { MQ_MD, MQ_LG } from "../constants/breakpoint";
+import { MQ_MD, MQ_LG, MQ_MB } from "../constants/breakpoint";
 import styled from "styled-components";
 import Logo from "../assets/Logo";
 import { UseFileContext } from "../FileContext";
@@ -126,11 +126,15 @@ const Wrapper = styled.div`
 
 const TitleWrapper = styled.div`
   position: relative;
-  top: -50px;
+  top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  ${MQ_MB} {
+    top: -50px;
+  }
 `;
 
 const Title = styled.div`
@@ -170,7 +174,7 @@ const Subtitle = styled.div`
 
 const UploadWrapper = styled.div`
   position: relative;
-  top: -50px;
+  top: 100px;
 
   display: flex;
   flex-direction: column;
@@ -179,6 +183,10 @@ const UploadWrapper = styled.div`
   margin-top: 10%;
   width: 80%;
   height: auto;
+
+  ${MQ_MB} {
+    top: -50px;
+  }
 
   ${MQ_MD} {
     left: 5%;

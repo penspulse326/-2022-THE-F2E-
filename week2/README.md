@@ -21,10 +21,10 @@ UI 設計稿件：[Figma](https://www.figma.com/file/xINlkpj0AowEGQDVwahjqj/Week
 ***未實作部份***
 - 登入
 - 拍照
-- PDF 功能列僅有縮放功能
+- PDF 瀏覽僅縮放功能
 - 新增文字
 - 新增日期
-- Mobile 版無法預覽其他分頁
+- Mobile 版僅切版，功能還未整合
 
 如有其他疏忽部份請見諒，也歡迎提出問題
 

@@ -45,6 +45,7 @@ UI 設計稿件：[Figma](https://www.figma.com/file/xINlkpj0AowEGQDVwahjqj/Week
 ![image](https://user-images.githubusercontent.com/22139550/223065566-8177bc88-c956-407f-a640-ff021a4e5ccb.png)
 
   會呼叫出簽名版面，使用滑鼠或手指進行簽名，可選擇畫筆顏色，按下建立後即可儲存繪製好的簽名
+  
   最多可儲存三組簽名，超過會有警告視窗提示
 <br>
 <br>

@@ -60,6 +60,7 @@ Mobile 版則要按下***選擇按鈕***顯示
 ![image](https://user-images.githubusercontent.com/22139550/223066714-a0241005-e66c-4dc7-b3bc-3f71db77630f.png)
 
 點選簽名或此圖案 ![image](https://user-images.githubusercontent.com/22139550/223066815-081bb79e-9c95-4d2b-b5dc-3e1450d04513.png) 即可將簽名新增在當前頁面
+
 點選此圖案 ![image](https://user-images.githubusercontent.com/22139550/223067029-28ecf86b-0a1b-4701-b288-a8e9978813c6.png) 刪除簽名
 <br>
 <br>

@@ -4,69 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap" rel="stylesheet">
     <title>2022 F2E</title>
 </head>
 <body>
-    <div class="wrapper">
-        <nav>
-            <div class="logo"></div>
-            <div class="nav__group">
-                <div class="nav__item">本屆主題</div>
-                <div class="nav__item">關卡資訊</div>
-                <div class="nav__item">時程</div>
-                <div class="nav__item">贊助單位</div>
-                <button class="nav__join nav__btn">立即報名&nbsp&nbsp<svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 0.223633L10.2571 5.11701L15.6085 5.7515L11.6521 9.41026L12.7023 14.6958L8 12.0636L3.29772 14.6958L4.34794 9.41026L0.391548 5.7515L5.7429 5.11701L8 0.223633Z"/>
-                    </svg>
-                    </button>
-                <button class="nav__login nav__btn">登入&nbsp&nbsp<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 0.223633C3.58854 0.223633 0 3.81217 0 8.22363C0 12.6351 3.58854 16.2236 8 16.2236C12.4115 16.2236 16 12.6351 16 8.22363C16 3.81217 12.4115 0.223633 8 0.223633ZM8 1.55697C11.6901 1.55697 14.6667 4.53353 14.6667 8.22363C14.6667 11.9137 11.6901 14.8903 8 14.8903C4.3099 14.8903 1.33333 11.9137 1.33333 8.22363C1.33333 4.53353 4.3099 1.55697 8 1.55697ZM5 5.55697C4.44792 5.55697 4 6.00488 4 6.55697C4 7.10905 4.44792 7.55697 5 7.55697C5.55208 7.55697 6 7.10905 6 6.55697C6 6.00488 5.55208 5.55697 5 5.55697ZM9.33333 6.22363V7.55697H12.6667V6.22363H9.33333ZM11.3125 8.91113C11.3125 10.0335 10.862 10.8122 10.2083 11.3695C9.55469 11.9268 8.6901 12.2236 8 12.2236C6.58594 12.2236 5.625 11.6507 4.875 10.9111L3.9375 11.8695C4.86719 12.7835 6.21354 13.557 8 13.557C9.03646 13.557 10.1745 13.1663 11.0833 12.3903C11.9922 11.6143 12.6458 10.4163 12.6458 8.91113H11.3125Z"/>
-                    </svg></button>
+    <nav>
+        <img src="./src/images/logo.svg"/>
+        <div class="nav-items">
+            <div class="nav-links">
+                <a href="#">關卡資訊</a>|
+                <a href="#">攻略資源</a>|
+                <a href="#">求職專區</a>
             </div>
-        </nav>
-        <section class="section1">
-            <div class="title">
-                THE F2E
-                <div class="handwrite">
-                    <svg width="200" height="160" viewBox="0 0 149 119" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M62.7754 104.534C45.5535 103.55 27.596 98.3578 14.5472 86.7338C0.138734 73.8987 -4.01748 57.6716 10.8188 42.8353C25.0604 28.5938 47.1325 21.5255 66.2632 17.4584C86.6281 13.1288 109.142 11.1632 129.886 14.0908C137.203 15.1234 144.761 17.2811 146.423 25.336C148.168 33.7944 146.804 43.5155 144.559 51.7353C136.601 80.8674 106.595 98.1689 78.5307 103.572C60.8822 106.969 9.7503 110.876 6.36883 83.4865C3.69459 61.8251 21.7177 38.858 40.5255 30.8083C61.1369 21.9866 98.9237 17.6181 116.175 35.7394C128.052 48.2145 128.582 68.0912 120.745 82.6446C107.142 107.908 74.3422 117.464 47.5011 117.643C37.6111 117.709 25.6054 116.831 18.5762 108.924C11.9043 101.418 9.06826 90.9591 9.37558 81.0811C10.3502 49.7535 29.496 27.4849 57.243 14.9327C77.5697 5.73728 114.44 -7.91962 133.735 10.8435C144.79 21.5942 145.637 41.9031 139.989 55.5839C130.695 78.0921 102.409 91.0625 80.5753 97.077C71.6169 99.5448 57.6467 103.593 48.7038 99.1216" stroke="#D96EE9" stroke-width="2" stroke-linecap="round"/>
-                        <text x="45%" y="65%" font-size="50px" text-anchor="middle" fill="#00162A">4th</text>
-                    </svg>
-                    <span></span>
-                </div>
-                <div style="width:100%"></div>
-                <div class="subtitle">
-                    互動式網頁設計
-                </div>
+            <div>
+                <span class="btn-nav">
+                    註冊報名
+                </span>
+                <span class="btn-nav">
+                    登入
+                </span>
             </div>
-            <div class="gems">
-                <div class="gem gem-1"></div>
-                <div class="gem gem-2"></div>
-                <div class="gem gem-3"></div>
-                <div class="gem gem-4"></div>
-                <div class="gem gem-5"></div>
-            </div>
-            <div class="stars">
-                <div class="star star-1"></div>
-                <div class="star star-2"></div>
-                <div class="star star-3"></div>
-                <div class="star star-4"></div>
-                <div class="star star-5"></div>
-                <div class="star star-6"></div>
-            </div>      
-        </section>
-        <section class="mask__box">
-            <div class="mask-outer">
-                <div class="mask-inner"><div></div></div>
-            </div>
-        </section>
-        <section class="section2">
-            <div>section2</div>
-        </section>
-        <section class="section3">
-            <div>section3</div>
-        </section>
-    </div>
+        </div>
+    </nav>
 </body>
 <script src="./dist/bundle.js"></script>
 </html>

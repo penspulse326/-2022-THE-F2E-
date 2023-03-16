@@ -1,0 +1,72 @@
+@import "./helpers/reset";
+@import "./helpers/variables";
+
+a {
+    text-decoration: none;
+    color: $text-black;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    margin: 0;
+    background-color: white;
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: 10%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 52px;
+    height: 80px;
+
+    box-shadow: 0px 5px 6px rgba(231, 231, 231, 0.25);
+
+    a {
+        margin: 0 0.5rem;
+    }
+}
+
+.nav-items {
+    @extend %center;
+}
+
+.nav-links {
+    margin: 0 1.5rem;
+}
+
+
+%btn {
+    margin: 0 10px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.btn {
+    &-nav {
+        @extend %btn;
+        background-color: $yellow-100;
+    }
+    &-card {
+        @extend %btn;
+        padding: 0.5rem 1rem;
+        background-color: $text-blue;
+        color: white;
+    }
+}
+
+.l-spacing-sm {
+    letter-spacing: 5%;
+}
+
+.l-spacing-lg {
+    letter-spacing: 15%;
+}
+
+.ling-h-lg {
+    line-height: 1.75;
+}

@@ -31,8 +31,6 @@ body {
     width: 100vw;
     height: 100vh;
 
-    font-size: 36px;
-
     img {
         margin-top: 2rem;
     }
@@ -50,7 +48,7 @@ body {
 
 nav {
     @extend %center;
-    width: 100vw;
+    width: 100%;
     height: 56px;
     background-color: $primary;
     color: $secondary;
@@ -74,8 +72,6 @@ nav {
     @extend %center;
     margin-top: 1.5rem;
 
-    font-size: 42px;
-
     .container {
         height: 747px;
         justify-content: space-between;
@@ -87,7 +83,6 @@ nav {
     justify-content: space-between;
 
     width: 100%;
-    font-size: 36px;
 }
 
 .jumbo-option {
@@ -103,20 +98,65 @@ nav {
     div:nth-child(1) {
         margin-top: 0.5rem;
         margin-bottom: 1.5rem;
+
+        a {
+            color: $primary;
+        }
     }
 
     div:nth-child(2) {
         margin-bottom: 0.5rem;
-    }
-
-    div a:hover, div a:active {
-        color: $primary;
     }
 } 
 
 .tank-select {
     width: 86px;
     height: 53px;
+}
+
+.manga {
+    display: flex;
+    flex-direction: column;
+    margin-top: 375px;
+
+    .manga-frame:nth-child(odd) {
+        align-self: flex-start;
+    }
+
+    .manga-frame:nth-child(even) {
+        margin: 243px 0;
+        align-self: flex-end;
+    }
+}
+
+.manga-frame {
+    @extend %center;
+    position: relative;
+
+    width: 980px;
+    height: 570px;
+
+    background-color: $primary;
+}
+
+.page {
+    position: absolute;
+    width: 70%;
+}
+
+.tank {
+    position: relative;
+}
+
+.dialog {
+    position: absolute;
+    top: -45px;
+    right: 20px;
+    
+    width: 390px;
+    height: 118px;
+    background-image: url("../images/dialog-1.png");
+    background-size: cover;
 }
 
 %btn {
@@ -185,3 +225,26 @@ nav {
     }
 }
 
+.h1 {
+    font-size: 72px;
+}
+
+.h2 {
+    font-size: 56px;
+}
+
+.h3 {
+    font-size: 42px;
+}
+
+.h4 {
+    font-size: 36px;
+}
+
+.h5 {
+    font-size: 30px;
+}
+
+.h6 {
+    font-size: 24px;
+}

@@ -2,249 +2,374 @@
 @import "./helpers/variables";
 
 @font-face {
-    font-family: 'Cubic';
-    src: local("Cubic 11"),
-      url('../fonts/Cubic_11_1.013_R.woff') format("woff"),
-      url('../fonts/Cubic_11_1.013_R.woff2') format("woff"),
-      url('../fonts/Cubic_11_1.013_R.ttf') format("opentype");
-  }
+  font-family: "Cubic";
+  src: local("Cubic 11"), url("../fonts/Cubic_11_1.013_R.woff") format("woff"),
+    url("../fonts/Cubic_11_1.013_R.woff2") format("woff"),
+    url("../fonts/Cubic_11_1.013_R.ttf") format("opentype");
+}
 
 * {
-    box-sizing: border-box;
-    text-decoration: none;
+  box-sizing: border-box;
+  text-decoration: none;
 }
 
 a {
-    color: white;
+  color: white;
 }
 
 body {
-    font-family: 'Cubic';
-    background-color: black;
-    color: white;
-    font-size: 16px;
+  font-family: "Cubic";
+  background-color: black;
+  color: white;
+  font-size: 16px;
 }
 
 .loading {
-    @extend %center;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
+  @extend %center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 
-    img {
-        margin-top: 2rem;
-    }
+  img {
+    margin-top: 2rem;
+  }
 }
 
 #root {
-    display: none;
+  display: none;
 }
 
 .container {
-    @extend %center;
-    flex-direction: column;
-    width: 1440px;
+  @extend %center;
+  flex-direction: column;
+  width: 1440px;
 }
 
 nav {
-    @extend %center;
-    width: 100%;
-    height: 56px;
-    background-color: $primary;
-    color: $secondary;
+  @extend %center;
+  width: 100%;
+  height: 56px;
+  background-color: $primary;
+  color: $secondary;
 }
 
 .nav-box {
-    display: flex;
-    align-self: flex-end;
+  display: flex;
+  align-self: flex-end;
 }
 
 .nav-link {
-    @extend %center;
-    
-    * {
-        margin-right: 30px;
-        cursor: pointer;
-    }
+  @extend %center;
+
+  * {
+    margin-right: 30px;
+    cursor: pointer;
+  }
 }
 
 .jumbotron {
-    @extend %center;
-    margin-top: 1.5rem;
+  @extend %center;
+  margin-top: 1.5rem;
 
-    .container {
-        height: 747px;
-        justify-content: space-between;
-    }
+  .container {
+    height: 747px;
+    justify-content: space-between;
+  }
 }
 
 .jumbo-bar {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-    width: 100%;
+  width: 100%;
 }
 
 .jumbo-option {
-    display: flex;
-    align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
 
-    img {
-        margin-right: 42px;
-    }
+  img {
+    margin-right: 42px;
+  }
 }
 
-.option-items{
-    div:nth-child(1) {
-        margin-top: 0.5rem;
-        margin-bottom: 1.5rem;
+.option-items {
+  div:nth-child(1) {
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
 
-        a {
-            color: $primary;
-        }
+    a {
+      color: $primary;
     }
+  }
 
-    div:nth-child(2) {
-        margin-bottom: 0.5rem;
-    }
-} 
+  div:nth-child(2) {
+    margin-bottom: 0.5rem;
+  }
+}
 
 .tank-select {
-    width: 86px;
-    height: 53px;
+  width: 86px;
+  height: 53px;
 }
 
 .manga {
-    display: flex;
-    flex-direction: column;
-    margin-top: 375px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 375px;
 
-    .manga-frame:nth-child(odd) {
-        align-self: flex-start;
-    }
+  .manga-frame {
+    align-self: flex-start;
+  }
 
-    .manga-frame:nth-child(even) {
-        margin: 243px 0;
-        align-self: flex-end;
-    }
+  .manga-frame:nth-child(3) {
+    align-self: flex-end;
+  }
 }
 
 .manga-frame {
-    @extend %center;
-    position: relative;
+  @extend %center;
+  position: relative;
 
-    width: 980px;
-    height: 570px;
+  width: 980px;
+  height: 570px;
 
-    background-color: $primary;
+  background-color: $primary;
 }
 
 .page {
-    position: absolute;
-    width: 70%;
+  position: absolute;
+  width: 60%;
 }
 
 .tank {
-    position: relative;
+  position: absolute;
+  bottom: 200px;
+  width: 336px;
 }
 
-.dialog {
+.page-dialog {
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  top: -45px;
+  right: 20px;
+
+  width: 390px;
+  height: 118px;
+  background-image: url("../images/dialog-1.png");
+  background-size: cover;
+
+  color: $secondary;
+
+  span {
+    margin-top: 20px;
+  }
+}
+
+.soldier-dialog {
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  top: -70px;
+  left: -50px;
+
+  width: 356px;
+  height: 204px;
+  background-image: url("../images/dialog-2.png");
+  background-size: cover;
+
+  color: $secondary;
+
+  span {
+    margin-top: 75px;
+    margin-left: 10px;
+  }
+}
+
+.frame-text {
+  color: white;
+  transform-style: preserve-3D;
+
+  &::before {
+    content: attr(text);
     position: absolute;
-    top: -45px;
-    right: 20px;
-    
-    width: 390px;
-    height: 118px;
-    background-image: url("../images/dialog-1.png");
-    background-size: cover;
+    transform: translateZ(-1px);
+    -webkit-text-stroke: 6px $secondary;
+  }
+}
+
+.frame1 {
+  .frame-text {
+    position: absolute;
+    bottom: 275px;
+    right: -215px;
+  }
+}
+
+.frame2 {
+  .frame-text {
+    position: absolute;
+    bottom: 185px;
+    left: -180px;
+  }
+}
+
+.frame3 {
+    .frame-text {
+      position: absolute;
+      bottom: 120px;
+      right: -210px ;
+    }
+  }
+
+.soldier-call {
+  align-self: flex-end;
+  position: relative;
+  left: 100px;
+}
+
+.tree{
+    align-self: flex-end;
+    position: absolute;
+    right: 100px;
+}
+
+.soldier-back {
+    align-self: flex-end;
+    position: absolute;
+    left: 317px;
+  }
+
+.frame-margin {
+  @extend %center;
+
+  width: 100%;
+  height: 243px;
+
+  opacity: 0;
+}
+
+.hill {
+    @extend %center;
+    position: relative;
+
+    flex-direction: column;
+
+    width: 100%;
+    height: 1080px;
+
+    background-color: $tertiary;
+
+    overflow: hidden;
+    img {
+        position: absolute;
+        bottom: 0;
+        max-width: 100%;
+    }
+
+    :nth-child(4) {
+        align-self:flex-end;
+    }
+    :nth-child(5) {
+        align-self:flex-start;
+    }
+}
+
+.hill-title {
+    margin-bottom: 32px;
+    padding: 40px 120px;
+    border: 4px solid white;
 }
 
 %btn {
-    @extend %center;
-    position: relative;
-    z-index: 0;
-    min-width: 104px;
-    background-color: white;
-    color: $primary;
-    transform-style: preserve-3D;
+  @extend %center;
+  position: relative;
+  z-index: 0;
+  min-width: 104px;
+  background-color: white;
+  color: $primary;
+  transform-style: preserve-3D;
 
-    &:hover {
-        transform: translate(5px,5px);
-    }
+  &:hover {
+    transform: translate(5px, 5px);
+  }
 
-    &:active {
-        background-color: $secondary;
-    }
+  &:active {
+    background-color: $secondary;
+  }
 
-    &::after {
-        content: ""; 
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-    }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
 
-    &:hover::after {
-        background-color: $tertiary;
-        transform: translate(-5px,-5px) translateZ(-1px);
-    }
+  &:hover::after {
+    background-color: $tertiary;
+    transform: translate(-5px, -5px) translateZ(-1px);
+  }
 }
 
 .btn-sm {
-    @extend %btn;
-    height: 35px;
+  @extend %btn;
+  height: 35px;
 }
 
 .btn-md {
-    @extend %btn;
-    height: 43px;
+  @extend %btn;
+  height: 43px;
 }
 
 .btn-lg {
-    @extend %btn;
-    height: 60px;
+  @extend %btn;
+  height: 60px;
 }
 
 .btn-xl {
-    @extend %btn;
-    width: 1370px;
-    height: 140px;
+  @extend %btn;
+  width: 1370px;
+  height: 140px;
 }
 
 .nav-btn {
-    @extend %center;
-    margin-right: 30px;
+  @extend %center;
+  margin-right: 30px;
 
-    * {
-        cursor: pointer;
-    }
-    :nth-child(1) {
-        margin-right: 10px;
-    }
+  * {
+    cursor: pointer;
+  }
+  :nth-child(1) {
+    margin-right: 10px;
+  }
 }
 
 .h1 {
-    font-size: 72px;
+  font-size: 72px;
 }
 
 .h2 {
-    font-size: 56px;
+  font-size: 56px;
 }
 
 .h3 {
-    font-size: 42px;
+  font-size: 42px;
 }
 
 .h4 {
-    font-size: 36px;
+  font-size: 36px;
 }
 
 .h5 {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .h6 {
-    font-size: 24px;
+  font-size: 24px;
 }

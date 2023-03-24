@@ -17,6 +17,10 @@ a {
   color: white;
 }
 
+li {
+  list-style: none;
+}
+
 body {
   font-family: "Cubic";
   background-color: black;
@@ -26,6 +30,8 @@ body {
 
 .loading {
   @extend %center;
+  @extend %h4;
+
   flex-direction: column;
   width: 100vw;
   height: 100vh;
@@ -69,6 +75,7 @@ nav {
 
 .jumbotron {
   @extend %center;
+  @extend %h3;
   margin-top: 1.5rem;
 
   .container {
@@ -78,6 +85,7 @@ nav {
 }
 
 .jumbo-bar {
+  @extend %h4;
   display: flex;
   justify-content: space-between;
 
@@ -149,6 +157,7 @@ nav {
 }
 
 .page-dialog {
+  @extend %h4;
   display: flex;
   justify-content: center;
 
@@ -169,6 +178,7 @@ nav {
 }
 
 .soldier-dialog {
+  @extend %h4;
   display: flex;
   justify-content: center;
 
@@ -190,6 +200,7 @@ nav {
 }
 
 .frame-text {
+  @extend %h4;
   color: white;
   transform-style: preserve-3D;
 
@@ -218,12 +229,12 @@ nav {
 }
 
 .frame3 {
-    .frame-text {
-      position: absolute;
-      bottom: 120px;
-      right: -210px ;
-    }
+  .frame-text {
+    position: absolute;
+    bottom: 120px;
+    right: -210px;
   }
+}
 
 .soldier-call {
   align-self: flex-end;
@@ -231,17 +242,17 @@ nav {
   left: 100px;
 }
 
-.tree{
-    align-self: flex-end;
-    position: absolute;
-    right: 100px;
+.tree {
+  align-self: flex-end;
+  position: absolute;
+  right: 100px;
 }
 
 .soldier-back {
-    align-self: flex-end;
-    position: absolute;
-    left: 317px;
-  }
+  align-self: flex-end;
+  position: absolute;
+  left: 317px;
+}
 
 .frame-margin {
   @extend %center;
@@ -253,35 +264,188 @@ nav {
 }
 
 .hill {
-    @extend %center;
-    position: relative;
+  @extend %center;
+  position: relative;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    width: 100%;
-    height: 1080px;
+  width: 100%;
+  height: 1080px;
 
-    background-color: $tertiary;
+  background-color: $tertiary;
 
-    overflow: hidden;
-    img {
-        position: absolute;
-        bottom: 0;
-        max-width: 100%;
-    }
+  overflow: hidden;
 
-    :nth-child(4) {
-        align-self:flex-end;
-    }
-    :nth-child(5) {
-        align-self:flex-start;
-    }
+  img {
+    position: absolute;
+    bottom: 0;
+    max-width: 100%;
+  }
+
+  :nth-child(4) {
+    align-self: flex-end;
+  }
+
+  :nth-child(5) {
+    align-self: flex-start;
+  }
+
+  span {
+    @extend %h6;
+  }
 }
 
 .hill-title {
-    margin-bottom: 32px;
-    padding: 40px 120px;
-    border: 4px solid white;
+  @extend %h1;
+  margin-bottom: 32px;
+  padding: 40px 120px;
+  border: 4px solid white;
+}
+
+.game-intro {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  margin-top: 500px;
+
+  width: 300%;
+
+  div {
+    background-repeat: no-repeat;
+    background-position: (left);
+    background-size: contain;
+  }
+
+  .week-frame:nth-child(1) {
+    background-color: $primary;
+    background-image: url("../images/week1.png");
+
+    .week-title {
+      div:first-child {
+        color: $tertiary;
+      }
+    }
+  }
+
+  .week-frame:nth-child(2) {
+    background-color: #76b9d6;
+    background-image: url("../images/week2.png");
+
+    .week-title {
+      div:first-child {
+        color: #0061a1;
+      }
+    }
+  }
+
+  .week-frame:nth-child(3) {
+    background-color: #215400;
+    background-image: url("../images/week3.png");
+
+    .week-title {
+      div:first-child {
+        color: #c7ffa3;
+      }
+    }
+  }
+}
+
+.guide-line {
+  position: absolute;
+  bottom: 175px;
+  width: 65%;
+
+  svg {
+    display: block;
+    width: 100%;
+  }
+  line {
+    stroke: rgba(255, 255, 255, 0.5);
+    stroke-width: 5px;
+  }
+}
+
+.week-frame {
+  @extend %center;
+  flex-direction: column;
+
+  padding-top: 100px;
+  width: 100%;
+  height: 1080px;
+  text-align: center;
+
+  li {
+    margin-bottom: 48px;
+    div {
+      margin: 1rem 0;
+    }
+  }
+}
+
+.week-title {
+  div:first-child {
+    @extend %h4;
+  }
+
+  div:last-child {
+    @extend %h1;
+  }
+}
+
+.week-game {
+  @extend %h4;
+}
+
+.week-img {
+  position: relative;
+  left: -80px;
+  height: 229px;
+
+  img {
+    position: absolute;
+  }
+
+  :last-child {
+    width: 207px;
+    left: 12px;
+    bottom: 24px;
+    z-index: 99;
+  }
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: auto;
+  padding: 300px 0;
+  width: 65%;
+}
+
+.schedule-item {
+  display: flex;
+  justify-content: flex-start;
+  margin: 150px 0;
+  img {
+    margin-right: 70px;
+  }
+}
+
+.schedule-info {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+.schedule-title {
+  @extend %h1;
+  color: $tertiary;
+}
+
+.schedule-content {
+  @extend %h6;
 }
 
 %btn {
@@ -324,11 +488,14 @@ nav {
 
 .btn-md {
   @extend %btn;
+  @extend %h6;
   height: 43px;
 }
 
 .btn-lg {
   @extend %btn;
+  @extend %h4;
+  padding: 0 50px;
   height: 60px;
 }
 
@@ -345,31 +512,32 @@ nav {
   * {
     cursor: pointer;
   }
+
   :nth-child(1) {
     margin-right: 10px;
   }
 }
 
-.h1 {
+%h1 {
   font-size: 72px;
 }
 
-.h2 {
+%h2 {
   font-size: 56px;
 }
 
-.h3 {
+%h3 {
   font-size: 42px;
 }
 
-.h4 {
+%h4 {
   font-size: 36px;
 }
 
-.h5 {
+%h5 {
   font-size: 30px;
 }
 
-.h6 {
+%h6 {
   font-size: 24px;
 }

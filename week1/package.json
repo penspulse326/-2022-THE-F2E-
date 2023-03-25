@@ -12,6 +12,6 @@
     "webpack-cli": "^4.10.0"
   },
   "scripts": {
-    "build": "webpack --mode development"
+    "watch": "webpack --mode development"
   }
 }

@@ -1,0 +1,67 @@
+$primary: #B82A06;
+$secondary: #3C0C00;
+$light-grey: #DCDCDC;
+$tertiary: #FFB3A4;
+
+%center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+%h1 {
+    font-size: 72px;
+  }
+  
+  %h2 {
+    font-size: 56px;
+  }
+  
+  %h3 {
+    font-size: 42px;
+  }
+  
+  %h4 {
+    font-size: 36px;
+  }
+  
+  %h5 {
+    font-size: 30px;
+  }
+  
+  %h6 {
+    font-size: 24px;
+  }
+
+  %btn {
+    @extend %center;
+    position: relative;
+    z-index: 0;
+    min-width: 104px;
+    background-color: white;
+    color: $primary;
+    transform-style: preserve-3D;
+  
+    &:hover {
+      transform: translate(5px, 5px);
+    }
+  
+    &:active {
+      background-color: $secondary;
+    }
+  
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+    }
+  
+    &:hover::after {
+      background-color: $tertiary;
+      transform: translate(-5px, -5px) translateZ(-1px);
+    }
+  }

@@ -310,49 +310,93 @@ nav {
 
 .game-intro {
   position: relative;
-  display: flex;
-  justify-content: flex-start;
 
   margin-top: 500px;
-  width: 100vw;
-
-  .week-frame:nth-child(1) {
+  
+  .intro-frame:nth-child(1) {
     background-color: $primary;
     background-image: url("../images/week1.png");
 
-    .week-title {
+    .intro-title {
       div:first-child {
         color: $tertiary;
       }
     }
   }
 
-  .week-frame:nth-child(2) {
+  .intro-frame:nth-child(2) {
     background-color: #76b9d6;
     background-image: url("../images/week2.png");
 
-    .week-title {
+    .intro-title {
       div:first-child {
         color: #0061a1;
       }
     }
   }
 
-  .week-frame:nth-child(3) {
+  .intro-frame:nth-child(3) {
     background-color: #215400;
     background-image: url("../images/week3.png");
 
-    .week-title {
+    .intro-title {
       div:first-child {
         color: #c7ffa3;
       }
     }
   }
-}
 
-.frame-group {
-  display: flex;
-  width: 300vw;
+  .intro-group {
+    display: flex;
+    justify-content: center;
+    width: 300vw;
+  }
+  
+  
+  .intro-frame {
+    @extend %center;
+    flex-direction: column;
+  
+    padding-top: 100px;
+    width: 100vw;
+    height: 100vh;
+    text-align: center;
+  
+    background-repeat: no-repeat;
+      background-position: (left);
+      background-size: contain;
+  
+    li {
+      margin-bottom: 48px;
+      div {
+        margin: 1rem 0;
+      }
+    }
+  }
+  
+  .intro-title {
+    div:first-child {
+      @extend %h4;
+    }
+  
+    div:last-child {
+      @extend %h1;
+    }
+  }
+  
+  .intro-game {
+    @extend %h4;
+  }
+  
+  .intro-img {
+    position: relative;
+    left: -80px;
+    height: 229px;
+  
+    img {
+      position: absolute;
+    }
+  }
 }
 
 .game-tank {
@@ -364,63 +408,17 @@ nav {
 
 .guide-line {
   @extend %center;
-  position:relative;
-
+  position:absolute;
+  bottom: 120px;
   svg {
     display: block;
-    width: 65%;
+    width: 200vw;
   }
   line {
     stroke: rgba(255, 255, 255, 0.5);
     stroke-width: 5px;
   }
 }
-
-.week-frame {
-  @extend %center;
-  flex-direction: column;
-
-  padding-top: 100px;
-  width: 100vw;
-  height: 100vh;
-  text-align: center;
-
-  background-repeat: no-repeat;
-    background-position: (left);
-    background-size: contain;
-
-  li {
-    margin-bottom: 48px;
-    div {
-      margin: 1rem 0;
-    }
-  }
-}
-
-.week-title {
-  div:first-child {
-    @extend %h4;
-  }
-
-  div:last-child {
-    @extend %h1;
-  }
-}
-
-.week-game {
-  @extend %h4;
-}
-
-.week-img {
-  position: relative;
-  left: -80px;
-  height: 229px;
-
-  img {
-    position: absolute;
-  }
-}
-
 .schedule {
   display: flex;
   flex-direction: column;

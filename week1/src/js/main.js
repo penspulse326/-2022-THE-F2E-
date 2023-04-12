@@ -15,9 +15,8 @@ window.addEventListener("load", () => {
     document.getElementById("root").style.display = "block";
     document.querySelector(".loading").style.display = "none";
     blinkTween = Blink(login);
-    ScrollTrigger.refresh()
+    ScrollTrigger.refresh();
   }, 1000);
-
 });
 
 // options button event
@@ -183,8 +182,11 @@ gsap
       markers: true,
       pin: true,
       scrub: true,
-      end: "bottom 0"
+      end: "bottom 0",
     },
+  })
+  .to(".guide-line", {
+    xPercent: -50,
   })
   .to(
     ".week2",
@@ -196,31 +198,50 @@ gsap
         "25%": {
           xPercent: -25,
           onComplete: () => {
-            gsap.set(".week2 img", { attr: { src: "./src/images/F1.png" } })
-          }
+            gsap.set(".week2 img", { attr: { src: "./src/images/F1.png" } });
+          },
         },
         "50%": {
           xPercent: -50,
           onComplete: () => {
-            gsap.set(".week2 img", { attr: { src: "./src/images/F2.png" } })
-          }
+            gsap.set(".week2 img", { attr: { src: "./src/images/F2.png" } });
+          },
         },
         "75%": {
           xPercent: -75,
           onComplete: () => {
-            gsap.set(".week2 img", { attr: { src: "./src/images/F3.png" } })
-          }
+            gsap.set(".week2 img", { attr: { src: "./src/images/F3.png" } });
+          },
         },
         "100%": {
           xPercent: -100,
           onComplete: () => {
-            gsap.set(".week2 img", { attr: { src: "./src/images/F4.png" } })
-          }
-        }
-      }
+            gsap.set(".week2 img", { attr: { src: "./src/images/F4.png" } });
+          },
+        },
+      },
     },
     "<"
   )
+  .to(".guide-line", {
+    keyframes: {
+      "0%": {
+        xPercent: -50,
+      },
+      "25%": {
+        xPercent: -60,
+      },
+      "50%": {
+        xPercent: -70,
+      },
+      "75%": {
+        xPercent: -92.5,
+      },
+      "100%": {
+        xPercent: -100,
+      },
+    },
+  })
   .to(
     ".week3",
     {
@@ -231,29 +252,30 @@ gsap
         "25%": {
           xPercent: -125,
           onComplete: () => {
-            gsap.set(".week3 img", { attr: { src: "./src/images/F1.png" } })
-          }
+            gsap.set(".week3 img", { attr: { src: "./src/images/F1.png" } });
+          },
         },
         "50%": {
           xPercent: -150,
           onComplete: () => {
-            gsap.set(".week3 img", { attr: { src: "./src/images/F2.png" } })
-          }
+            gsap.set(".week3 img", { attr: { src: "./src/images/F2.png" } });
+          },
         },
         "75%": {
           xPercent: -175,
           onComplete: () => {
-            gsap.set(".week3 img", { attr: { src: "./src/images/F3.png" } })
-          }
+            gsap.set(".week3 img", { attr: { src: "./src/images/F3.png" } });
+          },
         },
         "100%": {
           xPercent: -200,
           onComplete: () => {
-            gsap.set(".week3 img", { attr: { src: "./src/images/F4.png" } })
-          }
-        }
-      }
+            gsap.set(".week3 img", { attr: { src: "./src/images/F4.png" } });
+          },
+        },
+      },
     },
+    "<"
   );
 
 //diamond
